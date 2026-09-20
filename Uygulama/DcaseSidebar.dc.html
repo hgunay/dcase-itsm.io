@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;} a{color:inherit;text-decoration:none;}</style>
+</helmet>
+<div style="position:relative;width:{{ w }}px;height:100%;font-family:Inter,system-ui,sans-serif;color:#020618;font-size:14px;transition:width .2s">
+
+<sc-if value="{{ ray }}" hint-placeholder-val="{{ false }}">
+<div style="width:56px;height:100%;box-sizing:border-box;background:#fff;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;align-items:center;padding:12px 0 8px">
+<span style="width:32px;height:32px;border-radius:8px;background:#08748e;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M6.376 18.91a6 6 0 0 1 11.249.003"></path><circle cx="12" cy="11" r="4"></circle></svg></span>
+<button type="button" onClick="{{ genislet }}" title="Menüyü genişlet" aria-label="Menüyü genişlet" style="margin-top:8px;width:40px;height:32px;border:0;background:transparent;border-radius:6px;color:#64748b;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0" style-hover="background:#f1f5f9;color:#020618"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path></svg></button>
+<span style="width:24px;height:1px;background:#e2e8f0;margin:8px 0;flex-shrink:0"></span>
+<div style="flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;align-items:center;gap:4px;width:100%">
+<a href="#" onClick="{{ rayTalep }}" title="Talep Yönetimi" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ rayTalepBg }}" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a524" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a>
+<a href="#" onClick="{{ rayOlay }}" title="Olay Yönetimi" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ rayOlayBg }}" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5484d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg></a>
+<a href="#" onClick="{{ rayProblem }}" title="Problem Yönetimi" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ rayProblemBg }}" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5484d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"></path><path d="M14.12 3.88 16 2"></path><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"></path><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"></path><path d="M12 20v-9"></path><path d="M6.53 9C4.6 8.8 3 7.1 3 5"></path><path d="M6 13H2"></path><path d="M3 21c0-2.1 1.7-3.9 3.8-4"></path><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"></path><path d="M22 13h-4"></path><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"></path></svg></a>
+<a href="#" onClick="{{ rayDegisiklik }}" title="Değişiklik Yönetimi" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ rayDegisiklikBg }}" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a524" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 5-2.414-2.414A2 2 0 0 0 14.172 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"></path><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"></path><path d="M8 18h1"></path></svg></a>
+<a href="#" onClick="{{ rayAc }}" title="Görev Yönetimi" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1fa5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg></a>
+<a href="#" onClick="{{ rayAc }}" title="Bilgi Bankası" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3fb3d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg></a>
+<a href="#" onClick="{{ rayAc }}" title="Hizmet Kataloğu" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1fa5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg></a>
+<a href="#" onClick="{{ rayAc }}" title="Kullanıcı Lokasyon" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3fb3d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg></a>
+<a href="#" onClick="{{ rayAc }}" title="Kullanıcı Detay" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3fb3d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></a>
+<span style="width:24px;height:1px;background:#e2e8f0;margin:4px 0;flex-shrink:0"></span>
+<a href="#" onClick="{{ rayAc }}" title="Diğer menüler" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#64748b" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></a>
+</div>
+<span title="admin admin" style="width:32px;height:32px;border-radius:8px;background:#f1f5f9;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;margin-top:8px">AA</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ ortu }}" hint-placeholder-val="{{ false }}"><div onClick="{{ kapat }}" style="position:fixed;left:0;right:0;top:49px;bottom:0;background:rgba(2,6,24,.35);z-index:1"></div></sc-if>
+
+<sc-if value="{{ panel }}" hint-placeholder-val="{{ true }}">
+<div style="position:{{ pPos }};top:0;left:0;z-index:2;width:256px;height:100%;box-sizing:border-box;background:#fff;border-right:1px solid #e2e8f0;box-shadow:{{ pShadow }};display:flex;flex-direction:column">
+<div style="padding:12px 12px 4px;display:flex;align-items:center;gap:8px;height:56px;box-sizing:border-box">
+<span style="width:32px;height:32px;border-radius:8px;background:#08748e;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M6.376 18.91a6 6 0 0 1 11.249.003"></path><circle cx="12" cy="11" r="4"></circle></svg></span>
+<span style="font-weight:600;font-size:14px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Administrator</span>
+<button type="button" onClick="{{ toggleDar }}" title="{{ darTitle }}" aria-label="{{ darTitle }}" style="width:28px;height:28px;border:0;background:transparent;border-radius:6px;color:#64748b;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0" style-hover="background:#f1f5f9;color:#020618"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path></svg></button>
+</div>
+<div style="flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:8px;padding-top:8px">
+
+<div style="padding:0 8px">
+<div onClick="{{ toggleBenim }}" style="height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:12px;font-weight:700;border-radius:6px;cursor:pointer;user-select:none"><span>Benim Kayıtlarım</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ benimRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></div>
+<sc-if value="{{ benimOpen }}" hint-placeholder-val="{{ false }}">
+<ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px">
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px">Açık Kayıtlarım</a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px">Onay Bekleyenlerim</a></li>
+</ul>
+</sc-if>
+</div>
+
+<div style="padding:0 8px">
+<div onClick="{{ toggleHizmet }}" style="height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:12px;font-weight:700;border-radius:6px;cursor:pointer;user-select:none"><span>Hizmet Masası</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ hizmetRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></div>
+<sc-if value="{{ hizmetOpen }}" hint-placeholder-val="{{ true }}">
+<ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px">
+<li><a href="#" onClick="{{ toggleTalep }}" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px;background:{{ talepBg }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a524" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg><span style="flex:1">Talep Yönetimi</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ talepRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></a>
+<sc-if value="{{ talepOpen }}" hint-placeholder-val="{{ false }}">
+<ul style="list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:4px">
+<li><a href="Uzerimdeki Talepler.dc.html" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px;background:{{ uzerimdekiBg }};color:{{ uzerimdekiFg }};font-weight:{{ uzerimdekiWeight }}">Üzerimdeki Talepler</a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px">Tüm Talepler</a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px">Yeni Talep Kaydı</a></li>
+</ul>
+</sc-if>
+</li>
+<li><a href="#" onClick="{{ toggleOlay }}" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px;background:{{ olayBg }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5484d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg><span style="flex:1">Olay Yönetimi</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ olayRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></a>
+<sc-if value="{{ olayOpen }}" hint-placeholder-val="{{ false }}">
+<ul style="list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:4px">
+<li><a href="Olay Listesi.dc.html" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px;background:{{ olayListeBg }};color:{{ olayListeFg }};font-weight:{{ olayListeWeight }}">Olay Listesi</a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px">Yeni Olay Kaydı</a></li>
+</ul>
+</sc-if>
+</li>
+<li><a href="#" onClick="{{ toggleProblem }}" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px;background:{{ problemBg }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5484d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"></path><path d="M14.12 3.88 16 2"></path><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"></path><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"></path><path d="M12 20v-9"></path><path d="M6.53 9C4.6 8.8 3 7.1 3 5"></path><path d="M6 13H2"></path><path d="M3 21c0-2.1 1.7-3.9 3.8-4"></path><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"></path><path d="M22 13h-4"></path><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"></path></svg><span style="flex:1">Problem Yönetimi</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ problemRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></a>
+<sc-if value="{{ problemOpen }}" hint-placeholder-val="{{ false }}">
+<ul style="list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:4px">
+<li><a href="Problem Listesi.dc.html" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px;background:{{ problemListeBg }};color:{{ problemListeFg }};font-weight:{{ problemListeWeight }}">Problem Listesi</a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px">Bilinen Hatalar</a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px">Yeni Problem Kaydı</a></li>
+</ul>
+</sc-if>
+</li>
+<li><a href="#" onClick="{{ toggleDegisiklik }}" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px;background:{{ degisiklikBg }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a524" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 5-2.414-2.414A2 2 0 0 0 14.172 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"></path><path d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"></path><path d="M8 18h1"></path></svg><span style="flex:1">Değişiklik Yönetimi</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ degisiklikRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></a>
+<sc-if value="{{ degisiklikOpen }}" hint-placeholder-val="{{ false }}">
+<ul style="list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:4px">
+<li><a href="Degisiklik Listesi.dc.html" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px;background:{{ degisiklikListeBg }};color:{{ degisiklikListeFg }};font-weight:{{ degisiklikListeWeight }}">Değişiklik Listesi</a></li>
+<li><a href="Degisiklik Listesi.dc.html?view=takvim" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px">Değişiklik Takvimi</a></li>
+<li><a href="Degisiklik Listesi.dc.html?queue=appr" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px">Onayımı Bekleyenler</a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px;font-size:13px">Yeni Değişiklik Kaydı</a></li>
+</ul>
+</sc-if>
+</li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1fa5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg><span>Görev Yönetimi</span></a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3fb3d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg><span>Bilgi Bankası</span></a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1fa5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg><span style="flex:1">Hizmet Kataloğu</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3fb3d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg><span>Kullanıcı Lokasyon</span></a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3fb3d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Kullanıcı Detay</span></a></li>
+</ul>
+</sc-if>
+</div>
+
+<div style="padding:0 8px">
+<div onClick="{{ toggleVarlik }}" style="height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:12px;font-weight:700;border-radius:6px;cursor:pointer;user-select:none"><span>Varlık Yönetimi</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ varlikRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></div>
+<sc-if value="{{ varlikOpen }}" hint-placeholder-val="{{ false }}">
+<ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px">
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px">Varlıklar</a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px">Lisanslar</a></li>
+</ul>
+</sc-if>
+</div>
+
+<div style="padding:0 8px">
+<div onClick="{{ toggleSon }}" style="height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:12px;font-weight:700;border-radius:6px;cursor:pointer;user-select:none"><span>Son Kullanıcı İşlemleri</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ sonRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></div>
+<sc-if value="{{ sonOpen }}" hint-placeholder-val="{{ false }}">
+<ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px">
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px">Self Servis Portal</a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px">Anketler</a></li>
+</ul>
+</sc-if>
+</div>
+
+<div style="padding:0 8px">
+<div onClick="{{ toggleSla }}" style="height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:12px;font-weight:700;border-radius:6px;cursor:pointer;user-select:none"><span>SLA Motoru</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ slaRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></div>
+<sc-if value="{{ slaOpen }}" hint-placeholder-val="{{ false }}">
+<ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px">
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px">SLA Tanımları</a></li>
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px">Çalışma Takvimleri</a></li>
+</ul>
+</sc-if>
+</div>
+
+<div style="padding:0 8px">
+<div onClick="{{ toggleGecici }}" style="height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:12px;font-weight:700;border-radius:6px;cursor:pointer;user-select:none"><span>Geçici</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ geciciRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></div>
+<sc-if value="{{ geciciOpen }}" hint-placeholder-val="{{ false }}">
+<ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px">
+<li><a href="#" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 32px;border-radius:6px">Test Formları</a></li>
+</ul>
+</sc-if>
+</div>
+
+</div>
+<div style="padding:8px;border-top:1px solid transparent">
+<div style="height:48px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px">
+<span style="width:32px;height:32px;border-radius:8px;background:#f1f5f9;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0">AA</span>
+<span style="display:grid;flex:1;min-width:0;line-height:1.25"><span style="font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">admin admin</span><span style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">isin.kaynak@btbilgi.com.tr</span></span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg>
+</div>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;aktif&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;&quot;,&quot;uzerimdeki&quot;,&quot;olaylar&quot;,&quot;problemler&quot;,&quot;degisiklikler&quot;],&quot;section&quot;:&quot;Menü&quot;}}">
+class Component extends DCLogic {
+  // Kırılımlar: ≥1200 tam menü (256px), 800–1199 ikon rayı (56px), <800 gizli (0). Ray/gizli modda menü içeriğin üzerine açılır.
+  static TAM = 1200; static GIZLI = 800;
+  state = { benim: false, hizmet: true, varlik: false, son: false, sla: false, gecici: false, talep: null, olay: null, problem: null, degisiklik: null, vw: window.innerWidth, daralt: false, acik: false };
+  mode() { const vw = this.state.vw; return vw < Component.GIZLI ? 'gizli' : (vw < Component.TAM || this.state.daralt) ? 'dar' : 'tam'; }
+  onMenu() {
+    const m = this.mode();
+    if (m === 'tam') this.setState({ daralt: true, acik: false });
+    else if (m === 'dar' && this.state.daralt && this.state.vw >= Component.TAM) this.setState({ daralt: false, acik: false });
+    else this.setState(s => ({ acik: !s.acik }));
+  }
+  yayinla() { const m = this.mode(); if (m !== this._son) { this._son = m; window.dispatchEvent(new CustomEvent('dcase:menu-mode', { detail: { mode: m } })); } }
+  componentDidMount() {
+    this._rs = () => this.setState({ vw: window.innerWidth });
+    this._mn = () => this.onMenu();
+    this._kd = ev => { if (ev.key === 'Escape' && this.state.acik) this.setState({ acik: false }); };
+    window.addEventListener('resize', this._rs); window.addEventListener('dcase:menu', this._mn); window.addEventListener('keydown', this._kd);
+    this.yayinla();
+  }
+  componentDidUpdate() { this.yayinla(); }
+  componentWillUnmount() { window.removeEventListener('resize', this._rs); window.removeEventListener('dcase:menu', this._mn); window.removeEventListener('keydown', this._kd); }
+  renderVals() {
+    const s = this.state, out = {};
+    const aktif = this.props.aktif ?? '';
+    const talepOpen = s.talep ?? aktif === 'uzerimdeki';
+    out.talepOpen = talepOpen;
+    out.talepRot = talepOpen ? 90 : 0;
+    out.talepBg = talepOpen ? '#f1f5f9' : 'transparent';
+    out.toggleTalep = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ talep: !talepOpen }); };
+    const on = aktif === 'uzerimdeki';
+    out.uzerimdekiBg = on ? '#e6f4f1' : 'transparent';
+    out.uzerimdekiFg = on ? '#08748e' : 'inherit';
+    out.uzerimdekiWeight = on ? 600 : 400;
+    for (const k of ['benim', 'hizmet', 'varlik', 'son', 'sla', 'gecici']) {
+      out[k + 'Open'] = s[k];
+      out[k + 'Rot'] = s[k] ? 90 : 0;
+      out['toggle' + k[0].toUpperCase() + k.slice(1)] = () => this.setState({ [k]: !this.state[k] });
+    }
+    const m = this.mode(), tam = m === 'tam', acik = !tam && s.acik;
+    out.w = tam ? 256 : m === 'dar' ? 56 : 0;
+    out.ray = m === 'dar'; out.ortu = acik; out.panel = tam || acik;
+    out.pPos = tam ? 'relative' : 'absolute';
+    out.pShadow = acik ? '12px 0 32px rgba(2,6,24,.18)' : 'none';
+    out.kapat = () => this.setState({ acik: false });
+    out.toggleDar = () => tam ? this.setState({ daralt: true }) : this.setState({ acik: false });
+    out.darTitle = tam ? 'Menüyü daralt' : 'Menüyü kapat';
+    out.genislet = () => this.onMenu();
+    out.rayAc = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true }); };
+    out.rayTalep = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true, talep: true }); };
+    out.rayTalepBg = on ? '#e6f4f1' : 'transparent';
+    const olayOpen = s.olay ?? aktif === 'olaylar', onOlay = aktif === 'olaylar';
+    out.olayOpen = olayOpen;
+    out.olayRot = olayOpen ? 90 : 0;
+    out.olayBg = olayOpen ? '#f1f5f9' : 'transparent';
+    out.toggleOlay = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ olay: !olayOpen }); };
+    out.olayListeBg = onOlay ? '#e6f4f1' : 'transparent';
+    out.olayListeFg = onOlay ? '#08748e' : 'inherit';
+    out.olayListeWeight = onOlay ? 600 : 400;
+    out.rayOlay = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true, olay: true }); };
+    out.rayOlayBg = onOlay ? '#e6f4f1' : 'transparent';
+    const problemOpen = s.problem ?? aktif === 'problemler', onProblem = aktif === 'problemler';
+    out.problemOpen = problemOpen;
+    out.problemRot = problemOpen ? 90 : 0;
+    out.problemBg = problemOpen ? '#f1f5f9' : 'transparent';
+    out.toggleProblem = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ problem: !problemOpen }); };
+    out.problemListeBg = onProblem ? '#e6f4f1' : 'transparent';
+    out.problemListeFg = onProblem ? '#08748e' : 'inherit';
+    out.problemListeWeight = onProblem ? 600 : 400;
+    out.rayProblem = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true, problem: true }); };
+    out.rayProblemBg = onProblem ? '#e6f4f1' : 'transparent';
+    const degisiklikOpen = s.degisiklik ?? aktif === 'degisiklikler', onDegisiklik = aktif === 'degisiklikler';
+    out.degisiklikOpen = degisiklikOpen;
+    out.degisiklikRot = degisiklikOpen ? 90 : 0;
+    out.degisiklikBg = degisiklikOpen ? '#f1f5f9' : 'transparent';
+    out.toggleDegisiklik = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ degisiklik: !degisiklikOpen }); };
+    out.degisiklikListeBg = onDegisiklik ? '#e6f4f1' : 'transparent';
+    out.degisiklikListeFg = onDegisiklik ? '#08748e' : 'inherit';
+    out.degisiklikListeWeight = onDegisiklik ? 600 : 400;
+    out.rayDegisiklik = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true, degisiklik: true }); };
+    out.rayDegisiklikBg = onDegisiklik ? '#e6f4f1' : 'transparent';
+    return out;
+  }
+}
+</script>
+</body>
+</html>

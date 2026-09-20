@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
+</helmet>
+<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap;overflow:hidden"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Ekran analizi 05 · Olay detayı konsepti</span><span style="color:#64748b;overflow:hidden;text-overflow:ellipsis">Deneyin: AI kartında Talebe dönüştür · şeritte Durum / Öncelik (etki × aciliyet matrisi) / Atanan · Çöz → çözüm kodu, KB · Transfer et · ··· → Büyük olay ilan et, Problem kaydı aç · Düzenle → Kaydet · sağda bildirene yanıt yaz</span><a href="Olay Listesi.dc.html" style="color:#fff;margin-left:auto">← Olay listesi</a><a href="../Konsept Ekranlari.dc.html" style="color:#fff">Konsept menüsü</a><a href="../Olay Detayı Analizi.dc.html" style="color:#fff">Analiz</a><a href="Problem Listesi.dc.html" style="color:#fff">Problem listesi →</a></div>
+<div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" tema="{{ ustBar }}" hint-size="100%,49px"></dc-import></div>
+<div style="display:flex;align-items:flex-start">
+<div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" aktif="olaylar" style="height:100%" hint-size="256px,100%"></dc-import></div>
+<main data-screen-label="Olay detayı prototipi" style="flex:1;min-width:0;padding:14px 24px 48px;background:#f8fafc;min-height:calc(100vh - 77px);box-sizing:border-box">
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;color:#64748b;margin-bottom:8px"><a href="#">Olay Yönetimi</a><span>›</span><a href="Olay Listesi.dc.html">Olay Listesi</a><span>›</span><span style="color:#020618;font-weight:500">{{ id }}</span></div>
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:14px">
+<div style="display:flex;align-items:center;gap:10px;min-width:0;margin-right:auto"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;font-weight:600;color:#08748e">{{ id }}</span><h1 style="font-size:20px;font-weight:700;margin:0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ title }}</h1><sc-if value="{{ isMajor }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:999px;background:#d23f43;color:#fff;white-space:nowrap">BÜYÜK OLAY</span></sc-if></div>
+<sc-if value="{{ isView }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ startEdit }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:#334155"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>Düzenle</button></sc-if>
+<sc-if value="{{ notClosed }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ openTransfer }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:#334155"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg>Transfer et</button></sc-if>
+<sc-if value="{{ notClosed }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ openResolve }}" style="height:32px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Çöz</button></sc-if>
+<sc-if value="{{ isClosed }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ reopen }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:600;cursor:pointer;color:#334155">Yeniden aç</button></sc-if>
+<button type="button" onClick="{{ openMenu }}" aria-label="Diğer eylemler" style="width:32px;height:32px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#334155;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+</div>
+
+<sc-if value="{{ isConverted }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 14px;border-radius:10px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(2,6,24,.05);margin-bottom:14px;font-size:13px;color:#334155"><span style="font-weight:600;color:#020618">Talebe dönüştürüldü</span><span>Bu olay <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#08748e">{{ convReq }}</span> talebi olarak sürüyor · {{ convItem }} · {{ convTime }}</span><a href="Uzerimdeki Talepler.dc.html" style="margin-left:auto;font-weight:500">Talep kuyruğunu aç →</a></div>
+</sc-if>
+
+<sc-if value="{{ isMajor }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 14px;border-radius:10px;background:#fbe9ea;border:1px solid #f3c1c3;margin-bottom:14px;font-size:13px;color:#7a1c20"><span style="font-weight:700">Büyük olay</span><span>{{ majorSince }} · {{ childCount }} bağlı olay · Köprü: Teams · MI-{{ id }}</span><span style="margin-left:auto;display:inline-flex;gap:6px;flex-wrap:wrap"><button type="button" onClick="{{ goRelated }}" style="height:28px;padding:0 10px;border-radius:6px;background:#fff;color:#b3282d;border:1px solid #f3c1c3;font-size:12px;font-weight:600;cursor:pointer">Bağlı olaylar</button><button type="button" onClick="{{ sendMajorUpdate }}" style="height:28px;padding:0 10px;border-radius:6px;background:#d23f43;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Durum bildirimi gönder</button></span></div>
+</sc-if>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:14px">
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Durum</div><span onClick="{{ pickStatus }}" title="Durumu değiştir" style="display:inline-flex;align-items:center;gap:8px;margin:6px 0 0 -8px;padding:0 8px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;background:{{ stBg }}" style-hover="background:#f1f5f9"><span style="width:9px;height:9px;border-radius:50%;box-sizing:border-box;background:{{ stDot }};border:2px solid {{ stColor }}"></span>{{ stLabel }}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span><sc-if value="{{ hasStSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ stSub }}</div></sc-if></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Öncelik</div><span onClick="{{ pickPrio }}" title="Etki × aciliyet matrisi" style="display:inline-flex;align-items:center;gap:8px;margin:6px 0 0 -8px;padding:0 8px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;background:{{ pBg }}" style-hover="background:#f1f5f9"><span style="color:{{ pColor }}">{{ pLabel }}</span><span style="font-weight:400;color:#64748b;font-size:13px">{{ pDesc }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span><div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ pSrc }}</div></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Çözüm SLA</div><div style="display:flex;align-items:baseline;gap:8px;margin-top:6px;height:28px"><span style="font-size:14px;font-weight:600;color:{{ slaColor }};font-variant-numeric:tabular-nums;white-space:nowrap">{{ slaText }}</span></div><sc-if value="{{ slaHasBar }}" hint-placeholder-val="{{ true }}"><div style="height:3px;border-radius:2px;background:#f1f5f9;margin-bottom:4px"><div style="width:{{ slaBar }};height:100%;border-radius:2px;background:{{ slaBarColor }}"></div></div></sc-if><div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ slaSub }}</div></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Yanıt SLA</div><div style="display:flex;align-items:baseline;gap:8px;margin-top:6px;height:28px"><span style="font-size:14px;font-weight:600;color:{{ rColor }};font-variant-numeric:tabular-nums;white-space:nowrap">{{ rText }}</span></div><div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ rSub }}</div></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Atanan</div><span onClick="{{ pickAssignee }}" title="Atananı değiştir" style="display:flex;align-items:center;gap:6px;margin:6px 0 0 -8px;padding:0 8px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;max-width:100%;min-width:0;background:{{ aBg }}" style-hover="background:#f1f5f9"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:{{ aColor }};min-width:0">{{ aLabel }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span><div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ aGroup }}</div></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Bekleyen</div><div style="margin-top:6px;height:28px;display:flex;align-items:center"><span style="font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:{{ wBg }};color:{{ wFg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%">{{ wLabel }}</span></div></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Etkilenen hizmet</div><div style="margin-top:6px;height:28px;line-height:28px;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ svc }}</div><div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Kapsam: {{ scope }}</div></div>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+<div style="flex:1.6 1 460px;min-width:0">
+<div style="display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid #e2e8f0;margin-bottom:12px">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+<button type="button" onClick="{{ t.click }}" style="display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border:0;border-bottom:2px solid {{ t.border }};margin-bottom:-1px;background:transparent;font-weight:{{ t.weight }};color:{{ t.color }};font-size:13px;cursor:pointer">{{ t.label }}<sc-if value="{{ t.hasCount }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:#f1f5f9;color:#334155">{{ t.count }}</span></sc-if></button>
+</sc-for>
+</div>
+
+<sc-if value="{{ tabOlay }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ isEdit }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:#fffbeb;border:1px solid #f1dfae;margin-bottom:12px;font-size:13px;color:#7a5a12"><span style="font-weight:600">Düzenleme modu</span><span>Boş alanlar da görünür; Kaydet ile tek seferde yazılır ve aktiviteye işlenir. Etki veya aciliyet değişirse öncelik ve SLA hedefi yeniden hesaplanır.</span></div></sc-if>
+<sc-if value="{{ aiConvert }}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border:1px solid #bfe0d8;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;margin-bottom:12px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px"><div style="font-size:13px;font-weight:600">Bu kayıt bir hizmet talebi olabilir</div><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #08748e;color:#08748e">AI</span><span style="font-size:12px;color:#64748b">güven %92</span></div>
+<div style="font-size:13px;line-height:1.55;color:#334155">Açıklama "{{ desc }}" Şifre sıfırlama katalog öğesiyle eşleşiyor. Dönüştürülürse olay SLA'sı yerine talep SLA'sı işler, bildiren tek e-posta alır, olay "Talebe dönüştürüldü" koduyla kapanır.</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><button type="button" onClick="{{ openConvert }}" style="height:30px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Talebe dönüştür…</button><button type="button" onClick="{{ dismissAi }}" style="height:30px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:12px;font-weight:500;cursor:pointer;color:#334155">Olay olarak kalsın</button></div>
+</div>
+</sc-if>
+<sc-if value="{{ aiDraft }}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border:1px solid #bfe0d8;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;margin-bottom:12px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px"><div style="font-size:13px;font-weight:600">Çözüm taslağı hazır</div><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #08748e;color:#08748e">AI</span><span style="font-size:12px;color:#64748b">kaynak: {{ draftSrc }}</span></div>
+<div style="font-size:13px;line-height:1.55;color:#334155;padding:8px 10px;border-radius:8px;background:#f8fafc">{{ draftText }}</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><button type="button" onClick="{{ useDraft }}" style="height:30px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Taslağı kullan → Çöz</button><button type="button" onClick="{{ dismissAi }}" style="height:30px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:12px;font-weight:500;cursor:pointer;color:#334155">Yoksay</button></div>
+</div>
+</sc-if>
+<div style="display:grid;gap:12px">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="5">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px 16px">
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;margin-bottom:10px"><div style="font-size:13px;font-weight:600">{{ g.title }}</div><div style="font-size:12px;color:#64748b">{{ g.note }}</div><sc-if value="{{ g.hasHidden }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ g.toggle }}" style="margin-left:auto;border:0;background:transparent;color:#08748e;font-size:12px;font-weight:500;cursor:pointer;padding:0">{{ g.toggleLabel }}</button></sc-if></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(max(220px,50% - 10px),1fr));gap:12px 20px">
+<sc-for list="{{ g.fields }}" as="f" hint-placeholder-count="4">
+<div style="grid-column:{{ f.col }};min-width:0">
+<div style="font-size:12px;color:#64748b;margin-bottom:3px">{{ f.label }}</div>
+<sc-if value="{{ f.isView }}" hint-placeholder-val="{{ true }}"><div style="font-size:13px;line-height:1.5;color:{{ f.valueColor }};overflow-wrap:anywhere">{{ f.display }}</div></sc-if>
+<sc-if value="{{ f.isText }}" hint-placeholder-val="{{ false }}"><input type="text" value="{{ f.value }}" onChange="{{ f.set }}" style="width:100%;box-sizing:border-box;height:32px;border:1px solid #cbd5e1;border-radius:6px;padding:0 10px;font-size:13px;background:#fff;color:#020618;outline:0" style-focus="border-color:#08748e;box-shadow:0 0 0 2px rgba(8,116,142,.15)"></sc-if>
+<sc-if value="{{ f.isArea }}" hint-placeholder-val="{{ false }}"><textarea value="{{ f.value }}" onChange="{{ f.set }}" rows="{{ 4 }}" style="width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;background:#fff;color:#020618;outline:0;resize:vertical" style-focus="border-color:#08748e;box-shadow:0 0 0 2px rgba(8,116,142,.15)"></textarea></sc-if>
+<sc-if value="{{ f.isSelect }}" hint-placeholder-val="{{ false }}"><select value="{{ f.value }}" onChange="{{ f.set }}" style="width:100%;box-sizing:border-box;height:32px;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-size:13px;background:#fff;color:#020618;outline:0" style-focus="border-color:#08748e;box-shadow:0 0 0 2px rgba(8,116,142,.15)"><sc-for list="{{ f.options }}" as="o" hint-placeholder-count="0"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ isEdit }}" hint-placeholder-val="{{ false }}">
+<div style="position:sticky;bottom:12px;margin-top:12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:#020618;color:#fff;font-size:13px;box-shadow:0 8px 24px rgba(2,6,24,.25)"><span style="font-weight:600">{{ changedText }}</span><span style="color:#94a3b8">Esc iptal eder</span><button type="button" onClick="{{ cancelEdit }}" style="margin-left:auto;height:30px;padding:0 12px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">İptal</button><button type="button" onClick="{{ saveEdit }}" style="height:30px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Kaydet</button></div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ tabIliskili }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;gap:12px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px">
+<div style="display:flex;align-items:baseline;gap:12px;margin-bottom:10px"><div style="font-size:13px;font-weight:600">Bağlı kayıtlar</div><a href="#" onClick="{{ noop }}" style="margin-left:auto;font-size:12px;font-weight:500">+ Kayıt bağla</a></div>
+<sc-if value="{{ hasRelated }}" hint-placeholder-val="{{ true }}">
+<sc-for list="{{ related }}" as="x" hint-placeholder-count="2">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 0;border-top:1px solid #f1f5f9;font-size:13px"><a href="{{ x.href }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600">{{ x.id }}</a><span style="font-weight:500;flex:1;min-width:160px">{{ x.s }}</span><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:{{ x.relBg }};color:{{ x.relFg }}">{{ x.rel }}</span><span style="display:inline-flex;align-items:center;gap:6px;color:#334155"><span style="width:8px;height:8px;border-radius:50%;background:{{ x.dot }}"></span>{{ x.st }}</span><span style="font-size:12px;color:#64748b">{{ x.who }}</span></div>
+</sc-for>
+</sc-if>
+<sc-if value="{{ noRelated }}" hint-placeholder-val="{{ false }}"><div style="padding:10px 0;border-top:1px solid #f1f5f9;font-size:13px;color:#64748b">Bağlı problem, üst/alt olay ya da aynı hizmette başka açık olay yok.</div></sc-if>
+</div>
+<sc-if value="{{ hasKb }}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="font-size:13px;font-weight:600">Bilgi makaleleri</div><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #08748e;color:#08748e">AI</span><span style="font-size:12px;color:#64748b">kategori ve açıklamaya göre eşleşti</span></div>
+<sc-for list="{{ kb }}" as="k" hint-placeholder-count="1">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 0;border-top:1px solid #f1f5f9;font-size:13px"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#08748e">{{ k.id }}</span><span style="font-weight:500;flex:1;min-width:160px">{{ k.title }}</span><span style="font-size:12px;color:#64748b">{{ k.meta }}</span><a href="#" onClick="{{ noop }}" style="font-size:12px;font-weight:500">Aç</a></div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ tabEkler }}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px">
+<div style="font-size:13px;font-weight:600;margin-bottom:10px">Ekler</div>
+<sc-for list="{{ files }}" as="fl" hint-placeholder-count="1">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 0;border-top:1px solid #f1f5f9;font-size:13px"><span style="width:32px;height:32px;border-radius:8px;background:#e6f4f1;color:#0f5c4d;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">{{ fl.ext }}</span><span style="font-weight:500;flex:1;min-width:160px">{{ fl.name }}</span><span style="font-size:12px;color:#64748b">{{ fl.meta }}</span><a href="#" onClick="{{ noop }}" style="font-size:12px;font-weight:500">İndir</a></div>
+</sc-for>
+<sc-if value="{{ noFiles }}" hint-placeholder-val="{{ false }}"><div style="padding:10px 0;border-top:1px solid #f1f5f9;font-size:13px;color:#64748b">Kayda eklenmiş dosya yok.</div></sc-if>
+<div onClick="{{ noop }}" style="margin-top:12px;border:1px dashed #cbd5e1;border-radius:10px;padding:18px;text-align:center;font-size:13px;color:#64748b;cursor:pointer">Ekran görüntüsü ya da günlük dosyası sürükleyin ya da <span style="color:#08748e;font-weight:500">seçin</span> · en fazla 5 dosya, 20 MB</div>
+</div>
+</sc-if>
+</div>
+
+<aside style="flex:1 1 320px;min-width:0;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;position:sticky;top:61px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:10px"><div style="font-size:13px;font-weight:600;margin-right:auto">Aktivite</div>
+<sc-for list="{{ filters }}" as="fi" hint-placeholder-count="3"><button type="button" onClick="{{ fi.click }}" style="height:24px;padding:0 9px;border-radius:999px;border:1px solid {{ fi.border }};background:{{ fi.bg }};color:{{ fi.color }};font-size:11px;font-weight:600;cursor:pointer">{{ fi.label }}</button></sc-for>
+</div>
+<div style="border:1px solid #e2e8f0;border-radius:10px;padding:8px 10px 10px;margin-bottom:6px;background:{{ composeBg }}">
+<textarea value="{{ composeText }}" onChange="{{ setComposeText }}" placeholder="{{ composePh }}" rows="{{ 3 }}" style="width:100%;box-sizing:border-box;border:0;outline:0;resize:vertical;font-size:13px;line-height:1.5;background:transparent;color:#020618;padding:0"></textarea>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px">
+<span style="display:inline-flex;border:1px solid #e2e8f0;border-radius:6px;overflow:hidden"><button type="button" onClick="{{ visCustomer }}" style="height:26px;padding:0 10px;border:0;font-size:12px;font-weight:600;cursor:pointer;background:{{ visCBg }};color:{{ visCFg }}">Bildirene yanıt</button><button type="button" onClick="{{ visInternal }}" style="height:26px;padding:0 10px;border:0;border-left:1px solid #e2e8f0;font-size:12px;font-weight:600;cursor:pointer;background:{{ visIBg }};color:{{ visIFg }}">İç not</button></span>
+<button type="button" onClick="{{ send }}" style="margin-left:auto;height:26px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer;opacity:{{ sendOpacity }}">Gönder</button>
+</div>
+</div>
+<sc-for list="{{ entries }}" as="e" hint-placeholder-count="5">
+<div style="display:grid;grid-template-columns:28px 1fr;gap:10px;padding:10px 0;border-top:1px solid #f1f5f9">
+<span style="width:28px;height:28px;border-radius:50%;background:{{ e.avBg }};color:{{ e.avFg }};font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">{{ e.av }}</span>
+<div style="min-width:0">
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 6px;font-size:13px"><span style="font-weight:600">{{ e.who }}</span><span style="color:#64748b">{{ e.action }}</span><sc-if value="{{ e.hasTag }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:600;padding:1px 6px;border-radius:4px;background:{{ e.tagBg }};color:{{ e.tagFg }}">{{ e.tag }}</span></sc-if><span style="margin-left:auto;font-size:11px;color:#94a3b8;white-space:nowrap">{{ e.time }}</span></div>
+<sc-if value="{{ e.hasText }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;line-height:1.5;margin-top:5px;padding:8px 10px;border-radius:8px;background:{{ e.textBg }};color:#020618">{{ e.text }}</div></sc-if>
+<sc-if value="{{ e.hasChanges }}" hint-placeholder-val="{{ false }}"><div style="display:grid;gap:4px;margin-top:5px;font-size:12px"><sc-for list="{{ e.changes }}" as="c" hint-placeholder-count="1"><div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px"><span style="padding:1px 6px;border-radius:4px;border:1px solid #e2e8f0;font-weight:500">{{ c.f }}</span><span style="color:#94a3b8">{{ c.from }}</span><span style="color:#94a3b8">→</span><span style="font-weight:600">{{ c.to }}</span></div></sc-for></div></sc-if>
+</div>
+</div>
+</sc-for>
+</aside>
+</div>
+</main>
+</div>
+
+<sc-if value="{{ hasPop }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closePop }}" style="position:fixed;inset:0;z-index:30"></div></sc-if>
+
+<sc-if value="{{ popIsOptions }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ popTop }}px;left:{{ popLeft }}px;z-index:60;width:{{ popW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px">{{ popTitle }}</div>
+<sc-for list="{{ popOptions }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;background:{{ o.bg }}" style-hover="background:#f1f5f9"><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:9px;height:9px;border-radius:50%;box-sizing:border-box;background:{{ o.dot }};border:2px solid {{ o.dotBorder }};flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }}">{{ o.label }}</span><span style="color:#64748b;font-size:12px">{{ o.desc }}</span><span style="margin-left:auto;color:#08748e;font-size:12px;font-weight:600">{{ o.check }}</span></div>
+</sc-for>
+<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px 8px 4px;font-size:11px;color:#94a3b8;line-height:1.4">{{ popFoot }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ popIsPrio }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ popTop }}px;left:{{ popLeft }}px;z-index:60;width:{{ popW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:10px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
+<div style="display:flex;align-items:baseline;gap:8px;padding:0 2px 8px;border-bottom:1px solid #f1f5f9;margin-bottom:8px"><span style="font-weight:600">Öncelik</span><span style="font-size:11px;color:#64748b">= Etki × Aciliyet</span></div>
+<div style="display:grid;grid-template-columns:64px repeat(3,minmax(0,1fr));gap:4px;font-size:12px">
+<div></div>
+<sc-for list="{{ urgHead }}" as="u" hint-placeholder-count="3"><div style="text-align:center;color:#64748b;font-weight:600;padding:2px 0 4px">{{ u.label }}</div></sc-for>
+<sc-for list="{{ matrixRows }}" as="row" hint-placeholder-count="4">
+<div style="color:#64748b;font-weight:600;display:flex;align-items:center">{{ row.label }}</div>
+<sc-for list="{{ row.cells }}" as="c" hint-placeholder-count="3"><div onClick="{{ c.pick }}" title="{{ c.title }}" style="height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;cursor:pointer;box-sizing:border-box;background:{{ c.bg }};color:{{ c.color }};border:2px solid {{ c.border }}" style-hover="filter:brightness(.95)">{{ c.label }}</div></sc-for>
+</sc-for>
+</div>
+<div style="margin-top:8px;padding-top:8px;border-top:1px solid #f1f5f9;font-size:11px;color:#94a3b8;line-height:1.4">Seçim anında kaydedilir; çözüm ve yanıt hedefleri yeni önceliğe göre yeniden hesaplanır ve aktiviteye gerekçesiyle işlenir.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ popIsTransfer }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ popTop }}px;left:{{ popLeft }}px;z-index:60;width:{{ popW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:12px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618;display:grid;gap:10px">
+<div style="font-weight:600">Transfer et</div>
+<div><div style="font-size:12px;color:#64748b;margin-bottom:3px">Grup</div><select value="{{ trGroup }}" onChange="{{ setTrGroup }}" style="width:100%;box-sizing:border-box;height:32px;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-size:13px;background:#fff;color:#020618;outline:0"><sc-for list="{{ groupOpts }}" as="o" hint-placeholder-count="0"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select></div>
+<div><div style="font-size:12px;color:#64748b;margin-bottom:3px">Kişi</div><select value="{{ trPerson }}" onChange="{{ setTrPerson }}" style="width:100%;box-sizing:border-box;height:32px;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-size:13px;background:#fff;color:#020618;outline:0"><sc-for list="{{ personOpts }}" as="o" hint-placeholder-count="0"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select></div>
+<div><div style="font-size:12px;color:#64748b;margin-bottom:3px">Not (devralan görür)</div><textarea value="{{ trNote }}" onChange="{{ setTrNote }}" rows="{{ 2 }}" placeholder="Neden transfer ediliyor, ne denendi?" style="width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:6px;padding:6px 8px;font-size:13px;line-height:1.5;background:#fff;color:#020618;outline:0;resize:vertical"></textarea></div>
+<div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" onClick="{{ closePop }}" style="height:30px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:12px;font-weight:500;cursor:pointer;color:#334155">Vazgeç</button><button type="button" onClick="{{ doTransfer }}" style="height:30px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Transfer et</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ popIsConvert }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ popTop }}px;left:{{ popLeft }}px;z-index:60;width:{{ popW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:12px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618;display:grid;gap:10px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-weight:600">Talebe dönüştür</span><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #08748e;color:#08748e">AI</span><span style="font-size:11px;color:#64748b">öneri: Şifre sıfırlama</span></div>
+<div><div style="font-size:12px;color:#64748b;margin-bottom:3px">Talep tipi · katalog öğesi</div><select value="{{ cvItem }}" onChange="{{ setCvItem }}" style="width:100%;box-sizing:border-box;height:32px;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-size:13px;background:#fff;color:#020618;outline:0"><sc-for list="{{ cvItems }}" as="o" hint-placeholder-count="0"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select></div>
+<label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;line-height:1.5"><input type="checkbox" checked="{{ cvNotify }}" onChange="{{ toggleCvNotify }}" style="margin-top:3px"><span>Bildirene tek e-posta: "kaydınız talep olarak sürüyor" (ikinci "kaydınız alındı" gitmez)</span></label>
+<div style="font-size:12px;color:#64748b;line-height:1.5;padding:10px 12px;border-radius:8px;background:#f8fafc">Yeni talep açıklama, ekler ve aktiviteyi devralır; olay "Talebe dönüştürüldü" koduyla kapanır, olay SLA'sı sonuçsuz sayılır (rapora ihlal yazılmaz).</div>
+<div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" onClick="{{ closePop }}" style="height:30px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:12px;font-weight:500;cursor:pointer;color:#334155">Vazgeç</button><button type="button" onClick="{{ doConvert }}" style="height:30px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Dönüştür</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ popIsMenu }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ popTop }}px;left:{{ popLeft }}px;z-index:60;width:{{ popW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
+<sc-for list="{{ menuItems }}" as="m" hint-placeholder-count="5"><div onClick="{{ m.click }}" style="display:flex;align-items:center;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;color:{{ m.color }}" style-hover="background:#f8fafc">{{ m.label }}</div></sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeDrawer }}" style="position:fixed;inset:0;background:rgba(2,6,24,.35);z-index:70"></div>
+<div style="position:fixed;top:0;right:0;bottom:0;width:460px;max-width:100vw;box-sizing:border-box;background:#fff;z-index:80;box-shadow:-12px 0 32px rgba(2,6,24,.18);display:flex;flex-direction:column;font-family:Inter,system-ui,sans-serif;color:#020618">
+<div style="display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid #e2e8f0"><div><div style="font-size:16px;font-weight:700">Çöz</div><div style="font-size:12px;color:#64748b;margin-top:2px">{{ id }} · {{ title }}</div></div><button type="button" onClick="{{ closeDrawer }}" aria-label="Kapat" style="margin-left:auto;width:32px;height:32px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:16px;color:#64748b">×</button></div>
+<div style="flex:1;overflow:auto;padding:20px;display:grid;gap:16px;align-content:start">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+<div><div style="font-size:12px;color:#64748b;margin-bottom:4px">Çözüm kodu <span style="color:#d23f43">*</span></div><select value="{{ rsCode }}" onChange="{{ setRsCode }}" style="width:100%;box-sizing:border-box;height:34px;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-size:13px;background:#fff;color:#020618;outline:0"><sc-for list="{{ rsCodes }}" as="o" hint-placeholder-count="0"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select></div>
+<div><div style="font-size:12px;color:#64748b;margin-bottom:4px">Kök neden</div><select value="{{ rsCause }}" onChange="{{ setRsCause }}" style="width:100%;box-sizing:border-box;height:34px;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-size:13px;background:#fff;color:#020618;outline:0"><sc-for list="{{ rsCauses }}" as="o" hint-placeholder-count="0"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select></div>
+</div>
+<div><div style="font-size:12px;color:#64748b;margin-bottom:4px">Çözüm açıklaması <span style="color:#d23f43">*</span> <span style="color:#94a3b8">· bildirene gönderilir</span></div><textarea value="{{ rsText }}" onChange="{{ setRsText }}" rows="{{ 5 }}" placeholder="Ne yapıldı, kullanıcı ne yapmalı?" style="width:100%;box-sizing:border-box;border:1px solid {{ rsBorder }};border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;background:#fff;color:#020618;outline:0;resize:vertical"></textarea><sc-if value="{{ rsErr }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#d23f43;margin-top:4px">Çözüm açıklaması zorunlu.</div></sc-if></div>
+<sc-if value="{{ hasKb }}" hint-placeholder-val="{{ false }}">
+<div style="border:1px solid #e2e8f0;border-radius:10px;padding:12px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="font-size:13px;font-weight:600">Bilgi Bankası eşleşmesi</div><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #08748e;color:#08748e">AI</span></div>
+<label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;line-height:1.5"><input type="checkbox" checked="{{ rsKb }}" onChange="{{ toggleRsKb }}" style="margin-top:3px"><span><span style="font-weight:600">{{ kbFirstId }} · {{ kbFirstTitle }}</span><br><span style="color:#64748b">{{ kbFirstMeta }}. İşaretlenirse bağlantı yanıta eklenir ve makale kullanım sayısı artar.</span></span></label>
+</div>
+</sc-if>
+<sc-if value="{{ hasPrb }}" hint-placeholder-val="{{ false }}"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px"><input type="checkbox" checked="{{ rsPrbNote }}" onChange="{{ toggleRsPrbNote }}">Çözüm notunu bağlı probleme ({{ prb }}) ekle</label></sc-if>
+<label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px"><input type="checkbox" checked="{{ rsNotify }}" onChange="{{ toggleRsNotify }}">Bildirene e-posta ile bildir ve 3 iş günü sonra otomatik kapat</label>
+<div style="font-size:12px;color:#64748b;line-height:1.5;padding:10px 12px;border-radius:8px;background:#f8fafc">Çözünce çözüm SLA sayacı durur ve sonucu (tutuldu / ihlal) kayda yazılır; bildiren 3 iş günü içinde itiraz etmezse kayıt Kapalı'ya geçer. Geçici çözüm seçildiyse kalıcı çözüm bağlı problemde izlenir.</div>
+</div>
+<div style="display:flex;gap:10px;justify-content:flex-end;padding:14px 20px;border-top:1px solid #e2e8f0"><button type="button" onClick="{{ closeDrawer }}" style="height:34px;padding:0 14px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer;color:#334155">Vazgeç</button><button type="button" onClick="{{ doResolve }}" style="height:34px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Çözümü kaydet</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);font-family:Inter,system-ui,sans-serif;max-width:480px">{{ toastText }}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ustBar&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;acik&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;acik&quot;,&quot;koyu&quot;],&quot;section&quot;:&quot;Kabuk&quot;}}">
+class Component extends DCLogic {
+  static ME = 'admin admin';
+  static ST = { acik: ['Açık', '#4c7bd9', true], atandi: ['Atandı', '#4c7bd9', false], calisiliyor: ['Çalışılıyor', '#e39b2c', true], beklemede: ['Beklemede', '#94a3b8', true], cozuldu: ['Çözüldü', '#2fa886', true], kapali: ['Kapalı', '#64748b', true] };
+  static WAIT = { musteri: 'Bildiren yanıtı', tedarikci: 'Tedarikçi', kargo: 'Kargo / kurye' };
+  static PC = { 1: '#d23f43', 2: '#b16a08', 3: '#334155', 4: '#64748b' };
+  static PD = { 1: 'Kritik', 2: 'Yüksek', 3: 'Orta', 4: 'Düşük' };
+  static TOT = { 1: 240, 2: 480, 3: 960, 4: 2880 };
+  static RTOT = { 1: 15, 2: 30, 3: 120, 4: 240 };
+  static IMP = [['kurum', 'Kurum'], ['bolum', 'Bölüm'], ['ekip', 'Ekip'], ['kisi', 'Kişi']];
+  static URG = [['dusuk', 'Düşük'], ['orta', 'Orta'], ['yuksek', 'Yüksek']];
+  static MATRIX = { kurum: [2, 1, 1], bolum: [3, 2, 1], ekip: [4, 3, 2], kisi: [4, 4, 3] };
+  static TYPE = [['kesinti', 'Kesinti'], ['yavaslik', 'Yavaşlık'], ['kalite', 'Kalite']];
+  static SRC = [['portal', 'Web Portal'], ['email', 'E-posta'], ['phone', 'Telefon'], ['monitor', 'İzleme sistemi'], ['walkin', 'Yüz yüze']];
+  static RCODE = [['kalici', 'Kalıcı çözüm'], ['gecici', 'Geçici çözüm (workaround)'], ['kullanici', 'Kullanıcı bilgilendirildi'], ['yinelenen', 'Yinelenen kayıt'], ['kendiliginden', 'Kendiliğinden düzeldi']];
+  static RCAUSE = [['bilinmiyor', 'Bilinmiyor / araştırılıyor'], ['yazilim', 'Yazılım hatası'], ['donanim', 'Donanım'], ['yapilandirma', 'Yapılandırma'], ['kapasite', 'Kapasite'], ['kullanici', 'Kullanıcı kaynaklı'], ['degisiklik', 'Değişiklik kaynaklı']];
+  static GROUP_OF = { 'admin admin': 'Level 1 Analist', 'Barış Can Ataklı': 'Level 1 Analist', 'Deniz Acar': 'Level 1 Analist', 'Gökhan Tuna': 'Level 2 Analist', 'Zeynep Ural': 'Level 2 Analist' };
+  static GROUP_OPTS = ['Level 1 Analist', 'Level 2 Analist', 'Ağ Ekibi', 'Uygulama Ekibi'];
+  static PEOPLE = ['admin admin', 'Barış Can Ataklı', 'Deniz Acar', 'Gökhan Tuna', 'Zeynep Ural'];
+  static CV_ITEMS = [['sifre', 'Erişim Hizmetleri › Şifre sıfırlama'], ['kilit', 'Erişim Hizmetleri › Hesap kilidi açma'], ['yetki', 'Hesap Operasyonları › Yetki değişikliği']];
+  static PRB = { 'PRB-031': 'SAP uygulama sunucusu bellek sızıntısı', 'PRB-028': 'VPN yoğunlaştırıcı oturum düşmeleri' };
+  static DATA = [
+    { id: 'INC549', s: 'Sisteme giriş yapamıyorum', rep: 'Funda Aksoy', type: 'kalite', svc: 'Kimlik ve erişim (Active Directory)', scope: 'Kişi', cat: 'Erişim Hizmetleri › Hesap Operasyonları › Yetki Operasyonları', p: 4, st: 'atandi', w: null, sla: 1437, tot: 1440, resp: 237, u: 3, a: 'admin admin', major: false, prb: null, parent: null, imp: 'kisi', urg: 'dusuk', desc: 'Şifremi değiştirir misiniz?', dept: 'Dahili', loc: 'Diyarbakır', src: 'portal', cr: 3, ai: 'convert', kb: [['KB-102', 'Parola sıfırlama ve hesap kilidi açma adımları', 'son 30 günde 14 kullanım']] },
+    { id: 'INC546', s: 'E-posta hizmeti erişilemiyor', rep: 'İzleme (Zabbix)', email: 'zabbix@btbilgi.com.tr', aff: 'Tüm kullanıcılar', type: 'kesinti', svc: 'E-posta (Exchange)', scope: 'Kurum geneli · ~1.200 kullanıcı', cat: 'Sistem Hizmetleri › E-posta › Erişilemiyor', p: 1, st: 'calisiliyor', w: null, sla: 19, tot: 240, resp: -12, u: 8, a: 'Gökhan Tuna', major: true, majorM: 215, prb: null, parent: null, imp: 'kurum', urg: 'yuksek', desc: 'Zabbix: EXCH-01 ve EXCH-02 üzerinde OWA ve MAPI servisleri yanıt vermiyor. Kullanıcılar Outlook\'ta "bağlantı kesildi" alıyor; mobil istemciler senkronlanmıyor.', dept: 'BT Operasyon', loc: 'Veri merkezi · Ankara', src: 'monitor', cr: 221, ci: 'EXCH-01, EXCH-02 (Exchange 2019 DAG)', files: [{ name: 'zabbix-alarm-exch01.png', size: '312 KB', who: 'İzleme (Zabbix)' }], kb: [['KB-418', 'Exchange DAG failover ve servis yeniden başlatma', 'son 30 günde 3 kullanım']], notes: [{ m: 200, who: 'Gökhan Tuna', kind: 'note', text: 'DAG failover denendi, EXCH-02 de yanıt vermiyor; depolama ekibiyle köprüdeyiz. SAN üzerinde gecikme alarmı var.' }, { m: 150, who: 'Sistem', kind: 'email', action: 'durum bildirimi gönderdi', text: 'Alıcı: tüm kullanıcılar (1.200) · "E-posta hizmetinde kesinti — çalışma sürüyor, sonraki bildirim 30 dk içinde"' }] },
+    { id: 'INC538', s: 'Kart okuyucu turnikeler yanıt vermiyor', rep: 'Güvenlik', email: 'guvenlik@btbilgi.com.tr', aff: 'Ana giriş kullanıcıları', type: 'kesinti', svc: 'Fiziksel erişim', scope: 'Bina · Ana giriş', cat: 'Erişim Hizmetleri › Fiziksel Erişim › Turnike', p: 2, st: 'acik', w: null, sla: 44, tot: 480, resp: -5, u: 5, a: null, major: false, prb: null, parent: null, imp: 'bolum', urg: 'orta', desc: 'Ana girişteki dört turnikenin kart okuyucuları kırmızı yanıyor; güvenlik personeli girişi elle açıyor.', dept: 'Güvenlik', loc: 'Genel Müdürlük · Ana giriş', src: 'phone', cr: 436, ci: 'TRN-GM-01..04 (HID turnike kontrolcüsü)' },
+    { id: 'INC548', s: 'SAP oturum açma 30 saniyenin üzerinde', rep: 'Ayşe Kaya', type: 'yavaslik', svc: 'SAP ERP', scope: 'Bölüm · Finans, 60 kullanıcı', cat: 'Sistem Hizmetleri › SAP › Performans', p: 2, st: 'calisiliyor', w: null, sla: 65, tot: 480, resp: 'ok', u: 25, a: 'admin admin', major: false, prb: 'PRB-031', parent: null, imp: 'bolum', urg: 'orta', desc: 'Finans ekibinde SAP GUI oturum açma 30–45 saniye sürüyor; bazı kullanıcılar zaman aşımı alıyor. Sabahtan beri, ay kapanışı çalışması var.', dept: 'Finans', loc: 'Genel Müdürlük · 4. kat', src: 'portal', cr: 415, ai: 'draft', kb: [['KB-330', 'SAP oturum açma gecikmesi: bilinen hata ve geçici çözüm', 'son 30 günde 6 kullanım']], draft: { src: 'INC533 · 2 gün önce · PRB-031', code: 'gecici', cause: 'kapasite', text: 'SAP uygulama sunucusu (AS-02) bellek kullanımı %95\'e ulaşmıştı; iş süreci yeniden başlatıldı, oturum açma süresi 4 saniyeye düştü. Kalıcı çözüm PRB-031 kapsamında (bellek sızıntısı yaması).' } },
+    { id: 'INC536', s: 'E-posta gönderimi gecikiyor', rep: 'Pelin Er', type: 'kesinti', svc: 'E-posta (Exchange)', scope: 'Bölüm · Pazarlama', cat: 'Sistem Hizmetleri › E-posta › Gecikme', p: 3, st: 'calisiliyor', w: null, sla: 100, tot: 960, resp: 'ok', u: 30, a: 'Gökhan Tuna', major: false, prb: null, parent: 'INC546', imp: 'bolum', urg: 'dusuk', desc: 'Gönderdiğim e-postalar 20–30 dakika sonra ulaşıyor; kampanya onayları gecikiyor.', dept: 'Pazarlama', loc: 'Genel Müdürlük · 2. kat', src: 'email', cr: 860 },
+    { id: 'INC539', s: 'Ortak klasöre erişim yetki hatası', rep: 'Can Yıldız', type: 'kesinti', svc: 'Dosya paylaşımı', scope: 'Ekip · 6 kullanıcı', cat: 'Erişim Hizmetleri › Hesap Operasyonları › Yetki Operasyonları', p: 3, st: 'acik', w: null, sla: 150, tot: 960, resp: 20, u: 12, a: null, major: false, prb: null, parent: null, imp: 'ekip', urg: 'orta', desc: 'Satış › Teklifler ortak klasörüne ekipçe "erişim reddedildi" alıyoruz; dün akşama kadar çalışıyordu.', dept: 'Satış', loc: 'Genel Müdürlük · 3. kat', src: 'portal', cr: 810 },
+    { id: 'INC541', s: 'Teams görüşmelerinde ses kesintisi', rep: 'Selin Koç', type: 'kalite', svc: 'Teams', scope: 'Bölüm · Satış', cat: 'İletişim › Teams › Ses kalitesi', p: 4, st: 'acik', w: null, sla: 254, tot: 2880, resp: 'ok', u: 300, a: 'Barış Can Ataklı', major: false, prb: null, parent: null, imp: 'ekip', urg: 'dusuk', desc: 'Müşteri görüşmelerinde ses 2–3 saniye kesiliyor, özellikle öğleden sonra. Kablolu bağlantıda da oluyor.', dept: 'Satış', loc: 'Genel Müdürlük · 3. kat', src: 'portal', cr: 2626 },
+    { id: 'INC545', s: 'Wi-Fi kopmaları — 3. kat toplantı odaları', rep: 'Elif Aydın', type: 'yavaslik', svc: 'Kablosuz ağ', scope: 'Kat · 3. kat, 4 oda', cat: 'Ağ Hizmetleri › Kablosuz › Kopma', p: 3, st: 'atandi', w: null, sla: 280, tot: 960, resp: 'ok', u: 90, a: 'Deniz Acar', major: false, prb: null, parent: null, imp: 'ekip', urg: 'orta', desc: 'Toplantı odalarında (301–304) kablosuz bağlantı her 10–15 dakikada kopuyor; sunumlar kesiliyor.', dept: 'İnsan Kaynakları', loc: 'Genel Müdürlük · 3. kat', src: 'portal', cr: 680, ci: 'AP-3K-07, AP-3K-08 (Aruba 515)' },
+    { id: 'INC540', s: 'Bilgisayar açılışı 10 dakika sürüyor', rep: 'Hakan Öz', type: 'yavaslik', svc: 'İstemci bilgisayar', scope: 'Tek kullanıcı · Muhasebe', cat: 'Sistem Hizmetleri › Diğer Sistem Hizmetleri › Bilgisayar Arızası', p: 3, st: 'acik', w: null, sla: 474, tot: 960, resp: 'ok', u: 400, a: 'Gökhan Tuna', major: false, prb: null, parent: null, imp: 'kisi', urg: 'yuksek', desc: 'Dizüstü bilgisayarım açılışta 10 dakika oturum ekranında kalıyor; disk sürekli %100.', dept: 'Muhasebe', loc: 'Genel Müdürlük · 4. kat', src: 'walkin', cr: 486, ci: 'LT-MUH-0142 (Dell Latitude 5540)' },
+    { id: 'INC537', s: 'VPN bağlantısı sık kopuyor', rep: 'Tolga Işık', type: 'yavaslik', svc: 'VPN', scope: 'Uzak çalışanlar · ~15 kullanıcı', cat: 'Erişim Hizmetleri › VPN › Kopma', p: 3, st: 'atandi', w: null, sla: 700, tot: 960, resp: 'ok', u: 700, a: 'Zeynep Ural', major: false, prb: 'PRB-028', parent: null, imp: 'ekip', urg: 'orta', desc: 'Evden çalışan ekip üyelerinde VPN her 30–40 dakikada düşüp yeniden bağlanıyor; RDP oturumları kopuyor.', dept: 'Yazılım Geliştirme', loc: 'Uzaktan', src: 'email', cr: 260 },
+    { id: 'INC542', s: 'CRM rapor ekranı zaman aşımı veriyor', rep: 'Ece Tan', type: 'yavaslik', svc: 'CRM', scope: 'Tek kullanıcı', cat: 'Sistem Hizmetleri › CRM › Raporlama', p: 4, st: 'acik', w: null, sla: 1860, tot: 2880, resp: 35, u: 40, a: null, major: false, prb: null, parent: null, imp: 'kisi', urg: 'orta', desc: 'Aylık satış raporu ekranı 2 dakika sonra "zaman aşımı" veriyor; diğer ekranlar çalışıyor.', dept: 'Satış', loc: 'İzmir Bölge', src: 'portal', cr: 1020 },
+    { id: 'INC535', s: 'Outlook açılmıyor — sertifika hatası', rep: 'Berk Uçar', type: 'kesinti', svc: 'E-posta (Exchange)', scope: 'Tek kullanıcı', cat: 'Sistem Hizmetleri › E-posta › İstemci', p: 4, st: 'acik', w: null, sla: 2500, tot: 2880, resp: 'ok', u: 50, a: null, major: false, prb: null, parent: 'INC546', imp: 'kisi', urg: 'dusuk', desc: 'Outlook açılırken "güvenlik sertifikası doğrulanamadı" uyarısı veriyor, ardından kapanıyor.', dept: 'Hukuk', loc: 'Genel Müdürlük · 5. kat', src: 'phone', cr: 380 },
+    { id: 'INC543', s: 'Şube internet erişimi yok', rep: 'Şube müdürü — Kızılay', email: 'kizilay.sube@btbilgi.com.tr', aff: 'Şube çalışanları (40)', type: 'kesinti', svc: 'Şube ağı (WAN)', scope: 'Şube · Ankara Kızılay, 40 kullanıcı', cat: 'Ağ Hizmetleri › WAN › Kesinti', p: 2, st: 'beklemede', w: 'kargo', sla: null, pausedSla: 210, tot: 480, resp: 'ok', u: 180, a: 'admin admin', major: false, prb: null, parent: null, imp: 'bolum', urg: 'orta', desc: 'Şubede internet ve merkez uygulamaları erişilemiyor; yönlendirici üzerinde tüm ışıklar sönük.', dept: 'Şube Operasyon', loc: 'Ankara · Kızılay Şubesi', src: 'phone', cr: 450, ci: 'RTR-KZL-01 (Cisco ISR 1100)', notes: [{ m: 180, who: 'admin admin', kind: 'note', text: 'Yönlendirici güç arızası; yedek cihaz (RTR-KZL-02) kargoya verildi, takip no 7788 4512. Teslimat yarın 10:00.' }] },
+    { id: 'INC547', s: 'Dosya sunucusu yavaş — Finans katı', rep: 'Mehmet Arslan', type: 'yavaslik', svc: 'Dosya paylaşımı', scope: 'Kat · Finans, 25 kullanıcı', cat: 'Sistem Hizmetleri › Dosya › Performans', p: 3, st: 'beklemede', w: 'musteri', sla: null, pausedSla: 380, tot: 960, resp: 'ok', u: 600, a: 'Barış Can Ataklı', major: false, prb: null, parent: null, imp: 'ekip', urg: 'orta', desc: 'Büyük Excel dosyaları ağ sürücüsünden 1–2 dakikada açılıyor; yerelde anında.', dept: 'Finans', loc: 'Genel Müdürlük · 4. kat', src: 'portal', cr: 1400, notes: [{ m: 600, who: 'Barış Can Ataklı', kind: 'comment', text: 'Merhaba Mehmet Bey, hangi dosya yolunda ve saat aralığında yaşandığını iletebilir misiniz? Sunucu tarafında yük normal görünüyor.' }] },
+    { id: 'INC544', s: 'Yazıcı kuyruğu takılıyor', rep: 'İK Servisi', email: 'ik.servis@btbilgi.com.tr', aff: 'İK çalışanları', type: 'yavaslik', svc: 'Baskı hizmeti', scope: 'Bölüm · İK', cat: 'Sistem Hizmetleri › Baskı › Kuyruk', p: 4, st: 'beklemede', w: 'tedarikci', sla: null, pausedSla: 900, tot: 2880, resp: 'ok', u: 1500, a: 'Deniz Acar', major: false, prb: null, parent: null, imp: 'ekip', urg: 'dusuk', desc: 'İK katındaki çok fonksiyonlu yazıcıda kuyruk günde birkaç kez takılıyor; yeniden başlatınca düzeliyor.', dept: 'İnsan Kaynakları', loc: 'Genel Müdürlük · 2. kat', src: 'email', cr: 3000, ci: 'PRN-IK-02 (Xerox AltaLink C8145)', notes: [{ m: 1500, who: 'Deniz Acar', kind: 'note', text: 'Xerox servisine bildirildi (çağrı no XR-20931); firmware güncellemesi için teknisyen bekleniyor.' }] },
+    { id: 'INC533', s: 'SAP raporları geç açılıyor', rep: 'Finans', email: 'finans@btbilgi.com.tr', aff: 'Finans ekibi', type: 'yavaslik', svc: 'SAP ERP', scope: 'Bölüm · Finans', cat: 'Sistem Hizmetleri › SAP › Performans', p: 3, st: 'cozuldu', w: null, sla: 130, tot: 960, resp: 'ok', u: 2000, a: 'admin admin', major: false, prb: 'PRB-031', parent: null, imp: 'bolum', urg: 'dusuk', desc: 'Finansal raporlar (FBL3N, S_ALR) 1–2 dakikada açılıyor; ay kapanışı gecikiyor.', dept: 'Finans', loc: 'Genel Müdürlük · 4. kat', src: 'portal', cr: 2830, rcode: 'gecici', rcause: 'kapasite', rtext: 'SAP uygulama sunucusu (AS-02) bellek kullanımı %95\'e ulaşmıştı; iş süreci yeniden başlatıldı, rapor süreleri normale döndü. Kalıcı çözüm PRB-031 kapsamında.', rkb: 'KB-330', doneM: 2000 },
+    { id: 'INC530', s: 'Bordro uygulaması açılmıyor', rep: 'İK Servisi', email: 'ik.servis@btbilgi.com.tr', aff: 'İK · 8 kullanıcı', type: 'kesinti', svc: 'Bordro', scope: 'Bölüm · İK, 8 kullanıcı', cat: 'Sistem Hizmetleri › Bordro › Erişilemiyor', p: 2, st: 'kapali', w: null, sla: -633, tot: 480, resp: 'ok', u: 4400, a: 'Barış Can Ataklı', major: false, prb: null, parent: null, imp: 'bolum', urg: 'orta', desc: 'Bordro uygulaması giriş ekranında "veritabanına bağlanılamıyor" hatası veriyor; bordro dönemi.', dept: 'İnsan Kaynakları', loc: 'Genel Müdürlük · 2. kat', src: 'phone', cr: 9200, rcode: 'kalici', rcause: 'degisiklik', rtext: 'Veritabanı sunucusunda hafta sonu yapılan yama sonrası dinleyici servisi başlamamıştı; servis başlatıldı, bağlantı dizesi yeniden doğrulandı.', rkb: '', doneM: 8100, closedM: 4400 }
+  ];
+  static GROUPS = [
+    { key: 'olay', title: 'Olay', note: '', fields: [{ k: 's', label: 'Özet', type: 'text', span: 2 }, { k: 'desc', label: 'Açıklama', type: 'area', span: 2 }] },
+    { key: 'bildiren', title: 'Bildiren', note: '', fields: [{ k: 'rep', label: 'Sorunu ileten', type: 'text' }, { k: 'email', label: 'E-posta', type: 'text' }, { k: 'aff', label: 'Etkilenen kullanıcı', type: 'text' }, { k: 'dept', label: 'Departman', type: 'text' }, { k: 'loc', label: 'Lokasyon', type: 'text' }, { k: 'src', label: 'Kaynak', type: 'select', opt: 'src' }] },
+    { key: 'sinif', title: 'Sınıflandırma', note: 'Öncelik etki × aciliyetten hesaplanır', fields: [{ k: 'cat', label: 'Kategori', type: 'text', span: 2 }, { k: 'type', label: 'Olay türü', type: 'select', opt: 'type' }, { k: 'imp', label: 'Etki', type: 'select', opt: 'imp' }, { k: 'urg', label: 'Aciliyet', type: 'select', opt: 'urg' }, { k: 'prio', label: 'Öncelik', type: 'text', ro: true }] },
+    { key: 'hizmet', title: 'Hizmet ve varlık', note: '', fields: [{ k: 'svc', label: 'Etkilenen hizmet', type: 'text' }, { k: 'scope', label: 'Kapsam', type: 'text' }, { k: 'ci', label: 'Varlık / CI', type: 'text' }, { k: 'prbLabel', label: 'Bağlı problem', type: 'text', ro: true }] },
+    { key: 'atama', title: 'Atama ve zaman', note: '', fields: [{ k: 'g', label: 'Grup', type: 'select', opt: 'group' }, { k: 'a', label: 'Atanan', type: 'select', opt: 'assignee' }, { k: 'created', label: 'Oluşturulma', type: 'text', ro: true }, { k: 'respTarget', label: 'Yanıt hedefi (SLA)', type: 'text', ro: true }, { k: 'resTarget', label: 'Çözüm hedefi (SLA)', type: 'text', ro: true }, { k: 'updated', label: 'Son güncelleme', type: 'text', ro: true }, { k: 'doneAt', label: 'Çözüm zamanı', type: 'text', ro: true }] },
+    { key: 'cozum', title: 'Çözüm', note: '', resolved: true, fields: [{ k: 'rcodeLabel', label: 'Çözüm kodu', type: 'text', ro: true }, { k: 'rcauseLabel', label: 'Kök neden', type: 'text', ro: true }, { k: 'rtext', label: 'Çözüm açıklaması', type: 'text', ro: true, span: 2 }, { k: 'rkb', label: 'Bilgi makalesi', type: 'text', ro: true }] }
+  ];
+  constructor(props) {
+    super(props);
+    const q = new URLSearchParams(window.location.search);
+    const base = Component.DATA.find(x => x.id === (q.get('id') || '').toUpperCase().replace('-', '')) || Component.DATA[0];
+    const now = Date.now(), ago = m => now - m * 60000;
+    const r = { ...base, g: base.a ? Component.GROUP_OF[base.a] : 'Level 1 Analist', email: base.email || this.mail(base.rep), aff: base.aff || base.rep, ci: base.ci || '', createdT: ago(base.cr), updT: ago(base.u), doneT: base.doneM ? ago(base.doneM) : null, majorT: base.major ? ago(base.majorM || base.cr) : null, rcode: base.rcode || '', rcause: base.rcause || '', rtext: base.rtext || '', rkb: base.rkb || '', pausedSla: base.pausedSla == null ? null : base.pausedSla, turn: null, conv: null };
+    this.state = {
+      r, mode: q.get('mode') === 'edit' ? 'edit' : 'view', tab: 'olay', draft: null, showEmpty: {}, pop: null, drawer: null, filter: 'all', toast: '', aiOff: false,
+      transfer: { group: r.g, person: r.a || '', note: '' },
+      resolve: { code: 'kalici', cause: 'bilinmiyor', text: '', kb: true, prbNote: true, notify: true, err: false },
+      convert: { item: 'sifre', notify: true },
+      compose: { text: '', vis: 'customer' },
+      timeline: this.buildTimeline(r, ago)
+    };
+  }
+  mail(name) { const map = { ç: 'c', ğ: 'g', ı: 'i', ö: 'o', ş: 's', ü: 'u', İ: 'i', Ç: 'c', Ğ: 'g', Ö: 'o', Ş: 's', Ü: 'u' }; const parts = name.split(/[\s—(]+/).filter(Boolean).slice(0, 2); return parts.map(p => p.toLowerCase().replace(/[çğıöşüİÇĞÖŞÜ]/g, c => map[c] || c).replace(/[^a-z]/g, '')).filter(Boolean).join('.') + '@btbilgi.com.tr'; }
+  lbl(list, k) { const x = list.find(a => a[0] === k); return x ? x[1] : (k || '—'); }
+  calcP(imp, urg) { return Component.MATRIX[imp][Component.URG.findIndex(u => u[0] === urg)]; }
+  hrs(m) { return m >= 1440 ? (m / 1440) + ' gün' : (m / 60) + ' saat'; }
+  closed(r) { return r.st === 'cozuldu' || r.st === 'kapali'; }
+  fmtSla(m) { m = Math.abs(m); if (m >= 1440) return Math.floor(m / 1440) + 'g ' + String(Math.floor((m % 1440) / 60)).padStart(2, '0') + 's'; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
+  fmtT(t, y) { const d = new Date(t), ay = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara']; return d.getDate() + ' ' + ay[d.getMonth()] + (y ? ' ' + d.getFullYear() : '') + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
+  stLabel(r) { return Component.ST[r.st][0] + (r.st === 'beklemede' && r.w ? ' · ' + Component.WAIT[r.w] : ''); }
+  prioText(r) { return 'P' + r.p + ' · ' + Component.PD[r.p] + ' — ' + this.lbl(Component.IMP, r.imp) + ' × ' + this.lbl(Component.URG, r.urg); }
+  buildTimeline(r, ago) {
+    const c = [], em = r.email, who = r.a || Component.ME;
+    c.push({ t: ago(r.cr), who: r.rep, kind: 'created', action: 'olayı oluşturdu · ' + this.lbl(Component.SRC, r.src) });
+    const ch = [{ f: 'Durum', from: '—', to: r.a ? 'Atandı' : 'Açık' }]; if (r.a) ch.push({ f: 'Atanan', from: '—', to: r.a }); ch.push({ f: 'Öncelik', from: '—', to: 'P' + r.p + ' · ' + this.lbl(Component.IMP, r.imp) + ' × ' + this.lbl(Component.URG, r.urg) });
+    c.push({ t: ago(r.cr), who: 'Sistem', kind: 'system', action: ch.length + ' alanı güncelledi', changes: ch });
+    c.push({ t: ago(r.cr), who: 'Sistem', kind: 'email', action: 'e-posta gönderdi', text: 'Alıcı: ' + em + ' · "' + r.id + ' kaydınız alındı"' });
+    if (r.a && r.st !== 'acik' && r.st !== 'atandi') c.push({ t: ago(Math.max(0, r.cr - 15)), who: r.a, kind: 'system', action: 'durumu değiştirdi', changes: [{ f: 'Durum', from: 'Atandı', to: 'Çalışılıyor' }] });
+    if (r.resp === 'ok') c.push({ t: ago(Math.max(0, r.cr - 12)), who, kind: 'comment', action: 'bildirene yanıt yazdı', text: 'Merhaba, kaydınız alındı ve inceleme başladı; gelişmeleri bu kayıttan paylaşacağız.' });
+    if (r.prb) c.push({ t: ago(Math.max(0, r.cr - 25)), who, kind: 'system', action: 'probleme bağladı', changes: [{ f: 'Bağlı problem', from: '—', to: r.prb + ' · ' + (Component.PRB[r.prb] || '') }] });
+    if (r.major) c.push({ t: r.majorT, who, kind: 'system', action: 'büyük olay ilan etti', changes: [{ f: 'Büyük olay', from: 'Hayır', to: 'Evet' }], text: 'Köprü açıldı: Teams · MI-' + r.id + ' · bağlı olaylar otomatik eşlenir' });
+    (r.notes || []).forEach(n => c.push({ t: ago(n.m), who: n.who, kind: n.kind, action: n.action || (n.kind === 'note' ? 'iç not ekledi' : n.kind === 'comment' ? 'bildirene yanıt yazdı' : 'e-posta gönderdi'), text: n.text }));
+    if (r.st === 'beklemede') c.push({ t: ago(r.u), who, kind: 'system', action: 'durumu değiştirdi', changes: [{ f: 'Durum', from: 'Çalışılıyor', to: 'Beklemede · ' + Component.WAIT[r.w] }], text: 'Çözüm SLA sayacı duraklatıldı' });
+    if (this.closed(r)) {
+      c.push({ t: r.doneT, who, kind: 'comment', action: 'çözüm yazdı', text: r.rtext + (r.rkb ? ' — İlgili makale: ' + r.rkb : '') });
+      c.push({ t: r.doneT, who, kind: 'system', action: 'çözdü', changes: [{ f: 'Durum', from: 'Çalışılıyor', to: 'Çözüldü' }, { f: 'Çözüm kodu', from: '—', to: this.lbl(Component.RCODE, r.rcode) }, { f: 'Kök neden', from: '—', to: this.lbl(Component.RCAUSE, r.rcause) }] });
+      if (r.st === 'kapali') c.push({ t: ago(r.closedM || r.u), who: 'Sistem', kind: 'system', action: 'kaydı kapattı', changes: [{ f: 'Durum', from: 'Çözüldü', to: 'Kapalı' }], text: '3 iş günü içinde itiraz gelmedi' });
+    }
+    return c.sort((a, b) => a.t - b.t).reverse();
+  }
+  toast(msg) { this.setState({ toast: msg }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: '' }), 3600); }
+  componentDidMount() { this._kd = ev => { if (ev.key !== 'Escape') return; if (this.state.pop) this.setState({ pop: null }); else if (this.state.drawer) this.setState({ drawer: null }); else if (this.state.mode === 'edit') this.cancelEdit(); }; window.addEventListener('keydown', this._kd); }
+  componentWillUnmount() { clearTimeout(this._tt); window.removeEventListener('keydown', this._kd); }
+  setR(n) { this.setState(st => ({ r: { ...st.r, ...n, updT: Date.now() } })); }
+  log(entry) { this.setState(st => ({ timeline: [{ t: Date.now(), who: Component.ME, ...entry }, ...st.timeline] })); }
+  openPop(kind, ev) {
+    const rc = ev.currentTarget.getBoundingClientRect();
+    const W = { status: 236, prio: 320, assignee: 236, transfer: 300, menu: 232, convert: 340 }, H = { status: 330, prio: 268, assignee: 280, transfer: 330, menu: 270, convert: 330 };
+    const w = W[kind], hgt = H[kind];
+    let top = rc.bottom + 4; if (top + hgt > window.innerHeight - 8) top = Math.max(8, rc.top - hgt - 4);
+    const left = Math.max(8, Math.min(kind === 'menu' || kind === 'transfer' ? rc.right - w : rc.left, window.innerWidth - w - 8));
+    const same = this.state.pop && this.state.pop.kind === kind;
+    this.setState({ pop: same ? null : { kind, top, left, w } });
+  }
+  popSwap(kind, w) { const p = this.state.pop; if (!p) return; const left = Math.max(8, Math.min(p.left + p.w - w, window.innerWidth - w - 8)); this.setState({ pop: { kind, top: p.top, left, w } }); }
+  setStatus(k, w) {
+    const r = this.state.r, prev = this.stLabel(r);
+    if (k === 'cozuldu') { this.setState({ pop: null, drawer: 'resolve' }); return; }
+    this.setState({ pop: null });
+    if (k === r.st && (k !== 'beklemede' || w === r.w)) return;
+    const n = { st: k, turn: null };
+    if (k === 'beklemede') { n.w = w; if (r.sla !== null) { n.pausedSla = r.sla; n.sla = null; } }
+    else { n.w = null; if (r.sla === null) n.sla = r.pausedSla != null ? r.pausedSla : Math.round(r.tot * 0.6); n.pausedSla = null; if (this.closed(r)) { n.rcode = ''; n.rcause = ''; n.rtext = ''; n.rkb = ''; n.doneT = null; n.conv = null; } }
+    this.setR(n);
+    const to = Component.ST[k][0] + (k === 'beklemede' ? ' · ' + Component.WAIT[w] : '');
+    this.log({ kind: 'system', action: 'durumu değiştirdi', changes: [{ f: 'Durum', from: prev, to }] });
+    this.toast('Durum: ' + to + (k === 'beklemede' ? ' · çözüm SLA sayacı durdu' : (r.st === 'beklemede' || this.closed(r) ? ' · SLA kaldığı yerden devam ediyor' : '')));
+  }
+  applyPrio(r, imp, urg) {
+    const p = this.calcP(imp, urg), ch = [], n = { imp, urg };
+    if (imp !== r.imp) ch.push({ f: 'Etki', from: this.lbl(Component.IMP, r.imp), to: this.lbl(Component.IMP, imp) });
+    if (urg !== r.urg) ch.push({ f: 'Aciliyet', from: this.lbl(Component.URG, r.urg), to: this.lbl(Component.URG, urg) });
+    if (p !== r.p) {
+      const tot = Component.TOT[p]; n.p = p; n.tot = tot;
+      if (r.sla !== null) n.sla = tot - (r.tot - r.sla);
+      if (r.pausedSla != null) n.pausedSla = tot - (r.tot - r.pausedSla);
+      if (typeof r.resp === 'number') n.resp = Component.RTOT[p] - (Component.RTOT[r.p] - r.resp);
+      ch.push({ f: 'Öncelik', from: 'P' + r.p + ' · ' + Component.PD[r.p], to: 'P' + p + ' · ' + Component.PD[p] });
+      ch.push({ f: 'Çözüm hedefi', from: this.hrs(r.tot), to: this.hrs(tot) });
+    }
+    return { n, ch, p };
+  }
+  pickCell(imp, urg) {
+    const r = this.state.r; this.setState({ pop: null });
+    const { n, ch, p } = this.applyPrio(r, imp, urg); if (!ch.length) return;
+    this.setR(n);
+    this.log({ kind: 'system', action: 'önceliği değiştirdi', changes: ch });
+    this.toast('Öncelik: P' + p + ' · ' + Component.PD[p] + ' — ' + this.lbl(Component.IMP, imp) + ' × ' + this.lbl(Component.URG, urg) + (p !== r.p ? ' · çözüm hedefi ' + this.hrs(Component.TOT[p]) : ''));
+  }
+  setAssignee(a) {
+    const r = this.state.r, prev = r.a; this.setState({ pop: null }); if (a === (prev || '')) return;
+    const n = { a: a || null, g: a ? (Component.GROUP_OF[a] || r.g) : r.g, turn: null }; const ch = [{ f: 'Atanan', from: prev || '—', to: a || '—' }];
+    if (a && r.st === 'acik') { n.st = 'atandi'; ch.push({ f: 'Durum', from: 'Açık', to: 'Atandı' }); }
+    if (!a && r.st === 'atandi') { n.st = 'acik'; ch.push({ f: 'Durum', from: 'Atandı', to: 'Açık' }); }
+    this.setR(n); this.log({ kind: 'system', action: 'atananı değiştirdi', changes: ch });
+    this.toast('Atanan: ' + (a || 'atanmamış') + (a && a !== Component.ME ? ' · kayıt ' + a.split(' ')[0] + ' kuyruğuna geçti' : a ? '' : ' · kayıt grup kuyruğunda'));
+  }
+  doTransfer() {
+    const r = this.state.r, t = this.state.transfer, ch = [];
+    if (t.group !== r.g) ch.push({ f: 'Grup', from: r.g, to: t.group });
+    if ((t.person || '') !== (r.a || '')) ch.push({ f: 'Atanan', from: r.a || '—', to: t.person || '—' });
+    const n = { g: t.group, a: t.person || null, turn: null };
+    if (!t.person && !this.closed(r) && r.st !== 'beklemede') { n.st = 'acik'; if (r.st !== 'acik') ch.push({ f: 'Durum', from: this.stLabel(r), to: 'Açık' }); }
+    else if (t.person && r.st === 'acik') { n.st = 'atandi'; ch.push({ f: 'Durum', from: 'Açık', to: 'Atandı' }); }
+    this.setState({ pop: null }); this.setR(n);
+    this.log({ kind: 'system', action: 'transfer etti', changes: ch.length ? ch : [{ f: 'Grup', from: r.g, to: t.group }], text: t.note.trim() || undefined });
+    this.toast('Transfer edildi → ' + t.group + (t.person ? ' · ' + t.person : ' · atanmamış, grup kuyruğunda'));
+  }
+  doResolve() {
+    const r = this.state.r, x = this.state.resolve;
+    if (!x.text.trim()) { this.setState(st => ({ resolve: { ...st.resolve, err: true } })); return; }
+    const kb = x.kb && r.kb && r.kb.length ? r.kb[0][0] : '';
+    const sla = r.sla === null ? (r.pausedSla != null ? r.pausedSla : 0) : r.sla;
+    this.setR({ st: 'cozuldu', w: null, turn: null, sla, pausedSla: null, rcode: x.code, rcause: x.cause, rtext: x.text.trim(), rkb: kb, doneT: Date.now() });
+    this.setState(st => ({ drawer: null, resolve: { ...st.resolve, err: false } }));
+    if (x.notify) this.log({ kind: 'email', who: 'Sistem', action: 'çözüm bildirimi gönderdi', text: 'Alıcı: ' + r.email + ' · 3 iş günü içinde itiraz edilmezse kapanır' });
+    if (x.prbNote && r.prb) this.log({ kind: 'system', action: 'probleme not ekledi', changes: [{ f: r.prb, from: '—', to: 'çözüm notu eklendi' }] });
+    this.log({ kind: 'comment', action: 'çözüm yazdı', text: x.text.trim() + (kb ? ' — İlgili makale: ' + kb : '') });
+    const ch = [{ f: 'Durum', from: this.stLabel(r), to: 'Çözüldü' }, { f: 'Çözüm kodu', from: '—', to: this.lbl(Component.RCODE, x.code) }]; if (x.cause !== 'bilinmiyor') ch.push({ f: 'Kök neden', from: '—', to: this.lbl(Component.RCAUSE, x.cause) });
+    this.log({ kind: 'system', action: 'çözdü', changes: ch });
+    this.toast('Çözüldü · çözüm SLA ' + (sla >= 0 ? 'tutuldu (' + this.fmtSla(sla) + ' kala)' : 'ihlal olarak kaydedildi') + (kb ? ' · ' + kb + ' bağlandı' : ''));
+  }
+  doConvert() {
+    const r = this.state.r, c = this.state.convert, req = 'REQ-291', item = this.lbl(Component.CV_ITEMS, c.item);
+    this.setState({ pop: null, aiOff: true });
+    this.setR({ st: 'kapali', w: null, turn: null, sla: null, pausedSla: null, conv: { req, item, t: Date.now() } });
+    if (c.notify) this.log({ kind: 'email', who: 'Sistem', action: 'e-posta gönderdi', text: 'Alıcı: ' + r.email + ' · "' + r.id + ' kaydınız ' + req + ' talebi olarak sürüyor"' });
+    this.log({ kind: 'system', action: 'talebe dönüştürdü', changes: [{ f: 'Durum', from: this.stLabel(r), to: 'Kapalı' }, { f: 'Kapanış kodu', from: '—', to: 'Talebe dönüştürüldü' }, { f: 'Talep', from: '—', to: req + ' · ' + item }] });
+    this.toast(req + ' oluşturuldu · olay kapatıldı · bildirene tek e-posta gitti');
+  }
+  reopen() {
+    const r = this.state.r, st = r.a ? 'atandi' : 'acik';
+    this.setR({ st, w: null, turn: null, conv: null, rcode: '', rcause: '', rtext: '', rkb: '', doneT: null, sla: r.sla === null ? Math.round(r.tot * 0.5) : r.sla });
+    this.log({ kind: 'system', action: 'yeniden açtı', changes: [{ f: 'Durum', from: this.stLabel(r), to: Component.ST[st][0] }] });
+    this.toast('Kayıt yeniden açıldı · çözüm SLA kaldığı yerden devam ediyor');
+  }
+  toggleProblem() {
+    const r = this.state.r;
+    if (r.prb) { this.setR({ prb: null }); this.log({ kind: 'system', action: 'problem bağını kaldırdı', changes: [{ f: 'Bağlı problem', from: r.prb, to: '—' }] }); this.toast(r.prb + ' bağı kaldırıldı'); return; }
+    this.setR({ prb: 'PRB-034' }); this.log({ kind: 'system', action: 'problem kaydı açtı', changes: [{ f: 'Bağlı problem', from: '—', to: 'PRB-034 · ' + r.s }] }); this.toast('PRB-034 oluşturuldu · kök neden analizi problem yönetiminde · olay bağlandı');
+  }
+  toggleMajor() {
+    const r = this.state.r;
+    if (r.major) { this.setR({ major: false, majorT: null }); this.log({ kind: 'system', action: 'büyük olay işaretini kaldırdı', changes: [{ f: 'Büyük olay', from: 'Evet', to: 'Hayır' }] }); this.toast('Büyük olay işareti kaldırıldı · köprü kapatıldı'); return; }
+    this.setR({ major: true, majorT: Date.now() }); this.log({ kind: 'system', action: 'büyük olay ilan etti', changes: [{ f: 'Büyük olay', from: 'Hayır', to: 'Evet' }], text: 'Köprü açıldı: Teams · MI-' + r.id + ' · aynı hizmetteki yeni olaylar otomatik bağlanır' }); this.toast('Büyük olay ilan edildi · köprü açıldı · operasyon duvarına düştü');
+  }
+  startEdit() { this.setState(st => ({ mode: 'edit', draft: { ...st.r }, pop: null })); }
+  cancelEdit() { this.setState({ mode: 'view', draft: null }); }
+  saveEdit() {
+    const d = this.state.draft, r = this.state.r; if (!d) return;
+    const meta = {}; Component.GROUPS.forEach(g => g.fields.forEach(f => { meta[f.k] = f; }));
+    const disp = (f, v) => f.type === 'select' ? this.optLabel(f.opt, v) : (v || '—');
+    const keys = Object.keys(meta).filter(k => !meta[k].ro && d[k] !== r[k]);
+    const ch = keys.filter(k => k !== 'imp' && k !== 'urg').map(k => ({ f: meta[k].label, from: disp(meta[k], r[k]), to: disp(meta[k], d[k]) }));
+    const n = {}; keys.forEach(k => { n[k] = d[k]; });
+    if (keys.includes('a')) { n.a = d.a || null; if (!keys.includes('g') && n.a && Component.GROUP_OF[n.a]) n.g = Component.GROUP_OF[n.a]; }
+    if (keys.includes('imp') || keys.includes('urg')) { const pr = this.applyPrio(r, d.imp, d.urg); Object.assign(n, pr.n); ch.push(...pr.ch); }
+    this.setState({ mode: 'view', draft: null });
+    if (!ch.length) { this.toast('Değişiklik yok'); return; }
+    this.setR(n); this.log({ kind: 'system', action: ch.length + ' alanı güncelledi', changes: ch }); this.toast('Kaydedildi · ' + ch.length + ' alan değişti');
+  }
+  optLabel(opt, v) { return this.lbl(this.opts(opt), v); }
+  opts(opt) { return opt === 'src' ? Component.SRC : opt === 'type' ? Component.TYPE : opt === 'imp' ? Component.IMP : opt === 'urg' ? Component.URG : opt === 'group' ? Component.GROUP_OPTS.map(g => [g, g]) : [['', '— Atanmamış'], ...Component.PEOPLE.map(p => [p, p === Component.ME ? p + ' (ben)' : p])]; }
+  send() {
+    const c = this.state.compose, r = this.state.r; if (!c.text.trim()) return;
+    if (c.vis === 'customer') {
+      const first = typeof r.resp === 'number';
+      this.log({ kind: 'comment', action: 'bildirene yanıt yazdı', text: c.text.trim() });
+      const n = { turn: this.closed(r) || r.st === 'beklemede' ? null : 'musteri' }; if (first) n.resp = 'ok';
+      this.setR(n);
+      this.toast('Yanıt gönderildi · e-posta ile iletildi' + (first ? ' · yanıt SLA karşılandı' : '') + ' · sıra bildirende');
+    } else { this.log({ kind: 'note', action: 'iç not ekledi', text: c.text.trim() }); this.toast('İç not eklendi'); }
+    this.setState(st => ({ compose: { ...st.compose, text: '' } }));
+  }
+  slaInfo(r) {
+    const o = { text: '', color: '#334155', hasBar: false, bar: '0%', barColor: '#94a3b8', sub: '' };
+    const target = 'hedef ' + this.fmtT(r.createdT + r.tot * 60000, false);
+    if (this.closed(r)) {
+      if (r.sla === null) { o.text = 'Sonuçsuz'; o.color = '#64748b'; o.sub = 'talebe dönüştürüldü'; }
+      else if (r.sla < 0) { o.text = 'İhlal · ' + this.fmtSla(r.sla); o.color = '#d23f43'; o.sub = 'kapanışta donduruldu'; }
+      else { o.text = 'Tutuldu ✓'; o.color = '#1f8a6f'; o.sub = this.fmtSla(r.sla) + ' kala'; }
+      return o;
+    }
+    if (r.st === 'beklemede' || r.sla === null) { o.text = 'Duraklatıldı'; o.color = '#64748b'; o.sub = Component.WAIT[r.w] || 'beklemede'; return o; }
+    o.hasBar = true;
+    if (r.sla < 0) { o.text = 'İhlal · ' + this.fmtSla(r.sla); o.color = '#d23f43'; o.bar = '100%'; o.barColor = '#d23f43'; }
+    else { o.text = this.fmtSla(r.sla); o.bar = Math.max(4, Math.round((1 - r.sla / r.tot) * 100)) + '%'; if (r.sla < 60) { o.color = '#d23f43'; o.barColor = '#d23f43'; } else if (r.sla < 240) { o.color = '#b16a08'; o.barColor = '#e39b2c'; } }
+    o.sub = target; return o;
+  }
+  respInfo(r) {
+    if (r.resp === 'ok') return { text: 'Karşılandı ✓', color: '#1f8a6f', sub: 'ilk yanıt verildi' };
+    if (typeof r.resp !== 'number') return { text: '—', color: '#64748b', sub: '' };
+    if (this.closed(r)) return { text: 'Yanıt verilmedi', color: '#64748b', sub: 'kapanışta donduruldu' };
+    if (r.resp < 0) return { text: 'İhlal · ' + this.fmtSla(r.resp), color: '#d23f43', sub: 'henüz yanıt yok' };
+    return { text: this.fmtSla(r.resp) + ' kaldı', color: r.resp < 60 ? '#b16a08' : '#334155', sub: 'henüz yanıt yok · hedef ' + this.fmtT(r.createdT + Component.RTOT[r.p] * 60000, false) };
+  }
+  waitInfo(r) {
+    if (r.st === 'kapali') return r.conv ? ['Talep olarak sürüyor', '#f1f5f9', '#334155'] : ['Kapalı', '#f1f5f9', '#334155'];
+    if (r.st === 'cozuldu') return ['Kapanış bekliyor · 3 iş günü', '#f1f5f9', '#334155'];
+    if (r.st === 'beklemede') return [Component.WAIT[r.w] || 'Beklemede', '#fdf1e0', '#9a5b0a'];
+    if (!r.a) return ['Atama bekliyor', '#fdf1e0', '#9a5b0a'];
+    if (r.turn === 'musteri') return ['Bildiren yanıtı', '#fdf1e0', '#9a5b0a'];
+    if (r.a === Component.ME) return ['Benim sıramda', '#e6f4f1', '#0f5c4d'];
+    return ['Atananda · ' + r.a.split(' ')[0], '#f1f5f9', '#334155'];
+  }
+  renderVals() {
+    const s = this.state, r = s.r, ST = Component.ST, ME = Component.ME;
+    const isEdit = s.mode === 'edit', vals = isEdit ? s.draft : r, closed = this.closed(r);
+    const st = ST[r.st], sla = this.slaInfo(r), rs = this.respInfo(r), W = this.waitInfo(r);
+    const popIs = k => !!s.pop && s.pop.kind === k;
+    const computed = { prio: this.prioText(r), prbLabel: r.prb ? r.prb + (Component.PRB[r.prb] ? ' · ' + Component.PRB[r.prb] : '') : '', created: this.fmtT(r.createdT, true), respTarget: this.fmtT(r.createdT + Component.RTOT[r.p] * 60000, true), resTarget: this.fmtT(r.createdT + r.tot * 60000, true), updated: this.fmtT(r.updT, true), doneAt: r.doneT ? this.fmtT(r.doneT, true) : '', rcodeLabel: r.rcode ? this.lbl(Component.RCODE, r.rcode) : '', rcauseLabel: r.rcause ? this.lbl(Component.RCAUSE, r.rcause) : '', rtext: r.rtext, rkb: r.rkb };
+    const groups = Component.GROUPS.filter(g => !g.resolved || (closed && r.rcode)).map(g => {
+      const show = !!s.showEmpty[g.key];
+      const val = f => f.ro ? computed[f.k] : vals[f.k];
+      const isEmpty = f => !(val(f) && String(val(f)).trim());
+      const hidden = isEdit ? 0 : g.fields.filter(f => isEmpty(f)).length;
+      const fields = g.fields.filter(f => isEdit || show || !isEmpty(f)).map(f => {
+        const v = val(f), editable = isEdit && !f.ro;
+        const display = f.type === 'select' ? this.optLabel(f.opt, v) : (v && String(v).trim() ? v : '—');
+        return { label: f.label, col: f.span === 2 ? '1 / -1' : 'auto', isView: !editable, display, valueColor: display === '—' ? '#94a3b8' : '#020618', value: v === undefined || v === null ? '' : v,
+          isText: editable && f.type === 'text', isArea: editable && f.type === 'area', isSelect: editable && f.type === 'select',
+          options: f.opt ? this.opts(f.opt).map(o => ({ v: o[0], l: o[1] })) : [],
+          set: ev => { const x = ev.target.value; this.setState(stt => ({ draft: { ...stt.draft, [f.k]: x } })); } };
+      });
+      return { title: g.title, note: g.note, fields, hasHidden: hidden > 0, toggleLabel: show ? 'Boş alanları gizle' : hidden + ' boş alanı göster', toggle: () => this.setState(stt => ({ showEmpty: { ...stt.showEmpty, [g.key]: !stt.showEmpty[g.key] } })) };
+    });
+    const changed = isEdit ? Object.keys(s.draft).filter(k => s.draft[k] !== r[k]).length : 0;
+    const byId = id => Component.DATA.find(x => x.id === id);
+    const children = Component.DATA.filter(x => x.parent === r.id);
+    const relRow = (x, rel, relColor) => ({ id: x.id, s: x.s, rel, relBg: relColor === 'red' ? '#fbe9ea' : '#f1f5f9', relFg: relColor === 'red' ? '#b3282d' : '#334155', st: ST[x.st][0], dot: ST[x.st][1], who: x.a || 'Atanmamış', href: 'Olay Detayi.dc.html?id=' + x.id });
+    const related = [];
+    if (r.prb) related.push({ id: r.prb, s: Component.PRB[r.prb] || 'Kök neden analizi — ' + r.s, rel: 'Bağlı problem', relBg: '#f1f5f9', relFg: '#334155', st: 'Açık', dot: '#4c7bd9', who: 'Problem yönetimi', href: '#' });
+    if (r.parent && byId(r.parent)) related.push(relRow(byId(r.parent), 'Üst olay · büyük olay', 'red'));
+    children.forEach(c => related.push(relRow(c, 'Bağlı olay', 'red')));
+    Component.DATA.filter(x => x.id !== r.id && x.svc === r.svc && x.parent !== r.id && x.id !== r.parent).slice(0, 3).forEach(x => related.push(relRow(x, 'Aynı hizmet', '')));
+    if (r.conv) related.push({ id: r.conv.req, s: r.s, rel: 'Dönüştürüldü', relBg: '#e6f4f1', relFg: '#0f5c4d', st: 'Açık', dot: '#4c7bd9', who: 'Talep Yönetimi', href: 'Uzerimdeki Talepler.dc.html' });
+    const kb = (r.kb || []).map(k => ({ id: k[0], title: k[1], meta: k[2] }));
+    const files = (r.files || []).map(f => ({ name: f.name, ext: f.name.split('.').pop().toUpperCase(), meta: f.size + ' · ' + f.who + ' · ' + this.fmtT(r.createdT, true) }));
+    const tabs = [['olay', 'Olay', 0], ['iliskili', 'İlişkili', related.length + kb.length], ['ekler', 'Ekler', files.length]].map(([k, label, count]) => { const on = s.tab === k; return { label, count, hasCount: count > 0, border: on ? '#08748e' : 'transparent', color: on ? '#020618' : '#64748b', weight: on ? 600 : 500, click: () => this.setState({ tab: k }) }; });
+    const filters = [['all', 'Tümü'], ['comments', 'Yorumlar'], ['system', 'Sistem']].map(([k, label]) => { const on = s.filter === k; return { label, border: on ? '#08748e' : '#e2e8f0', bg: on ? '#e6f4f1' : '#fff', color: on ? '#0f5c4d' : '#64748b', click: () => this.setState({ filter: k }) }; });
+    const AV = { system: ['⟳', '#f1f5f9', '#64748b'], email: ['✉', '#f1f5f9', '#64748b'], created: ['+', '#f1f5f9', '#64748b'] };
+    const initials = n => n.split(' ').map(x => x[0]).join('').slice(0, 2).toUpperCase();
+    const entries = s.timeline.filter(e => s.filter === 'all' || (s.filter === 'comments' ? (e.kind === 'comment' || e.kind === 'note') : (e.kind !== 'comment' && e.kind !== 'note'))).map(e => {
+      const person = e.kind === 'comment' || e.kind === 'note' || (e.kind === 'system' && e.who !== 'Sistem');
+      const av = person ? [initials(e.who), e.who === ME ? '#08748e' : '#e6f4f1', e.who === ME ? '#fff' : '#0f5c4d'] : (AV[e.kind] || AV.system);
+      return { who: e.who, action: e.action, time: this.fmtT(e.t, false), av: av[0], avBg: av[1], avFg: av[2], hasText: !!e.text, text: e.text || '', textBg: e.kind === 'note' ? '#fffbeb' : e.kind === 'comment' ? '#f0f9fb' : '#f8fafc', hasChanges: !!(e.changes && e.changes.length), changes: e.changes || [],
+        hasTag: e.kind === 'comment' || e.kind === 'note', tag: e.kind === 'comment' ? 'Bildirene görünür' : 'İç not', tagBg: e.kind === 'comment' ? '#e6f4f1' : '#fdf1e0', tagFg: e.kind === 'comment' ? '#0f5c4d' : '#9a5b0a' };
+    });
+    const opt = (label, on, extra) => ({ label, hasDot: false, dot: '', dotBorder: '', desc: '', weight: 500, color: '#020618', check: on ? '✓' : '', bg: on ? '#f8fafc' : 'transparent', ...extra });
+    const stOpts = [['acik'], ['atandi'], ['calisiliyor'], ['beklemede', 'musteri'], ['beklemede', 'tedarikci'], ['beklemede', 'kargo'], ['cozuldu']];
+    const popOptions = popIs('status') ? stOpts.map(([k, w]) => opt(ST[k][0], r.st === k && (k !== 'beklemede' || r.w === w), { hasDot: true, dot: ST[k][2] ? ST[k][1] : '#fff', dotBorder: ST[k][1], desc: k === 'beklemede' ? Component.WAIT[w] : k === 'cozuldu' ? 'çözüm formu açılır' : '', pick: () => this.setStatus(k, w) }))
+      : popIs('assignee') ? this.opts('assignee').map(([v, label]) => opt(label, (r.a || '') === v, { desc: Component.GROUP_OF[v] || '', pick: () => this.setAssignee(v) })) : [];
+    const urgHead = Component.URG.map(u => ({ label: u[1] }));
+    const matrixRows = Component.IMP.map(([ik, il]) => ({ label: il, cells: Component.URG.map(([uk, ul]) => { const p = Component.MATRIX[ik][Component.URG.findIndex(u => u[0] === uk)], on = r.imp === ik && r.urg === uk; const tint = { 1: '#fbe9ea', 2: '#fdf1e0', 3: '#f1f5f9', 4: '#f8fafc' }[p]; return { label: 'P' + p, title: il + ' × ' + ul + ' → P' + p + ' ' + Component.PD[p], bg: on ? '#e6f4f1' : tint, color: Component.PC[p], border: on ? '#08748e' : 'transparent', pick: () => this.pickCell(ik, uk) }; }) }));
+    const menu = [];
+    if (!closed) menu.push(['Talebe dönüştür…', () => this.popSwap('convert', 340)]);
+    menu.push([r.prb ? 'Problem bağını kaldır' : 'Problem kaydı aç', () => { this.setState({ pop: null }); this.toggleProblem(); }]);
+    if (!closed) menu.push([r.major ? 'Büyük olay işaretini kaldır' : 'Büyük olay ilan et', () => { this.setState({ pop: null }); this.toggleMajor(); }]);
+    if (!closed && !(r.st === 'beklemede' && r.w === 'tedarikci')) menu.push(['Tedarikçiye aktar', () => this.setStatus('beklemede', 'tedarikci')]);
+    menu.push(['Bilgi bankasında ara', () => { this.setState({ pop: null, tab: 'iliskili' }); this.toast('Bilgi bankası: "' + r.s + '" için ' + kb.length + ' eşleşme · İlişkili sekmesinde'); }]);
+    menu.push(['Bağlantıyı kopyala', () => { this.setState({ pop: null }); this.toast('Bağlantı kopyalandı'); }]);
+    menu.push(['Takip et', () => { this.setState({ pop: null }); this.toast(r.id + ' takip listenize eklendi'); }]);
+    const menuItems = menu.map(([label, fn]) => ({ label, color: '#020618', click: fn }));
+    const c = s.compose, x = s.resolve, t = s.transfer, cv = s.convert;
+    const draft = r.draft || {};
+    const aiOn = !s.aiOff && !closed && !isEdit;
+    return {
+      ustBar: this.props.ustBar ?? 'acik',
+      id: r.id, title: r.s, desc: r.desc, svc: r.svc, scope: r.scope, prb: r.prb || '', hasPrb: !!r.prb,
+      isView: !isEdit, isEdit, notClosed: !closed, isClosed: closed, isMajor: !!r.major, isConverted: !!r.conv,
+      convReq: r.conv ? r.conv.req : '', convItem: r.conv ? r.conv.item : '', convTime: r.conv ? this.fmtT(r.conv.t, false) : '',
+      majorSince: r.majorT ? this.fmtT(r.majorT, false) + "'den beri" : '', childCount: children.length, goRelated: () => this.setState({ tab: 'iliskili' }),
+      sendMajorUpdate: () => { this.log({ kind: 'email', who: 'Sistem', action: 'durum bildirimi gönderdi', text: 'Alıcı: etkilenen kullanıcılar (' + r.scope + ') · "' + r.s + ' — çalışma sürüyor"' }); this.toast('Durum bildirimi gönderildi · e-posta + Teams · sonraki hatırlatma 30 dk'); },
+      startEdit: () => this.startEdit(), cancelEdit: () => this.cancelEdit(), saveEdit: () => this.saveEdit(), changedText: changed ? changed + ' alan değişti' : 'Henüz değişiklik yok',
+      openTransfer: ev => this.openPop('transfer', ev), openResolve: () => this.setState({ drawer: 'resolve', pop: null }), reopen: () => this.reopen(), openMenu: ev => this.openPop('menu', ev),
+      stLabel: st[0], stColor: st[1], stDot: st[2] ? st[1] : '#fff', stBg: popIs('status') ? '#f1f5f9' : 'transparent', pickStatus: ev => this.openPop('status', ev), hasStSub: r.st === 'beklemede' && !!r.w, stSub: r.st === 'beklemede' ? Component.WAIT[r.w] || '' : '',
+      pLabel: 'P' + r.p, pDesc: Component.PD[r.p], pColor: Component.PC[r.p], pSrc: this.lbl(Component.IMP, r.imp) + ' × ' + this.lbl(Component.URG, r.urg), pBg: popIs('prio') ? '#f1f5f9' : 'transparent', pickPrio: ev => this.openPop('prio', ev),
+      slaText: sla.text, slaColor: sla.color, slaSub: sla.sub, slaHasBar: sla.hasBar, slaBar: sla.bar, slaBarColor: sla.barColor,
+      rText: rs.text, rColor: rs.color, rSub: rs.sub,
+      aLabel: r.a || 'Atanmamış', aColor: r.a ? '#020618' : '#94a3b8', aGroup: r.g, aBg: popIs('assignee') ? '#f1f5f9' : 'transparent', pickAssignee: ev => this.openPop('assignee', ev),
+      wLabel: W[0], wBg: W[1], wFg: W[2],
+      tabs, tabOlay: s.tab === 'olay', tabIliskili: s.tab === 'iliskili', tabEkler: s.tab === 'ekler', groups,
+      aiConvert: aiOn && r.ai === 'convert', aiDraft: aiOn && r.ai === 'draft' && !!r.draft, draftSrc: draft.src || '', draftText: draft.text || '', dismissAi: () => this.setState({ aiOff: true }),
+      openConvert: ev => this.openPop('convert', ev), useDraft: () => this.setState({ drawer: 'resolve', resolve: { code: draft.code || 'kalici', cause: draft.cause || 'bilinmiyor', text: draft.text || '', kb: true, prbNote: true, notify: true, err: false } }),
+      related, hasRelated: related.length > 0, noRelated: related.length === 0, kb, hasKb: kb.length > 0, kbFirstId: kb.length ? kb[0].id : '', kbFirstTitle: kb.length ? kb[0].title : '', kbFirstMeta: kb.length ? kb[0].meta : '',
+      files, noFiles: files.length === 0, noop: ev => { if (ev && ev.preventDefault) ev.preventDefault(); },
+      filters, entries, composeText: c.text, setComposeText: ev => { const v = ev.target.value; this.setState(stt => ({ compose: { ...stt.compose, text: v } })); }, composePh: c.vis === 'customer' ? 'Bildirene yanıt yazın… e-posta ile de gider; ilk yanıt, yanıt SLA\'sını karşılar' : 'Yalnızca ekibin göreceği not…', composeBg: c.vis === 'customer' ? '#fff' : '#fffbeb',
+      visCustomer: () => this.setState(stt => ({ compose: { ...stt.compose, vis: 'customer' } })), visInternal: () => this.setState(stt => ({ compose: { ...stt.compose, vis: 'internal' } })),
+      visCBg: c.vis === 'customer' ? '#08748e' : '#fff', visCFg: c.vis === 'customer' ? '#fff' : '#334155', visIBg: c.vis === 'internal' ? '#b16a08' : '#fff', visIFg: c.vis === 'internal' ? '#fff' : '#334155',
+      send: () => this.send(), sendOpacity: c.text.trim() ? 1 : 0.5,
+      hasPop: !!s.pop, closePop: () => this.setState({ pop: null }), popTop: s.pop ? s.pop.top : 0, popLeft: s.pop ? s.pop.left : 0, popW: s.pop ? s.pop.w : 200,
+      popIsOptions: popIs('status') || popIs('assignee'), popTitle: popIs('status') ? 'Durum' : 'Atanan', popOptions, popFoot: popIs('status') ? 'Seçim anında kaydedilir. Beklemede çözüm SLA sayacını durdurur; Kapalı, çözümden 3 iş günü sonra otomatik.' : 'Seçim anında kaydedilir ve aktiviteye işlenir',
+      popIsPrio: popIs('prio'), urgHead, matrixRows,
+      popIsTransfer: popIs('transfer'), trGroup: t.group, trPerson: t.person, trNote: t.note, groupOpts: Component.GROUP_OPTS.map(g => ({ v: g, l: g })), personOpts: [{ v: '', l: 'Gruba bırak (atanmamış)' }, ...Component.PEOPLE.map(p => ({ v: p, l: p === ME ? p + ' (ben)' : p }))],
+      setTrGroup: ev => { const v = ev.target.value; this.setState(stt => ({ transfer: { ...stt.transfer, group: v } })); }, setTrPerson: ev => { const v = ev.target.value; this.setState(stt => ({ transfer: { ...stt.transfer, person: v } })); }, setTrNote: ev => { const v = ev.target.value; this.setState(stt => ({ transfer: { ...stt.transfer, note: v } })); }, doTransfer: () => this.doTransfer(),
+      popIsConvert: popIs('convert'), cvItem: cv.item, cvItems: Component.CV_ITEMS.map(o => ({ v: o[0], l: o[1] })), setCvItem: ev => { const v = ev.target.value; this.setState(stt => ({ convert: { ...stt.convert, item: v } })); }, cvNotify: cv.notify, toggleCvNotify: () => this.setState(stt => ({ convert: { ...stt.convert, notify: !stt.convert.notify } })), doConvert: () => this.doConvert(),
+      popIsMenu: popIs('menu'), menuItems,
+      drawerOpen: s.drawer === 'resolve', closeDrawer: () => this.setState({ drawer: null }),
+      rsCode: x.code, rsCodes: Component.RCODE.map(o => ({ v: o[0], l: o[1] })), setRsCode: ev => { const v = ev.target.value; this.setState(stt => ({ resolve: { ...stt.resolve, code: v } })); },
+      rsCause: x.cause, rsCauses: Component.RCAUSE.map(o => ({ v: o[0], l: o[1] })), setRsCause: ev => { const v = ev.target.value; this.setState(stt => ({ resolve: { ...stt.resolve, cause: v } })); },
+      rsText: x.text, setRsText: ev => { const v = ev.target.value; this.setState(stt => ({ resolve: { ...stt.resolve, text: v, err: false } })); }, rsBorder: x.err ? '#d23f43' : '#cbd5e1', rsErr: x.err,
+      rsKb: x.kb, toggleRsKb: () => this.setState(stt => ({ resolve: { ...stt.resolve, kb: !stt.resolve.kb } })), rsPrbNote: x.prbNote, toggleRsPrbNote: () => this.setState(stt => ({ resolve: { ...stt.resolve, prbNote: !stt.resolve.prbNote } })), rsNotify: x.notify, toggleRsNotify: () => this.setState(stt => ({ resolve: { ...stt.resolve, notify: !stt.resolve.notify } })), doResolve: () => this.doResolve(),
+      hasToast: !!s.toast, toastText: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

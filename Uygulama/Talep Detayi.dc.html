@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
+</helmet>
+<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap;overflow:hidden"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Ekran analizi 03 · Talep detayı konsepti</span><span style="color:#64748b;overflow:hidden;text-overflow:ellipsis">Deneyin: şeritte Durum / Öncelik / Atanan'a tıkla · Düzenle → alanları değiştir → Kaydet · Çözüme aktar · sağda yanıt yaz</span><a href="Uzerimdeki Talepler.dc.html" style="color:#fff;margin-left:auto">← Liste</a><a href="../Konsept Ekranlari.dc.html" style="color:#fff">Konsept menüsü</a><a href="../Talep Detayı Analizi.dc.html" style="color:#fff">Analiz</a></div>
+<div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" tema="{{ ustBar }}" hint-size="100%,49px"></dc-import></div>
+<div style="display:flex;align-items:flex-start">
+<div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" aktif="uzerimdeki" style="height:100%" hint-size="256px,100%"></dc-import></div>
+<main data-screen-label="Talep detayı prototipi" style="flex:1;min-width:0;padding:14px 24px 48px;background:#f8fafc;min-height:calc(100vh - 77px);box-sizing:border-box">
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;color:#64748b;margin-bottom:8px"><a href="#">Talep Yönetimi</a><span>›</span><a href="Uzerimdeki Talepler.dc.html">Üzerimdeki Talepler</a><span>›</span><span style="color:#020618;font-weight:500">{{ id }}</span></div>
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:14px">
+<div style="display:flex;align-items:baseline;gap:10px;min-width:0;margin-right:auto"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;font-weight:600;color:#08748e">{{ id }}</span><h1 style="font-size:20px;font-weight:700;margin:0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ title }}</h1></div>
+<sc-if value="{{ isView }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ startEdit }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:#334155"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>Düzenle</button></sc-if>
+<button type="button" onClick="{{ openTransfer }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:#334155"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg>Transfer et</button>
+<sc-if value="{{ notResolved }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ openResolve }}" style="height:32px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Çözüme aktar</button></sc-if>
+<sc-if value="{{ isResolved }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ reopen }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:600;cursor:pointer;color:#334155">Yeniden aç</button></sc-if>
+<button type="button" onClick="{{ openMenu }}" aria-label="Diğer eylemler" style="width:32px;height:32px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#334155;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:14px">
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Durum</div><span onClick="{{ pickStatus }}" title="Durumu değiştir" style="display:inline-flex;align-items:center;gap:8px;margin:6px 0 0 -8px;padding:0 8px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;background:{{ stBg }}" style-hover="background:#f1f5f9"><span style="width:9px;height:9px;border-radius:50%;background:{{ stColor }}"></span>{{ stLabel }}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Öncelik</div><span onClick="{{ pickPrio }}" title="Önceliği değiştir" style="display:inline-flex;align-items:center;gap:8px;margin:6px 0 0 -8px;padding:0 8px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;background:{{ pBg }}" style-hover="background:#f1f5f9"><span style="color:{{ pColor }}">{{ pLabel }}</span><span style="font-weight:400;color:#64748b;font-size:13px">{{ pDesc }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Kalan SLA</div><div style="display:flex;align-items:baseline;gap:8px;margin-top:6px;height:28px"><span style="font-size:14px;font-weight:600;color:{{ slaColor }};font-variant-numeric:tabular-nums">{{ slaText }}</span><span style="font-size:12px;color:#64748b">{{ slaSub }}</span></div><sc-if value="{{ slaHasBar }}" hint-placeholder-val="{{ true }}"><div style="height:3px;border-radius:2px;background:#f1f5f9;margin-top:4px"><div style="width:{{ slaBar }};height:100%;border-radius:2px;background:{{ slaBarColor }}"></div></div></sc-if></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Atanan</div><span onClick="{{ pickAssignee }}" title="Atananı değiştir" style="display:flex;align-items:center;gap:6px;margin:6px 0 0 -8px;padding:0 8px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;max-width:100%;min-width:0;background:{{ aBg }}" style-hover="background:#f1f5f9"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:{{ aColor }};min-width:0">{{ aLabel }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span><div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ aGroup }}</div></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Bekleyen</div><div style="margin-top:6px;height:28px;display:flex;align-items:center"><span style="font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:{{ wBg }};color:{{ wFg }}">{{ wLabel }}</span></div></div>
+<div style="background:#fff;padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;min-width:0"><div style="font-size:11px;font-weight:600;color:#64748b;letter-spacing:.04em;text-transform:uppercase">Talep eden</div><div style="margin-top:6px;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ requester }}</div><div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ requesterSub }}</div></div>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+<div style="flex:1.6 1 460px;min-width:0">
+<div style="display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid #e2e8f0;margin-bottom:12px">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+<button type="button" onClick="{{ t.click }}" style="display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border:0;border-bottom:2px solid {{ t.border }};margin-bottom:-1px;background:transparent;font-weight:{{ t.weight }};color:{{ t.color }};font-size:13px;cursor:pointer">{{ t.label }}<sc-if value="{{ t.hasCount }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:#f1f5f9;color:#334155">{{ t.count }}</span></sc-if></button>
+</sc-for>
+</div>
+
+<sc-if value="{{ tabTalep }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ isEdit }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:#fffbeb;border:1px solid #f1dfae;margin-bottom:12px;font-size:13px;color:#7a5a12"><span style="font-weight:600">Düzenleme modu</span><span>Boş alanlar da görünür; Kaydet ile tek seferde yazılır ve aktiviteye işlenir.</span></div></sc-if>
+<div style="display:grid;gap:12px">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="5">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px 16px">
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;margin-bottom:10px"><div style="font-size:13px;font-weight:600">{{ g.title }}</div><div style="font-size:12px;color:#64748b">{{ g.note }}</div><sc-if value="{{ g.hasHidden }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ g.toggle }}" style="margin-left:auto;border:0;background:transparent;color:#08748e;font-size:12px;font-weight:500;cursor:pointer;padding:0">{{ g.toggleLabel }}</button></sc-if></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(max(220px,50% - 10px),1fr));gap:12px 20px">
+<sc-for list="{{ g.fields }}" as="f" hint-placeholder-count="4">
+<div style="grid-column:{{ f.col }};min-width:0">
+<div style="font-size:12px;color:#64748b;margin-bottom:3px">{{ f.label }}</div>
+<sc-if value="{{ f.isView }}" hint-placeholder-val="{{ true }}"><div style="font-size:13px;line-height:1.5;color:{{ f.valueColor }};overflow-wrap:anywhere">{{ f.display }}</div></sc-if>
+<sc-if value="{{ f.isText }}" hint-placeholder-val="{{ false }}"><input type="text" value="{{ f.value }}" onChange="{{ f.set }}" style="width:100%;box-sizing:border-box;height:32px;border:1px solid #cbd5e1;border-radius:6px;padding:0 10px;font-size:13px;background:#fff;color:#020618;outline:0" style-focus="border-color:#08748e;box-shadow:0 0 0 2px rgba(8,116,142,.15)"></sc-if>
+<sc-if value="{{ f.isArea }}" hint-placeholder-val="{{ false }}"><textarea value="{{ f.value }}" onChange="{{ f.set }}" rows="{{ 4 }}" style="width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;background:#fff;color:#020618;outline:0;resize:vertical" style-focus="border-color:#08748e;box-shadow:0 0 0 2px rgba(8,116,142,.15)"></textarea></sc-if>
+<sc-if value="{{ f.isSelect }}" hint-placeholder-val="{{ false }}"><select value="{{ f.value }}" onChange="{{ f.set }}" style="width:100%;box-sizing:border-box;height:32px;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-size:13px;background:#fff;color:#020618;outline:0" style-focus="border-color:#08748e;box-shadow:0 0 0 2px rgba(8,116,142,.15)"><sc-for list="{{ f.options }}" as="o" hint-placeholder-count="0"><option value="{{ o.v }}">{{ o.l }}</option></sc-for></select></sc-if>
+<sc-if value="{{ f.isBool }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ f.toggle }}" style="display:inline-flex;align-items:center;gap:10px;height:32px;border:0;background:transparent;padding:0;cursor:pointer;font-size:13px;color:#020618"><span style="width:34px;height:20px;border-radius:999px;background:{{ f.boolBg }};position:relative;display:inline-block;transition:background .15s"><span style="position:absolute;top:2px;left:{{ f.knob }}px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:left .15s"></span></span>{{ f.display }}</button></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ isEdit }}" hint-placeholder-val="{{ false }}">
+<div style="position:sticky;bottom:12px;margin-top:12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:#020618;color:#fff;font-size:13px;box-shadow:0 8px 24px rgba(2,6,24,.25)"><span style="font-weight:600">{{ changedText }}</span><span style="color:#94a3b8">Esc iptal eder</span><button type="button" onClick="{{ cancelEdit }}" style="margin-left:auto;height:30px;padding:0 12px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">İptal</button><button type="button" onClick="{{ saveEdit }}" style="height:30px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Kaydet</button></div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ tabIliskili }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;gap:12px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px">
+<div style="display:flex;align-items:baseline;gap:12px;margin-bottom:10px"><div style="font-size:13px;font-weight:600">Bağlı kayıtlar</div><a href="#" onClick="{{ noop }}" style="margin-left:auto;font-size:12px;font-weight:500">+ Kayıt bağla</a></div>
+<sc-for list="{{ related }}" as="x" hint-placeholder-count="2">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 0;border-top:1px solid #f1f5f9;font-size:13px"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#08748e">{{ x.id }}</span><span style="font-weight:500;flex:1;min-width:160px">{{ x.s }}</span><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#f1f5f9;color:#334155">{{ x.rel }}</span><span style="display:inline-flex;align-items:center;gap:6px;color:#334155"><span style="width:8px;height:8px;border-radius:50%;background:{{ x.dot }}"></span>{{ x.st }}</span><span style="font-size:12px;color:#64748b">{{ x.who }}</span></div>
+</sc-for>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="font-size:13px;font-weight:600">Birleştirme önerisi</div><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #08748e;color:#08748e">AI</span></div>
+<div style="font-size:13px;line-height:1.55;color:#334155">REQ-286 "Yeni personel donanım seti" aynı talep eden ve aynı başlangıç tarihini taşıyor; büyük olasılıkla aynı işe alım süreci. Birleştirmek yerine <span style="font-weight:600">üst kayıt</span> olarak bağlamak önerilir.</div>
+<div style="display:flex;gap:8px;margin-top:10px"><button type="button" onClick="{{ linkParent }}" style="height:30px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Üst kayıt olarak bağla</button><button type="button" onClick="{{ noop }}" style="height:30px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:12px;font-weight:500;cursor:pointer;color:#334155">Yoksay</button></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ tabEkler }}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px">
+<div style="font-size:13px;font-weight:600;margin-bottom:10px">Ekler</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 0;border-top:1px solid #f1f5f9;font-size:13px"><span style="width:32px;height:32px;border-radius:8px;background:#fbe9ea;color:#b3282d;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">PDF</span><span style="font-weight:500;flex:1;min-width:160px">yonetici-onayi.pdf</span><span style="font-size:12px;color:#64748b">184 KB · Ayşe Kaya · 26 Ağu 2026 15:15</span><a href="#" onClick="{{ noop }}" style="font-size:12px;font-weight:500">İndir</a></div>
+<div onClick="{{ noop }}" style="margin-top:12px;border:1px dashed #cbd5e1;border-radius:10px;padding:18px;text-align:center;font-size:13px;color:#64748b;cursor:pointer">Dosya sürükleyin ya da <span style="color:#08748e;font-weight:500">seçin</span> · en fazla 5 dosya, 20 MB</div>
+</div>
+</sc-if>
+</div>
+
+<aside style="flex:1 1 320px;min-width:0;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;position:sticky;top:61px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:10px"><div style="font-size:13px;font-weight:600;margin-right:auto">Aktivite</div>
+<sc-for list="{{ filters }}" as="fl" hint-placeholder-count="3"><button type="button" onClick="{{ fl.click }}" style="height:24px;padding:0 9px;border-radius:999px;border:1px solid {{ fl.border }};background:{{ fl.bg }};color:{{ fl.color }};font-size:11px;font-weight:600;cursor:pointer">{{ fl.label }}</button></sc-for>
+</div>
+<div style="border:1px solid #e2e8f0;border-radius:10px;padding:8px 10px 10px;margin-bottom:6px;background:{{ composeBg }}">
+<textarea value="{{ composeText }}" onChange="{{ setComposeText }}" placeholder="{{ composePh }}" rows="{{ 3 }}" style="width:100%;box-sizing:border-box;border:0;outline:0;resize:vertical;font-size:13px;line-height:1.5;background:transparent;color:#020618;padding:0"></textarea>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px">
+<span style="display:inline-flex;border:1px solid #e2e8f0;border-radius:6px;overflow:hidden"><button type="button" onClick="{{ visCustomer }}" style="height:26px;padding:0 10px;border:0;font-size:12px;font-weight:600;cursor:pointer;background:{{ visCBg }};color:{{ visCFg }}">Müşteriye yanıt</button><button type="button" onClick="{{ visInternal }}" style="height:26px;padding:0 10px;border:0;border-left:1px solid #e2e8f0;font-size:12px;font-weight:600;cursor:pointer;background:{{ visIBg }};color:{{ visIFg }}">İç not</button></span>
+<button type="button" onClick="{{ send }}" style="margin-left:auto;height:26px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer;opacity:{{ sendOpacity }}">Gönder</button>
+</div>
+</div>
+<sc-for list="{{ entries }}" as="e" hint-placeholder-count="5">
+<div style="display:grid;grid-template-columns:28px 1fr;gap:10px;padding:10px 0;border-top:1px solid #f1f5f9">
+<span style="width:28px;height:28px;border-radius:50%;background:{{ e.avBg }};color:{{ e.avFg }};font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">{{ e.av }}</span>
+<div style="min-width:0">
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 6px;font-size:13px"><span style="font-weight:600">{{ e.who }}</span><span style="color:#64748b">{{ e.action }}</span><sc-if value="{{ e.hasTag }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:600;padding:1px 6px;border-radius:4px;background:{{ e.tagBg }};color:{{ e.tagFg }}">{{ e.tag }}</span></sc-if><span style="margin-left:auto;font-size:11px;color:#94a3b8;white-space:nowrap">{{ e.time }}</span></div>
+<sc-if value="{{ e.hasText }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;line-height:1.5;margin-top:5px;padding:8px 10px;border-radius:8px;background:{{ e.textBg }};color:#020618">{{ e.text }}</div></sc-if>
+<sc-if value="{{ e.hasChanges }}" hint-placeholder-val="{{ false }}"><div style="display:grid;gap:4px;margin-top:5px;font-size:12px"><sc-for list="{{ e.changes }}" as="c" hint-placeholder-count="1"><div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px"><span style="padding:1px 6px;border-radius:4px;border:1px solid #e2e8f0;font-weight:500">{{ c.f }}</span><span style="color:#94a3b8">{{ c.from }}</span><span style="color:#94a3b8">→</span><span style="font-weight:600">{{ c.to }}</span></div></sc-for></div></sc-if>
+</div>
+</div>
+</sc-for>
+</aside>
+</div>
+</main>
+</div>
+
+<sc-if value="{{ hasPop }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closePop }}" style="position:fixed;inset:0;z-index:30"></div></sc-if>
+
+<sc-if value="{{ popIsOptions }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ popTop }}px;left:{{ popLeft }}px;z-index:60;width:{{ popW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px">{{ popTitle }}</div>
+<sc-for list="{{ popOptions }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;background:{{ o.bg }}" style-hover="background:#f1f5f9"><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dot }};flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }}">{{ o.label }}</span><span style="color:#64748b;font-size:12px">{{ o.desc }}</span><span style="margin-left:auto;color:#08748e;font-size:12px;font-weight:600">{{ o.check }}</span></div>
+</sc-for>
+<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px 8px 4px;font-size:11px;color:#94a3b8;line-height:1.4">Seçim anında kaydedilir ve aktiviteye işlenir</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ popIsTransfer }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ popTop }}px;left:{{ popLeft }}px;z-index:60;width:{{ popW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:12px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618;display:grid;gap:10px">
+<div style="font-weight:600">Transfer et</div>
+<div><div style="font-size:12px;color:#64748b;margin-bottom:3px">Grup</div><select value="{{ trGroup }}" onChange="{{ setTrGroup }}" style="width:100%;box-sizing:border-box;height:32px;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-size:13px;background:#fff;color:#020618;outline:0"><option value="Destek Grup">Destek Grup</option><option value="Erişim Ekibi">Erişim Ekibi</option><option value="Altyapı">Altyapı</option></select></div>
+<div><div style="font-size:12px;color:#64748b;margin-bottom:3px">Kişi</div><select value="{{ trPerson }}" onChange="{{ setTrPerson }}" style="width:100%;box-sizing:border-box;height:32px;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-size:13px;background:#fff;color:#020618;outline:0"><option value="">Gruba bırak (atanmamış)</option><option value="Deniz Acar">Deniz Acar</option><option value="Gökhan Tuna">Gökhan Tuna</option><option value="Zeynep Ural">Zeynep Ural</option></select></div>
+<div><div style="font-size:12px;color:#64748b;margin-bottom:3px">Not (devralan görür)</div><textarea value="{{ trNote }}" onChange="{{ setTrNote }}" rows="{{ 2 }}" placeholder="Neden transfer ediliyor?" style="width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:6px;padding:6px 8px;font-size:13px;line-height:1.5;background:#fff;color:#020618;outline:0;resize:vertical"></textarea></div>
+<div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" onClick="{{ closePop }}" style="height:30px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:12px;font-weight:500;cursor:pointer;color:#334155">Vazgeç</button><button type="button" onClick="{{ doTransfer }}" style="height:30px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Transfer et</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ popIsMenu }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ popTop }}px;left:{{ popLeft }}px;z-index:60;width:{{ popW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
+<sc-for list="{{ menuItems }}" as="m" hint-placeholder-count="4"><div onClick="{{ m.click }}" style="display:flex;align-items:center;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;color:{{ m.color }}" style-hover="background:#f8fafc">{{ m.label }}</div></sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeDrawer }}" style="position:fixed;inset:0;background:rgba(2,6,24,.35);z-index:70"></div>
+<div style="position:fixed;top:0;right:0;bottom:0;width:460px;max-width:100vw;box-sizing:border-box;background:#fff;z-index:80;box-shadow:-12px 0 32px rgba(2,6,24,.18);display:flex;flex-direction:column;font-family:Inter,system-ui,sans-serif;color:#020618">
+<div style="display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid #e2e8f0"><div><div style="font-size:16px;font-weight:700">Çözüme aktar</div><div style="font-size:12px;color:#64748b;margin-top:2px">{{ id }} · {{ title }}</div></div><button type="button" onClick="{{ closeDrawer }}" aria-label="Kapat" style="margin-left:auto;width:32px;height:32px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:16px;color:#64748b">×</button></div>
+<div style="flex:1;overflow:auto;padding:20px;display:grid;gap:16px;align-content:start">
+<div><div style="font-size:12px;color:#64748b;margin-bottom:4px">Çözüm kodu <span style="color:#d23f43">*</span></div><select value="{{ rsCode }}" onChange="{{ setRsCode }}" style="width:100%;box-sizing:border-box;height:34px;border:1px solid #cbd5e1;border-radius:6px;padding:0 8px;font-size:13px;background:#fff;color:#020618;outline:0"><option value="karsilandi">Talep karşılandı</option><option value="bilgi">Bilgi verildi</option><option value="yinelenen">Yinelenen kayıt</option><option value="iptal">Talep eden iptal etti</option></select></div>
+<div><div style="font-size:12px;color:#64748b;margin-bottom:4px">Çözüm açıklaması <span style="color:#d23f43">*</span> <span style="color:#94a3b8">· müşteriye gönderilir</span></div><textarea value="{{ rsText }}" onChange="{{ setRsText }}" rows="{{ 5 }}" placeholder="Ne yapıldı, kullanıcı ne yapmalı?" style="width:100%;box-sizing:border-box;border:1px solid {{ rsBorder }};border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5;background:#fff;color:#020618;outline:0;resize:vertical"></textarea><sc-if value="{{ rsErr }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#d23f43;margin-top:4px">Çözüm açıklaması zorunlu.</div></sc-if></div>
+<div style="border:1px solid #e2e8f0;border-radius:10px;padding:12px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="font-size:13px;font-weight:600">Bilgi Bankası eşleşmesi</div><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #08748e;color:#08748e">AI</span></div>
+<label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;line-height:1.5"><input type="checkbox" checked="{{ rsKb }}" onChange="{{ toggleRsKb }}" style="margin-top:3px"><span><span style="font-weight:600">KB-214 · VPN erişim tanımı ve ilk bağlantı adımları</span><br><span style="color:#64748b">Bu kategoride son 30 günde 6 çözüme bağlandı. İşaretlenirse bağlantı yanıta eklenir ve makale kullanım sayısı artar.</span></span></label>
+</div>
+<label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px"><input type="checkbox" checked="{{ rsNotify }}" onChange="{{ toggleRsNotify }}">Müşteriye e-posta ile bildir ve 3 iş günü sonra otomatik kapat</label>
+<div style="font-size:12px;color:#64748b;line-height:1.5;padding:10px 12px;border-radius:8px;background:#f8fafc">Çözüme aktarınca SLA sayacı durur ve "Tutuldu" olarak kaydedilir; müşteri 3 iş günü içinde itiraz etmezse kayıt Kapalı'ya geçer.</div>
+</div>
+<div style="display:flex;gap:10px;justify-content:flex-end;padding:14px 20px;border-top:1px solid #e2e8f0"><button type="button" onClick="{{ closeDrawer }}" style="height:34px;padding:0 14px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer;color:#334155">Vazgeç</button><button type="button" onClick="{{ doResolve }}" style="height:34px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Çözümü kaydet</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);font-family:Inter,system-ui,sans-serif;max-width:480px">{{ toastText }}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ustBar&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;acik&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;acik&quot;,&quot;koyu&quot;],&quot;section&quot;:&quot;Kabuk&quot;}}">
+class Component extends DCLogic {
+  static ME = 'admin admin';
+  static ST = { acik: ['Açık', '#4c7bd9'], calisiliyor: ['Çalışılıyor', '#e39b2c'], bekleniyor: ['Bekleniyor', '#94a3b8'], cozuldu: ['Çözüldü', '#2fa886'] };
+  static ORDER = ['acik', 'calisiliyor', 'bekleniyor', 'cozuldu'];
+  static PC = { 1: '#d23f43', 2: '#b16a08', 3: '#334155', 4: '#64748b' };
+  static PD = { 1: 'Kritik', 2: 'Yüksek', 3: 'Orta', 4: 'Düşük' };
+  static SUM = { 'REQ-282': 'VPN erişimi — yeni personel', 'REQ-278': 'Şifre değiştirme talebi', 'REQ-268': 'Ortak klasöre yazma yetkisi', 'REQ-263': 'Yeni grup tanımı — Destek Grup', 'REQ-273': 'Test ve canlı ortamlarda workflow erişim hatası', 'REQ-259': 'E-posta dağıtım listesi güncellemesi' };
+  static GROUP_OF = { 'admin admin': 'Destek Grup', 'Deniz Acar': 'Destek Grup', 'Gökhan Tuna': 'Destek Grup', 'Zeynep Ural': 'Erişim Ekibi' };
+  static OPT = {
+    source: [['portal', 'Self servis portal'], ['email', 'E-posta'], ['phone', 'Telefon'], ['walkin', 'Yüz yüze']],
+    type: [['erisim', 'Erişim Hizmetleri'], ['uygulama', 'Uygulamalar'], ['donanim', 'Donanım'], ['hesap', 'Hesap Operasyonları']],
+    impact: [['tek', 'Tek kullanıcı'], ['ekip', 'Ekip'], ['birim', 'Birim'], ['kurum', 'Kurum geneli']],
+    group: [['Destek Grup', 'Destek Grup'], ['Erişim Ekibi', 'Erişim Ekibi'], ['Altyapı', 'Altyapı']],
+    assignee: [['', '— Atanmamış'], ['admin admin', 'admin admin (ben)'], ['Deniz Acar', 'Deniz Acar'], ['Gökhan Tuna', 'Gökhan Tuna'], ['Zeynep Ural', 'Zeynep Ural']]
+  };
+  static GROUPS = [
+    { key: 'talep', title: 'Talep', note: '', fields: [{ k: 's', label: 'Özet', type: 'text', span: 2 }, { k: 'desc', label: 'Açıklama', type: 'area', span: 2 }] },
+    { key: 'eden', title: 'Talep eden', note: '', fields: [{ k: 'requester', label: 'Talebi ileten', type: 'text' }, { k: 'email', label: 'E-posta', type: 'text' }, { k: 'dept', label: 'Departman', type: 'text' }, { k: 'loc', label: 'Lokasyon', type: 'text' }, { k: 'source', label: 'Kaynak', type: 'select', opt: 'source' }, { k: 'company', label: 'Şirket', type: 'text' }] },
+    { key: 'sinif', title: 'Sınıflandırma', note: 'Öncelik ve durum üstteki şeritte', fields: [{ k: 'type', label: 'Talep tipi', type: 'select', opt: 'type' }, { k: 'catalog', label: 'Katalog öğesi', type: 'text' }, { k: 'item', label: 'Talep öğesi', type: 'text' }, { k: 'impact', label: 'Etki', type: 'select', opt: 'impact' }] },
+    { key: 'atama', title: 'Atama ve zaman', note: '', fields: [{ k: 'group', label: 'Grup', type: 'select', opt: 'group' }, { k: 'assignee', label: 'Atanan', type: 'select', opt: 'assignee' }, { k: 'created', label: 'Oluşturulma', type: 'text', ro: true }, { k: 'target', label: 'Hedeflenen tamamlanma (SLA)', type: 'text', ro: true }, { k: 'done', label: 'Tamamlanma', type: 'text', ro: true }, { k: 'updated', label: 'Son güncelleme', type: 'text', ro: true }] },
+    { key: 'onay', title: 'Onay ve maliyet', note: '', fields: [{ k: 'approvalNeeded', label: 'Onay gerekli', type: 'bool' }, { k: 'approver', label: 'Onaylayan', type: 'text' }, { k: 'billable', label: 'Ücrete tabi', type: 'bool' }, { k: 'purchase', label: 'Satın alma gerekli', type: 'bool' }, { k: 'costCenter', label: 'Maliyet merkezi', type: 'text' }, { k: 'vendor', label: 'Tedarikçi', type: 'text' }, { k: 'manager', label: 'Yönetici bilgisi', type: 'text', span: 2 }] }
+  ];
+  constructor(props) {
+    super(props);
+    const q = new URLSearchParams(window.location.search);
+    const id = /^REQ-\d+$/.test(q.get('id') || '') ? q.get('id') : 'REQ-282';
+    const s = Component.SUM[id] || Component.SUM['REQ-282'];
+    this.state = {
+      id, mode: q.get('mode') === 'edit' ? 'edit' : 'view', tab: 'talep', st: 'calisiliyor', p: 2, sla: 42, tot: 480, w: 'ben',
+      vals: { s, desc: "1 Eylül'de göreve başlayan yeni satış temsilcisi Deniz Yalçın için VPN erişimi gerekiyor. Yönetici onayı ekte; erişim CRM ve dosya sunucusu ile sınırlı olmalı.", requester: 'Ayşe Kaya', email: 'ayse.kaya@btbilgi.com.tr', dept: 'Satış', loc: 'İstanbul – Maslak', source: 'portal', company: 'BT Bilgi', type: 'erisim', catalog: 'VPN', item: 'Yeni kullanıcı erişimi', impact: 'tek', group: 'Destek Grup', assignee: 'admin admin', created: '26 Ağu 2026 15:15', target: '26 Ağu 2026 23:15', done: '', updated: '31 Ağu 2026 13:18', approvalNeeded: true, approver: 'M. Demir · Satış Müdürü · 26 Ağu 16:02 onayladı', billable: false, purchase: false, costCenter: '', vendor: '', manager: '' },
+      draft: null, showEmpty: {}, pop: null, drawer: null, filter: 'all', toast: '', linked: false,
+      transfer: { group: 'Destek Grup', person: 'Deniz Acar', note: '' },
+      resolve: { code: 'karsilandi', text: '', kb: true, notify: true, err: false },
+      compose: { text: '', vis: 'customer' },
+      timeline: [
+        { time: '31 Ağu 2026 13:18', who: 'admin admin', kind: 'system', action: '2 alanı güncelledi', changes: [{ f: 'Grup', from: '—', to: 'Destek Grup' }, { f: 'Atanan', from: 'talha zambak', to: 'admin admin' }] },
+        { time: '27 Ağu 2026 09:40', who: 'admin admin', kind: 'note', action: 'iç not ekledi', text: 'Yönetici onayı geldi; hesap açılışı için AD ekibine iletildi. Erişim kapsamı CRM + dosya sunucusu.' },
+        { time: '26 Ağu 2026 16:02', who: 'M. Demir', kind: 'approval', action: 'talebi onayladı', text: 'Satış Müdürü · "Uygun, 1 Eylül itibarıyla."' },
+        { time: '26 Ağu 2026 15:20', who: 'admin admin', kind: 'comment', action: 'müşteriye yanıt yazdı', text: 'Merhaba Ayşe Hanım, talebinizi aldık. Yönetici onayının ardından erişim 1 iş günü içinde tanımlanacak.' },
+        { time: '26 Ağu 2026 15:15', who: 'Sistem', kind: 'email', action: 'e-posta gönderdi', text: 'Alıcı: ayse.kaya@btbilgi.com.tr · "' + id + ' talebiniz alındı"' },
+        { time: '26 Ağu 2026 15:15', who: 'Sistem', kind: 'system', action: '2 alanı güncelledi', changes: [{ f: 'Durum', from: '—', to: 'Açık' }, { f: 'Talep numarası', from: '—', to: id }] },
+        { time: '26 Ağu 2026 15:15', who: 'Ayşe Kaya', kind: 'created', action: 'talebi oluşturdu · Self servis portal' }
+      ]
+    };
+  }
+  toast(msg) { this.setState({ toast: msg }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: '' }), 3400); }
+  componentDidMount() { this._kd = ev => { if (ev.key !== 'Escape') return; if (this.state.pop) this.setState({ pop: null }); else if (this.state.drawer) this.setState({ drawer: null }); else if (this.state.mode === 'edit') this.cancelEdit(); }; window.addEventListener('keydown', this._kd); }
+  componentWillUnmount() { clearTimeout(this._tt); window.removeEventListener('keydown', this._kd); }
+  now() { const d = new Date(), ay = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara']; return d.getDate() + ' ' + ay[d.getMonth()] + ' ' + d.getFullYear() + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
+  fmtSla(m) { m = Math.abs(m); if (m >= 1440) return Math.floor(m / 1440) + 'g ' + String(Math.floor((m % 1440) / 60)).padStart(2, '0') + 's'; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
+  log(entry) { this.setState(st => ({ timeline: [{ time: this.now(), who: Component.ME, ...entry }, ...st.timeline], vals: { ...st.vals, updated: this.now() } })); }
+  optLabel(opt, v) { const o = (Component.OPT[opt] || []).find(x => x[0] === v); return o ? o[1] : v; }
+  openPop(kind, ev) {
+    const rc = ev.currentTarget.getBoundingClientRect();
+    const w = kind === 'transfer' ? 300 : kind === 'menu' ? 200 : kind === 'assignee' ? 236 : 200;
+    const n = kind === 'transfer' ? 9 : kind === 'assignee' ? 5 : 4;
+    const hgt = 46 + n * 32 + 34;
+    let top = rc.bottom + 4; if (top + hgt > window.innerHeight - 8) top = Math.max(8, rc.top - hgt - 4);
+    const left = Math.max(8, Math.min(kind === 'menu' || kind === 'transfer' ? rc.right - w : rc.left, window.innerWidth - w - 8));
+    const same = this.state.pop && this.state.pop.kind === kind;
+    this.setState({ pop: same ? null : { kind, top, left, w } });
+  }
+  setStatus(k) {
+    const prev = this.state.st; if (k === prev) { this.setState({ pop: null }); return; }
+    const patch = { st: k, pop: null };
+    if (k === 'cozuldu') { patch.sla = null; patch.w = null; }
+    else if (k === 'bekleniyor') { patch.sla = null; patch.w = 'musteri'; }
+    else { if (this.state.sla === null) patch.sla = Math.round(this.state.tot * 0.6); patch.w = this.state.vals.assignee ? 'ben' : 'atama'; }
+    this.setState(patch);
+    this.log({ kind: 'system', action: 'durumu değiştirdi', changes: [{ f: 'Durum', from: Component.ST[prev][0], to: Component.ST[k][0] }] });
+    this.toast('Durum: ' + Component.ST[k][0]);
+  }
+  setPrio(p) { const prev = this.state.p; this.setState({ p, pop: null }); if (p !== prev) { this.log({ kind: 'system', action: 'önceliği değiştirdi', changes: [{ f: 'Öncelik', from: 'P' + prev, to: 'P' + p }] }); this.toast('Öncelik: P' + p + ' · ' + Component.PD[p]); } }
+  setAssignee(a) {
+    const prev = this.state.vals.assignee; this.setState({ pop: null }); if (a === prev) return;
+    const g = a ? (Component.GROUP_OF[a] || this.state.vals.group) : this.state.vals.group;
+    this.setState(st => ({ vals: { ...st.vals, assignee: a, group: g }, w: st.st === 'cozuldu' ? null : (a ? (st.w === 'musteri' || st.w === 'ucuncu' ? st.w : 'ben') : 'atama') }));
+    this.log({ kind: 'system', action: 'atananı değiştirdi', changes: [{ f: 'Atanan', from: prev || '—', to: a || '—' }] });
+    this.toast('Atanan: ' + (a || 'atanmamış') + (a && a !== Component.ME ? ' · kayıt Ekibimin kuyruğuna geçti' : ''));
+  }
+  doTransfer() {
+    const t = this.state.transfer, prev = this.state.vals;
+    const ch = []; if (t.group !== prev.group) ch.push({ f: 'Grup', from: prev.group, to: t.group }); if ((t.person || '') !== (prev.assignee || '')) ch.push({ f: 'Atanan', from: prev.assignee || '—', to: t.person || '—' });
+    this.setState(st => ({ pop: null, vals: { ...st.vals, group: t.group, assignee: t.person }, w: st.st === 'cozuldu' ? null : (t.person ? 'ben' : 'atama') }));
+    this.log({ kind: 'system', action: 'transfer etti', changes: ch.length ? ch : [{ f: 'Grup', from: prev.group, to: t.group }], text: t.note.trim() || undefined });
+    this.toast('Transfer edildi → ' + t.group + (t.person ? ' · ' + t.person : ' · atanmamış'));
+  }
+  doResolve() {
+    const r = this.state.resolve;
+    if (!r.text.trim()) { this.setState(st => ({ resolve: { ...st.resolve, err: true } })); return; }
+    const codeLabel = { karsilandi: 'Talep karşılandı', bilgi: 'Bilgi verildi', yinelenen: 'Yinelenen kayıt', iptal: 'Talep eden iptal etti' }[r.code];
+    this.setState(st => ({ drawer: null, st: 'cozuldu', sla: null, w: null, vals: { ...st.vals, done: this.now() }, resolve: { ...st.resolve, err: false } }));
+    if (r.notify) this.log({ kind: 'email', who: 'Sistem', action: 'çözüm bildirimi gönderdi', text: 'Alıcı: ' + this.state.vals.email + ' · 3 iş günü içinde itiraz edilmezse kapanır' });
+    this.log({ kind: 'comment', action: 'çözüm yazdı', text: r.text.trim() + (r.kb ? ' — İlgili makale: KB-214' : '') });
+    this.log({ kind: 'system', action: 'çözüme aktardı', changes: [{ f: 'Durum', from: Component.ST[this.state.st][0], to: 'Çözüldü' }, { f: 'Çözüm kodu', from: '—', to: codeLabel }] });
+    this.toast('Çözüme aktarıldı · SLA tutuldu' + (r.kb ? ' · KB-214 bağlandı' : ''));
+  }
+  reopen() { const prev = this.state.st; this.setState(st => ({ st: 'acik', sla: Math.round(st.tot * 0.6), w: st.vals.assignee ? 'ben' : 'atama', vals: { ...st.vals, done: '' } })); this.log({ kind: 'system', action: 'yeniden açtı', changes: [{ f: 'Durum', from: Component.ST[prev][0], to: 'Açık' }] }); this.toast('Kayıt yeniden açıldı · SLA kaldığı yerden devam ediyor'); }
+  startEdit() { this.setState(st => ({ mode: 'edit', draft: { ...st.vals }, pop: null })); }
+  cancelEdit() { this.setState({ mode: 'view', draft: null }); }
+  saveEdit() {
+    const d = this.state.draft, v = this.state.vals; if (!d) return;
+    const label = {}; Component.GROUPS.forEach(g => g.fields.forEach(f => { label[f.k] = f; }));
+    const disp = (f, val) => f.type === 'bool' ? (val ? 'Evet' : 'Hayır') : f.type === 'select' ? this.optLabel(f.opt, val) : (val || '—');
+    const ch = Object.keys(d).filter(k => d[k] !== v[k] && !(label[k] && label[k].ro)).map(k => ({ f: label[k].label, from: disp(label[k], v[k]), to: disp(label[k], d[k]) }));
+    this.setState({ mode: 'view', draft: null, vals: { ...v, ...d } });
+    if (ch.length) { this.log({ kind: 'system', action: ch.length + ' alanı güncelledi', changes: ch }); this.toast('Kaydedildi · ' + ch.length + ' alan değişti'); } else this.toast('Değişiklik yok');
+  }
+  send() {
+    const c = this.state.compose; if (!c.text.trim()) return;
+    this.log(c.vis === 'customer' ? { kind: 'comment', action: 'müşteriye yanıt yazdı', text: c.text.trim() } : { kind: 'note', action: 'iç not ekledi', text: c.text.trim() });
+    this.setState(st => ({ compose: { ...st.compose, text: '' }, w: c.vis === 'customer' && st.st !== 'cozuldu' ? 'musteri' : st.w }));
+    this.toast(c.vis === 'customer' ? 'Yanıt gönderildi · e-posta ile iletildi · sıra müşteride' : 'İç not eklendi');
+  }
+  renderVals() {
+    const s = this.state, ST = Component.ST, ORDER = Component.ORDER, ME = Component.ME;
+    const isEdit = s.mode === 'edit', vals = isEdit ? s.draft : s.vals;
+    const st = ST[s.st];
+    let slaText, slaColor = '#334155', slaSub = '', slaHasBar = false, slaBar = '0%', slaBarColor = '#94a3b8';
+    if (s.st === 'cozuldu') { slaText = 'Tutuldu ✓'; slaColor = '#1f8a6f'; slaSub = 'hedef ' + s.vals.target.slice(-5); }
+    else if (s.st === 'bekleniyor') { slaText = 'Duraklatıldı'; slaColor = '#64748b'; slaSub = 'müşteri yanıtı bekleniyor'; }
+    else { slaText = this.fmtSla(s.sla); slaSub = 'hedef ' + s.vals.target.slice(-5); slaHasBar = true; slaBar = Math.max(4, Math.round((1 - s.sla / s.tot) * 100)) + '%'; if (s.sla < 60) { slaColor = '#d23f43'; slaBarColor = '#d23f43'; } else if (s.sla < 240) { slaColor = '#b16a08'; slaBarColor = '#e39b2c'; } }
+    const W = s.st === 'cozuldu' || !s.w ? ['Kapanış bekliyor', '#f1f5f9', '#334155'] : s.w === 'ben' ? (s.vals.assignee === ME ? ['Benim sıramda', '#e6f4f1', '#0f5c4d'] : ['Atananda', '#f1f5f9', '#334155']) : s.w === 'musteri' ? ['Müşteri yanıtı', '#fdf1e0', '#9a5b0a'] : s.w === 'ucuncu' ? ['Üçüncü taraf', '#f1f5f9', '#334155'] : ['Atama bekliyor', '#fdf1e0', '#9a5b0a'];
+    const popIs = k => !!s.pop && s.pop.kind === k;
+    const groups = Component.GROUPS.map(g => {
+      const show = !!s.showEmpty[g.key];
+      const isEmptyVal = f => f.type === 'bool' ? false : !(vals[f.k] && String(vals[f.k]).trim());
+      const hidden = isEdit ? 0 : g.fields.filter(f => !f.ro && isEmptyVal(f)).length;
+      const fields = g.fields.filter(f => isEdit || f.ro || f.type === 'bool' || show || !isEmptyVal(f)).map(f => {
+        const val = vals[f.k]; const editable = isEdit && !f.ro;
+        const display = f.type === 'bool' ? (val ? 'Evet' : 'Hayır') : f.type === 'select' ? this.optLabel(f.opt, val) : (val && String(val).trim() ? val : '—');
+        return { label: f.label, col: f.span === 2 ? '1 / -1' : 'auto', isView: !editable, display, valueColor: display === '—' ? '#94a3b8' : '#020618', value: val === undefined || val === null ? '' : val,
+          isText: editable && f.type === 'text', isArea: editable && f.type === 'area', isSelect: editable && f.type === 'select', isBool: editable && f.type === 'bool',
+          options: f.opt ? Component.OPT[f.opt].map(o => ({ v: o[0], l: o[1] })) : [], boolBg: val ? '#08748e' : '#cbd5e1', knob: val ? 16 : 2,
+          set: ev => { const v = ev.target.value; this.setState(stt => ({ draft: { ...stt.draft, [f.k]: v } })); }, toggle: () => this.setState(stt => ({ draft: { ...stt.draft, [f.k]: !stt.draft[f.k] } })) };
+      });
+      return { title: g.title, note: g.note, fields, hasHidden: hidden > 0, toggleLabel: show ? 'Boş alanları gizle' : hidden + ' boş alanı göster', toggle: () => this.setState(stt => ({ showEmpty: { ...stt.showEmpty, [g.key]: !stt.showEmpty[g.key] } })) };
+    });
+    const changed = isEdit ? Object.keys(s.draft).filter(k => s.draft[k] !== s.vals[k]).length : 0;
+    const tabs = [['talep', 'Talep', 0], ['iliskili', 'İlişkili', s.linked ? 3 : 2], ['ekler', 'Ekler', 1]].map(([k, label, count]) => { const on = s.tab === k; return { label, count, hasCount: count > 0, border: on ? '#08748e' : 'transparent', color: on ? '#020618' : '#64748b', weight: on ? 600 : 500, click: () => this.setState({ tab: k }) }; });
+    const filters = [['all', 'Tümü'], ['comments', 'Yorumlar'], ['system', 'Sistem']].map(([k, label]) => { const on = s.filter === k; return { label, border: on ? '#08748e' : '#e2e8f0', bg: on ? '#e6f4f1' : '#fff', color: on ? '#0f5c4d' : '#64748b', click: () => this.setState({ filter: k }) }; });
+    const AV = { system: ['⟳', '#f1f5f9', '#64748b'], email: ['✉', '#f1f5f9', '#64748b'], approval: ['✓', '#e6f4f1', '#0f5c4d'], created: ['+', '#f1f5f9', '#64748b'] };
+    const initials = n => n.split(' ').map(x => x[0]).join('').slice(0, 2).toUpperCase();
+    const entries = s.timeline.filter(e => s.filter === 'all' || (s.filter === 'comments' ? (e.kind === 'comment' || e.kind === 'note') : (e.kind !== 'comment' && e.kind !== 'note'))).map(e => {
+      const person = e.kind === 'comment' || e.kind === 'note' || (e.kind === 'system' && e.who !== 'Sistem');
+      const av = person ? [initials(e.who), e.who === ME ? '#08748e' : '#e6f4f1', e.who === ME ? '#fff' : '#0f5c4d'] : (AV[e.kind] || AV.system);
+      return { who: e.who, action: e.action, time: e.time, av: av[0], avBg: av[1], avFg: av[2], hasText: !!e.text, text: e.text || '', textBg: e.kind === 'note' ? '#fffbeb' : e.kind === 'comment' ? '#f0f9fb' : '#f8fafc', hasChanges: !!(e.changes && e.changes.length), changes: e.changes || [],
+        hasTag: e.kind === 'comment' || e.kind === 'note', tag: e.kind === 'comment' ? 'Müşteriye görünür' : 'İç not', tagBg: e.kind === 'comment' ? '#e6f4f1' : '#fdf1e0', tagFg: e.kind === 'comment' ? '#0f5c4d' : '#9a5b0a' };
+    });
+    const opt = (label, on, extra) => ({ label, hasDot: false, dot: '', desc: '', weight: 500, color: '#020618', check: on ? '✓' : '', bg: on ? '#f8fafc' : 'transparent', ...extra });
+    const popOptions = popIs('status') ? ORDER.map(k => opt(ST[k][0], s.st === k, { hasDot: true, dot: ST[k][1], pick: () => this.setStatus(k) }))
+      : popIs('prio') ? [1, 2, 3, 4].map(p => opt('P' + p, s.p === p, { desc: Component.PD[p], weight: 600, color: Component.PC[p], pick: () => this.setPrio(p) }))
+      : popIs('assignee') ? Component.OPT.assignee.map(([v, label]) => opt(label, (s.vals.assignee || '') === v, { desc: Component.GROUP_OF[v] || '', pick: () => this.setAssignee(v) })) : [];
+    const related = [
+      { id: 'INC-20493', s: 'VPN bağlantı kopması — Maslak', rel: 'İlgili olay', st: 'Açık', dot: '#4c7bd9', who: 'Gökhan Tuna' },
+      { id: 'REQ-266', s: 'VPN token yenileme', rel: 'Benzer talep', st: 'Çözüldü', dot: '#2fa886', who: 'Tolga Işık' },
+      ...(s.linked ? [{ id: 'REQ-286', s: 'Yeni personel donanım seti', rel: 'Üst kayıt', st: 'Açık', dot: '#4c7bd9', who: 'İK Servisi' }] : [])
+    ];
+    const menuItems = [['Bağlantıyı kopyala', () => this.toast('Bağlantı kopyalandı')], ['Takip et', () => this.toast(s.id + ' takip listenize eklendi')], ['Birleştir…', () => this.toast('Birleştirme — kayıt seçici, sıradaki adım')], ['Yazdır / PDF', () => this.toast('PDF hazırlanıyor')]].map(([label, fn]) => ({ label, color: '#020618', click: () => { this.setState({ pop: null }); fn(); } }));
+    const c = s.compose, r = s.resolve, t = s.transfer;
+    return {
+      ustBar: this.props.ustBar ?? 'acik',
+      id: s.id, title: s.vals.s, isView: !isEdit, isEdit, notResolved: s.st !== 'cozuldu', isResolved: s.st === 'cozuldu',
+      startEdit: () => this.startEdit(), cancelEdit: () => this.cancelEdit(), saveEdit: () => this.saveEdit(), changedText: changed ? changed + ' alan değişti' : 'Henüz değişiklik yok',
+      openTransfer: ev => this.openPop('transfer', ev), openResolve: () => this.setState({ drawer: 'resolve', pop: null }), reopen: () => this.reopen(), openMenu: ev => this.openPop('menu', ev),
+      stLabel: st[0], stColor: st[1], stBg: popIs('status') ? '#f1f5f9' : 'transparent', pickStatus: ev => this.openPop('status', ev),
+      pLabel: 'P' + s.p, pDesc: Component.PD[s.p], pColor: Component.PC[s.p], pBg: popIs('prio') ? '#f1f5f9' : 'transparent', pickPrio: ev => this.openPop('prio', ev),
+      slaText, slaColor, slaSub, slaHasBar, slaBar, slaBarColor,
+      aLabel: s.vals.assignee || 'Atanmamış', aColor: s.vals.assignee ? '#020618' : '#94a3b8', aGroup: s.vals.group, aBg: popIs('assignee') ? '#f1f5f9' : 'transparent', pickAssignee: ev => this.openPop('assignee', ev),
+      wLabel: W[0], wBg: W[1], wFg: W[2], requester: s.vals.requester, requesterSub: s.vals.dept + ' · ' + s.vals.email,
+      tabs, tabTalep: s.tab === 'talep', tabIliskili: s.tab === 'iliskili', tabEkler: s.tab === 'ekler', groups, related, linkParent: () => { this.setState({ linked: true }); this.log({ kind: 'system', action: 'üst kayıt bağladı', changes: [{ f: 'Üst kayıt', from: '—', to: 'REQ-286' }] }); this.toast('REQ-286 üst kayıt olarak bağlandı'); }, noop: ev => { if (ev && ev.preventDefault) ev.preventDefault(); },
+      filters, entries, composeText: c.text, setComposeText: ev => { const v = ev.target.value; this.setState(stt => ({ compose: { ...stt.compose, text: v } })); }, composePh: c.vis === 'customer' ? 'Müşteriye yanıt yazın… e-posta ile de gider' : 'Yalnızca ekibin göreceği not…', composeBg: c.vis === 'customer' ? '#fff' : '#fffbeb',
+      visCustomer: () => this.setState(stt => ({ compose: { ...stt.compose, vis: 'customer' } })), visInternal: () => this.setState(stt => ({ compose: { ...stt.compose, vis: 'internal' } })),
+      visCBg: c.vis === 'customer' ? '#08748e' : '#fff', visCFg: c.vis === 'customer' ? '#fff' : '#334155', visIBg: c.vis === 'internal' ? '#b16a08' : '#fff', visIFg: c.vis === 'internal' ? '#fff' : '#334155',
+      send: () => this.send(), sendOpacity: c.text.trim() ? 1 : 0.5,
+      hasPop: !!s.pop, closePop: () => this.setState({ pop: null }), popTop: s.pop ? s.pop.top : 0, popLeft: s.pop ? s.pop.left : 0, popW: s.pop ? s.pop.w : 200,
+      popIsOptions: popIs('status') || popIs('prio') || popIs('assignee'), popTitle: popIs('status') ? 'Durum' : popIs('prio') ? 'Öncelik' : 'Atanan', popOptions,
+      popIsTransfer: popIs('transfer'), trGroup: t.group, trPerson: t.person, trNote: t.note, setTrGroup: ev => { const v = ev.target.value; this.setState(stt => ({ transfer: { ...stt.transfer, group: v } })); }, setTrPerson: ev => { const v = ev.target.value; this.setState(stt => ({ transfer: { ...stt.transfer, person: v } })); }, setTrNote: ev => { const v = ev.target.value; this.setState(stt => ({ transfer: { ...stt.transfer, note: v } })); }, doTransfer: () => this.doTransfer(),
+      popIsMenu: popIs('menu'), menuItems,
+      drawerOpen: s.drawer === 'resolve', closeDrawer: () => this.setState({ drawer: null }), rsCode: r.code, setRsCode: ev => { const v = ev.target.value; this.setState(stt => ({ resolve: { ...stt.resolve, code: v } })); }, rsText: r.text, setRsText: ev => { const v = ev.target.value; this.setState(stt => ({ resolve: { ...stt.resolve, text: v, err: false } })); }, rsBorder: r.err ? '#d23f43' : '#cbd5e1', rsErr: r.err, rsKb: r.kb, toggleRsKb: () => this.setState(stt => ({ resolve: { ...stt.resolve, kb: !stt.resolve.kb } })), rsNotify: r.notify, toggleRsNotify: () => this.setState(stt => ({ resolve: { ...stt.resolve, notify: !stt.resolve.notify } })), doResolve: () => this.doResolve(),
+      hasToast: !!s.toast, toastText: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

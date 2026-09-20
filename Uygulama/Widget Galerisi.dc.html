@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} input,button,select{font-family:inherit;}</style>
+</helmet>
+<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 5 · Sektör widget paketleri</span><span style="color:#64748b">Deneyin: soldan sektör seç → "Paketi kur" → alanları eşle → widget'ları ekle · arama kutusu çalışır</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Kademe 3 Konseptler.dc.html#k5" style="color:#fff">Analiz</a></div>
+<div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" hint-size="100%,49px"></dc-import></div>
+<div style="display:flex;align-items:flex-start">
+<div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" style="height:100%" hint-size="256px,100%"></dc-import></div>
+<main style="flex:1;min-width:0;padding:16px 24px 48px;background:#f8fafc;min-height:calc(100vh - 77px);box-sizing:border-box">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;margin-bottom:16px">
+<h1 style="font-size:20px;font-weight:700;margin:0 auto 0 0">Widget galerisi</h1>
+<div style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;min-width:240px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><input value="{{ search }}" onChange="{{ setSearch }}" placeholder="Widget ara…" style="border:0;outline:0;font-size:13px;flex:1;min-width:0;background:transparent;color:#020618"></div>
+<a href="Dogal Dil Widget.dc.html" style="font-size:13px;font-weight:500">Yazarak oluştur →</a>
+</div>
+
+<div style="display:grid;grid-template-columns:190px minmax(0,1fr);gap:16px;align-items:start">
+<div style="display:grid;gap:2px;font-size:13px">
+<sc-for list="{{ sectors }}" as="s" hint-placeholder-count="6"><button type="button" onClick="{{ s.select }}" style="height:34px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:6px;border:1px solid {{ s.border }};background:{{ s.bg }};font-size:13px;font-weight:{{ s.w }};color:#020618;cursor:pointer;text-align:left"><span style="flex:1">{{ s.label }}</span><sc-if value="{{ s.installed }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1f8a6f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></button></sc-for>
+<div style="margin-top:10px;padding:10px;border-radius:8px;background:#f8fafc;font-size:12px;color:#64748b;line-height:1.5">Kurulu paket: {{ installedCount }} · Eklenen widget: {{ addedCount }}</div>
+</div>
+
+<div style="display:grid;gap:14px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px">
+<div style="margin-right:auto;min-width:0"><div style="font-size:16px;font-weight:600">{{ pack.name }}</div><div style="font-size:13px;color:#64748b;margin-top:2px">{{ pack.desc }}</div></div>
+<span style="font-size:12px;color:{{ pack.readyColor }}">{{ pack.readyText }}</span>
+<sc-if value="{{ pack.notInstalled }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ openInstall }}" style="height:32px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Paketi kur</button></sc-if>
+<sc-if value="{{ pack.installed }}" hint-placeholder-val="{{ false }}"><span style="height:32px;padding:0 12px;border-radius:6px;background:#e6f4f1;color:#0f5c4d;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Kurulu</span><button type="button" onClick="{{ openInstall }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Alan eşlemesi</button></sc-if>
+</div>
+
+<sc-if value="{{ isTelco }}" hint-placeholder-val="{{ true }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px"><div style="font-size:14px;font-weight:600">Öne çıkan · Hücre / saha kesinti haritası</div><span style="font-size:12px;color:#64748b">önizleme · demo verisi</span></div>
+<div style="display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:14px">
+<div style="min-height:200px;border-radius:10px;border:1px dashed #cbd5e1;background:#f8fafc;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px"><div style="font-size:13px;color:#64748b;line-height:1.5">Harita<br><span style="font-size:12px;color:#94a3b8">Kullanıcı Lokasyon.il / ilçe → etkilenen abone yoğunluğu</span></div></div>
+<div style="display:grid;gap:8px;align-content:start;font-size:13px">
+<div style="display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:8px;background:#fbe9ea"><span><span style="font-weight:600">Kadıköy</span> · 3 hücre</span><span style="font-weight:600;color:#b3282d">1.240 abone</span></div>
+<div style="display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:8px;background:#fdf6e8"><span><span style="font-weight:600">Ümraniye</span> · 2 hücre</span><span style="font-weight:600;color:#b16a08">860 abone</span></div>
+<div style="display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:8px;background:#f8fafc"><span><span style="font-weight:600">Ataşehir</span> · 1 hücre</span><span style="font-weight:600">310 abone</span></div>
+<div style="font-size:12px;color:#64748b;line-height:1.5;margin-top:4px">Aynı bölgeden 15 dk içinde 20+ olay gelirse paket, "Toplu kesinti" BPMN akışını tetikler ve tek major incident açar.</div>
+</div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ isLab }}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px"><div style="font-size:14px;font-weight:600">Öne çıkan · Numune süreç SLA'sı</div><span style="font-size:12px;color:#64748b">bugün · 120 numune</span></div>
+<div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px">
+<div style="padding:12px;border-radius:10px;background:#f8fafc"><div style="font-size:12px;color:#64748b">Kabul</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">120</div><div style="font-size:12px;color:#1f8a6f;margin-top:4px">0 ihlal</div></div>
+<div style="padding:12px;border-radius:10px;background:#f8fafc"><div style="font-size:12px;color:#64748b">Hazırlık</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">96</div><div style="font-size:12px;color:#1f8a6f;margin-top:4px">1 ihlal</div></div>
+<div style="padding:12px;border-radius:10px;background:#fbe9ea"><div style="font-size:12px;color:#64748b">Analiz</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">74</div><div style="font-size:12px;color:#b3282d;margin-top:4px;font-weight:600">6 ihlal</div></div>
+<div style="padding:12px;border-radius:10px;background:#fdf6e8"><div style="font-size:12px;color:#64748b">Doğrulama</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">41</div><div style="font-size:12px;color:#b16a08;margin-top:4px">2 ihlal</div></div>
+<div style="padding:12px;border-radius:10px;background:#f8fafc"><div style="font-size:12px;color:#64748b">Rapor</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">38</div><div style="font-size:12px;color:#1f8a6f;margin-top:4px">0 ihlal</div></div>
+</div>
+<div style="font-size:12px;color:#64748b;line-height:1.5;margin-top:12px">Analiz aşamasındaki ihlallerin 5'i aynı cihazda (Spektrometre-02); kalibrasyon kaydı 3 gün gecikmiş. <a href="#">Cihaz arızası aç</a></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px">
+<sc-for list="{{ widgets }}" as="w" hint-placeholder-count="6">
+<div style="background:#fff;border:1px solid {{ w.border }};border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px;display:grid;gap:6px;align-content:start">
+<div style="display:flex;align-items:flex-start;gap:8px"><div style="font-size:14px;font-weight:600;flex:1">{{ w.name }}</div><sc-if value="{{ w.missing }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;background:#fdf6e8;color:#b16a08;white-space:nowrap">Eksik alan</span></sc-if></div>
+<div style="font-size:12px;color:#64748b;line-height:1.5;text-align:justify">{{ w.desc }}</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;gap:8px"><span style="font-size:11px;color:#94a3b8;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ w.source }}</span><button type="button" onClick="{{ w.toggle }}" style="height:26px;padding:0 10px;border-radius:6px;border:1px solid {{ w.btnBorder }};background:{{ w.btnBg }};color:{{ w.btnFg }};font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">{{ w.btnLabel }}</button></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+<div style="padding:28px;border:1px dashed #cbd5e1;border-radius:12px;text-align:center;color:#64748b;font-size:13px">"{{ search }}" için bu pakette widget yok. <a href="Dogal Dil Widget.dc.html">Yazarak oluşturun →</a></div>
+</sc-if>
+</div>
+</div>
+</main>
+</div>
+
+<sc-if value="{{ modal }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeInstall }}" style="position:fixed;inset:0;background:rgba(2,6,24,.4);z-index:80"></div>
+<div style="position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:720px;max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);background:#fff;border-radius:14px;z-index:81;box-shadow:0 24px 64px rgba(2,6,24,.3);display:flex;flex-direction:column;font-family:Inter,system-ui,sans-serif;color:#020618;overflow:hidden">
+<div style="display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid #e2e8f0">
+<div style="flex:1"><div style="font-size:16px;font-weight:600">{{ pack.name }} · kurulum</div><div style="font-size:13px;color:#64748b;margin-top:2px">Paketin beklediği alanları bu kiracının formlarına eşleyin. Eksik alanlar Form Designer'da oluşturulabilir.</div></div>
+<button type="button" onClick="{{ closeInstall }}" style="width:32px;height:32px;border-radius:6px;border:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:#64748b"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+</div>
+<div style="flex:1;overflow:auto;padding:16px 20px">
+<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px 14px;align-items:center;font-size:13px">
+<div style="font-size:11px;font-weight:600;color:#64748b">Paket alanı</div><div style="font-size:11px;font-weight:600;color:#64748b">Kiracı alanı</div><div></div>
+<sc-for list="{{ mapping }}" as="m" hint-placeholder-count="6">
+<div style="padding:8px 0;border-top:1px solid #f1f5f9"><div style="font-weight:500">{{ m.field }}</div><div style="font-size:12px;color:#64748b">{{ m.hint }}</div></div>
+<div style="padding:8px 0;border-top:1px solid #f1f5f9"><select value="{{ m.value }}" onChange="{{ m.change }}" style="height:32px;width:100%;padding:0 8px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;font-size:13px;color:#020618"><sc-for list="{{ m.options }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.v }}</option></sc-for><option value="none">— eşleme yok —</option></select></div>
+<div style="padding:8px 0;border-top:1px solid #f1f5f9;min-width:90px;text-align:right"><sc-if value="{{ m.ok }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#1f8a6f;font-weight:600">Hazır</span></sc-if><sc-if value="{{ m.bad }}" hint-placeholder-val="{{ false }}"><a href="#" style="font-size:12px;font-weight:600;color:#b16a08">Alan oluştur</a></sc-if></div>
+</sc-for>
+</div>
+<div style="margin-top:14px;padding:10px 12px;border-radius:8px;background:#f8fafc;font-size:12px;color:#64748b;line-height:1.5">Kurulumla birlikte {{ pack.flows }} BPMN akışı ve {{ pack.count }} widget tanımı uygulamaya eklenir; eşlenmeyen alanı kullanan widget'lar "Eksik alan" etiketiyle gelir.</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 20px;border-top:1px solid #e2e8f0;justify-content:flex-end">
+<span style="font-size:12px;color:#64748b;margin-right:auto">{{ pack.readyText }}</span>
+<button type="button" onClick="{{ closeInstall }}" style="height:34px;padding:0 14px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Vazgeç</button>
+<button type="button" onClick="{{ install }}" style="height:34px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">{{ installLabel }}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);font-family:Inter,system-ui,sans-serif">{{ toastText }}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const W = (id, name, desc, source, needs) => ({ id, name, desc, source, needs: needs || null });
+const F = (field, hint, options, value) => ({ field, hint, options, value });
+const SECTORS = [
+  { id: 'genel', label: 'Genel ITSM', name: 'Genel ITSM paketi', desc: 'Olay, talep, değişiklik ve SLA için temel analist widget seti', flows: 1,
+    widgets: [W('g1', 'Benim kuyruğum', 'Bana atanan, ekipte atanmamış, onay ve yanıt bekleyen kayıtlar; her sayı listeye iner.', 'Olay · Talep'), W('g2', 'SLA riski', 'Belirlenen dakika içinde ihlal edecek kayıtlar, geri sayımla.', 'SLA Motoru'), W('g3', 'Açılan vs çözülen', '14 günlük akış ve backlog eğilimi.', 'Olay · Talep'), W('g4', 'Öncelik matrisi', 'Açık kayıtların etki × aciliyet dağılımı.', 'Olay'), W('g5', 'Durum dağılımı', 'Kayıt tipi bazında yığılmış durum barı.', 'Olay · Talep'), W('g6', 'Günün özeti (AI)', 'Anomali, korelasyon ve önerilen aksiyonlar.', 'AI modülü')],
+    mapping: [F('Kayıt önceliği', 'P1–P4 alanı', ['Olay.oncelik'], 'Olay.oncelik'), F('SLA hedefi', 'Çözüm SLA süresi', ['SLA.cozum_hedefi'], 'SLA.cozum_hedefi')] },
+  { id: 'esm', label: 'ESM · İK / Finans', name: 'ESM paketi · İK ve Finans', desc: 'IT dışı servis masaları için onay ve talep akışları', flows: 2,
+    widgets: [W('e1', 'İşe alım onay akışı', 'Adım bazında bekleyen onaylar ve ortalama bekleme süresi.', 'Talep · BPMN'), W('e2', 'Masraf talebi SLA', 'Ödeme onayı ve muhasebe aktarımı için süre takibi.', 'Talep · SLA Motoru'), W('e3', 'Onay bekleyen İK talepleri', 'İzin, bordro ve belge talepleri; yöneticiye göre kırılım.', 'Talep'), W('e4', 'Ekipman zimmet takibi', 'Çalışan başına zimmetli varlıklar ve iade tarihleri.', 'Varlık Yönetimi')],
+    mapping: [F('Onaylayan yönetici', 'Talep formundaki yönetici alanı', ['Talep.onaylayan', 'Kullanıcı Detay.yonetici'], 'Talep.onaylayan'), F('Maliyet merkezi', 'Finans talepleri için', ['Kullanıcı Detay.maliyet_merkezi'], 'none')] },
+  { id: 'telco', label: 'Telco', name: 'Telco paketi', desc: '6 widget · 2 BPMN akışı · Kullanıcı Lokasyon ve Varlık Yönetimi verisiyle çalışır', flows: 2,
+    widgets: [W('t1', 'Hücre / saha kesinti haritası', 'Etkilenen abone yoğunluğu ilçe bazında; toplu kesinti algılama.', 'Kullanıcı Lokasyon · Olay', 'Lokasyon'), W('t2', 'Saha ekibi durumu', 'Saha görevleri: yolda, sahada, tamamlandı; tahmini varış.', 'Görev Yönetimi', 'Saha görevi'), W('t3', 'Abone etkisi', 'Açık olayların toplam etkilenen abone sayısı; kurumsal / bireysel kırılımı.', 'Olay · Kullanıcı Detay', 'Etkilenen abone'), W('t4', 'Tekrarlayan hat arızaları', '90 günde 3+ olay açılan hat ve cihazlar; problem kaydı adayları.', 'Varlık Yönetimi', 'Hücre kimliği'), W('t5', 'Bakım penceresi takvimi', 'Planlı değişikliklerin bölge ve saat bazında yerleşimi; çakışma uyarısı.', 'Değişiklik Yönetimi', 'Bakım penceresi'), W('t6', 'Memnuniyet ↔ olay korelasyonu', 'Anket puanlarının kesinti süresine göre dağılımı.', 'Anket · Olay', 'NPS puanı')],
+    mapping: [F('Lokasyon', 'İl / ilçe düzeyinde konum', ['Kullanıcı Lokasyon.ilce', 'Kullanıcı Lokasyon.il'], 'Kullanıcı Lokasyon.ilce'), F('Etkilenen abone', 'Olay başına etkilenen kullanıcı sayısı', ['Olay.etkilenen_kullanici'], 'Olay.etkilenen_kullanici'), F('Hücre kimliği', 'Baz istasyonu / hat kodu', ['Varlık.cihaz_kodu', 'Varlık.seri_no'], 'Varlık.cihaz_kodu'), F('Saha görevi', 'Görev tipi = saha', ['Görev.saha_gorevi'], 'Görev.saha_gorevi'), F('Bakım penceresi', 'Planlı başlangıç zamanı', ['Değişiklik.planlanan_baslangic'], 'Değişiklik.planlanan_baslangic'), F('NPS puanı', 'Anket formunda puan alanı', [], 'none')] },
+  { id: 'lab', label: 'Laboratuvar / Sağlık', name: 'Laboratuvar / Sağlık paketi', desc: '6 widget · 3 BPMN akışı · Varlık Yönetimi (cihaz) ve Numune formuyla çalışır', flows: 3,
+    widgets: [W('l1', 'Numune süreç SLA\u2019sı', 'Kabul → rapor aşamalarında bekleyen numune ve ihlal sayısı.', 'Numune formu · SLA Motoru', 'Numune aşaması'), W('l2', 'Cihaz kalibrasyon takvimi', 'Kalibrasyon ve bakım tarihleri; geciken cihazlar önde.', 'Varlık Yönetimi', 'Kalibrasyon tarihi'), W('l3', 'Reaktif stok uyarısı', 'Kritik seviyenin altına inen reaktifler; otomatik satın alma talebi.', 'Talep · Varlık', 'Stok seviyesi'), W('l4', 'Numune reddi nedenleri', 'Ret sebeplerinin dağılımı; kaynağa göre kırılım.', 'Numune formu', 'Numune aşaması'), W('l5', 'Cihaz arıza MTTR', 'Cihaz tipine göre ortalama onarım süresi; tedarikçi SLA karşılaştırması.', 'Olay · Varlık'), W('l6', 'Soğuk zincir sapmaları', 'Sensör entegrasyonundan sıcaklık sapması olayları.', 'API entegrasyonu', 'Sensör olayı')],
+    mapping: [F('Numune aşaması', 'Numune formunda aşama alanı', [], 'none'), F('Kalibrasyon tarihi', 'Cihaz varlığında tarih alanı', ['Varlık.kalibrasyon_tarihi'], 'Varlık.kalibrasyon_tarihi'), F('Stok seviyesi', 'Reaktif varlığında sayısal alan', ['Varlık.stok_adedi'], 'Varlık.stok_adedi'), F('Sensör olayı', 'API ile gelen olay tipi', ['Olay.kaynak = sensor'], 'Olay.kaynak = sensor'), F('Cihaz tipi', 'Varlık kategorisi', ['Varlık.kategori'], 'Varlık.kategori'), F('Tedarikçi SLA', 'Sözleşme süresi', ['Tedarikçi.sla_saat'], 'none')] },
+  { id: 'finans', label: 'Finans', name: 'Finans paketi', desc: 'Regülasyon takvimi ve ödeme sistemleri için hizmet sağlığı', flows: 1,
+    widgets: [W('f1', 'Regülasyon raporu son tarihleri', 'Düzenleyici kuruma gidecek raporlar ve kalan süre.', 'Görev Yönetimi'), W('f2', 'Ödeme sistemi kesinti etkisi', 'Kesinti anında başarısız işlem sayısı ve tutar.', 'Olay · API'), W('f3', 'Denetim bulguları', 'Açık bulgular, sorumlu birim ve kapanış tarihi.', 'Talep'), W('f4', 'Şube hizmet skoru', 'Şube bazında talep çözüm süresi ve memnuniyet.', 'Talep · Anket')],
+    mapping: [F('İşlem tutarı', 'Ödeme olaylarında tutar alanı', ['Olay.islem_tutari'], 'Olay.islem_tutari'), F('Şube kodu', 'Kullanıcı lokasyonunda şube', ['Kullanıcı Lokasyon.sube'], 'Kullanıcı Lokasyon.sube')] },
+  { id: 'kamu', label: 'Kamu', name: 'Kamu paketi', desc: 'Vatandaş başvuruları ve kurumlar arası entegrasyon sağlığı', flows: 2,
+    widgets: [W('k1', 'e-Devlet entegrasyon sağlığı', 'Servis bazında hata oranı ve yanıt süresi.', 'API entegrasyonu'), W('k2', 'Vatandaş başvuru SLA', 'Başvuru tipine göre yasal süre ve kalan gün.', 'Talep · SLA Motoru'), W('k3', 'KEP / e-Yazışma kuyruğu', 'Bekleyen resmi yazışmalar ve sorumlu birim.', 'Talep'), W('k4', 'Mevzuat değişiklik takvimi', 'Yürürlük tarihleri ve etkilenen süreçler.', 'Değişiklik Yönetimi')],
+    mapping: [F('Yasal süre', 'Başvuru tipine bağlı gün sayısı', ['SLA.yasal_sure_gun'], 'SLA.yasal_sure_gun'), F('Başvuru tipi', 'Talep kategorisi', ['Talep.kategori'], 'Talep.kategori')] }
+];
+class Component extends DCLogic {
+  state = { sector: 'telco', search: '', installed: { genel: true }, added: {}, modal: false, toast: '', maps: Object.fromEntries(SECTORS.map(s => [s.id, s.mapping.map(m => m.value)])) };
+  toast(msg) { this.setState({ toast: msg }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: '' }), 3000); }
+  componentWillUnmount() { clearTimeout(this._tt); }
+  renderVals() {
+    const s = this.state, sec = SECTORS.find(x => x.id === s.sector);
+    const vals = s.maps[sec.id];
+    const ready = vals.filter(v => v !== 'none').length;
+    const missingFields = sec.mapping.filter((m, i) => vals[i] === 'none').map(m => m.field);
+    const installed = !!s.installed[sec.id];
+    const q = s.search.trim().toLowerCase();
+    const list = sec.widgets.filter(w => !q || (w.name + ' ' + w.desc + ' ' + w.source).toLowerCase().includes(q));
+    return {
+      search: s.search, setSearch: (ev) => this.setState({ search: ev.target.value }),
+      sectors: SECTORS.map(x => ({ label: x.label, installed: !!s.installed[x.id], select: () => this.setState({ sector: x.id }), bg: x.id === s.sector ? '#fff' : 'transparent', border: x.id === s.sector ? '#e2e8f0' : 'transparent', w: x.id === s.sector ? 600 : 400 })),
+      installedCount: Object.keys(s.installed).length, addedCount: Object.keys(s.added).length,
+      isTelco: sec.id === 'telco', isLab: sec.id === 'lab',
+      pack: { name: sec.name, desc: sec.desc, flows: sec.flows, count: sec.widgets.length, installed, notInstalled: !installed, readyText: 'Alan eşlemesi: ' + ready + '/' + sec.mapping.length + (missingFields.length ? ' · eksik: ' + missingFields.join(', ') : ' · hazır'), readyColor: missingFields.length ? '#b16a08' : '#1f8a6f' },
+      hasResults: list.length > 0, noResults: list.length === 0,
+      widgets: list.map(w => { const added = !!s.added[w.id]; const missing = installed && w.needs && missingFields.includes(w.needs); return { ...w, missing, border: added ? '#b9e2d8' : '#e2e8f0', btnLabel: added ? 'Eklendi' : 'Ekle', btnBg: added ? '#e6f4f1' : '#fff', btnFg: added ? '#0f5c4d' : '#08748e', btnBorder: added ? '#b9e2d8' : '#e2e8f0',
+        toggle: () => { if (!installed) { this.toast('Önce paketi kurun; alan eşlemesi açıldı'); this.setState({ modal: true }); return; } const next = { ...this.state.added }; if (next[w.id]) delete next[w.id]; else next[w.id] = true; this.setState({ added: next }); this.toast(next[w.id] ? w.name + " dashboard'a eklendi" : w.name + ' kaldırıldı'); } }; }),
+      modal: s.modal, openInstall: () => this.setState({ modal: true }), closeInstall: () => this.setState({ modal: false }),
+      mapping: sec.mapping.map((m, i) => ({ field: m.field, hint: m.hint, value: vals[i], ok: vals[i] !== 'none', bad: vals[i] === 'none', options: m.options.map(v => ({ v })), change: (ev) => { const maps = { ...this.state.maps, [sec.id]: this.state.maps[sec.id].map((v, j) => j === i ? ev.target.value : v) }; this.setState({ maps }); } })),
+      installLabel: (installed ? 'Eşlemeyi kaydet' : 'Kur') + ' (' + ready + '/' + sec.mapping.length + ' eşlendi)',
+      install: () => { this.setState({ installed: { ...this.state.installed, [sec.id]: true }, modal: false }); this.toast(installed ? 'Alan eşlemesi güncellendi' : sec.name + ' kuruldu · ' + sec.flows + ' BPMN akışı eklendi'); },
+      hasToast: !!s.toast, toastText: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

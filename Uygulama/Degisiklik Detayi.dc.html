@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
+</helmet>
+<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap;overflow:hidden"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Ekran analizi 09 · Değişiklik Detayı konsepti</span><span style="color:#64748b;overflow:hidden;text-overflow:ellipsis">Deneyin: birincil eylem zinciri (Değerlendirmeyi bitir → Onaya gönder → Onayla → Uygulamaya başla → Tamamla / Geri al → Gözden geçirmeyi kaydet → Kapat) · sekmeler · şeritteki Durum / Risk / Uygulayan hücresi · görev kutuları · "Geri al" · ?id=CHG-118 gibi</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Değişiklik Detayı Analizi.dc.html" style="color:#fff">Analiz</a><a href="Degisiklik Listesi.dc.html" style="color:#fff">← Değişiklik listesi</a></div>
+<div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" tema="{{ ustBar }}" hint-size="100%,49px"></dc-import></div>
+<div style="display:flex;align-items:flex-start">
+<div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" aktif="degisiklikler" style="height:100%" hint-size="256px,100%"></dc-import></div>
+<main data-screen-label="Değişiklik Detayı prototipi" style="flex:1;min-width:0;padding:16px 24px 48px;background:{{ zeminBg }};min-height:calc(100vh - 77px);box-sizing:border-box">
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;color:#64748b;margin-bottom:12px"><a href="Degisiklik Listesi.dc.html">Değişiklik Listesi</a><span>›</span><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#020618">{{ id }}</span><span style="margin-left:auto;display:inline-flex;gap:6px"><a href="{{ prevHref }}" style="height:26px;padding:0 8px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;display:inline-flex;align-items:center;color:#334155">‹ {{ prevId }}</a><a href="{{ nextHref }}" style="height:26px;padding:0 8px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;display:inline-flex;align-items:center;color:#334155">{{ nextId }} ›</a></span></div>
+
+<sc-if value="{{ hasPop }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closePop }}" style="position:fixed;inset:0;z-index:30"></div></sc-if>
+
+<div style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px 16px;margin-bottom:12px">
+<div style="flex:1 1 420px;min-width:0">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;font-weight:600;color:#08748e">{{ id }}</span><span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:{{ typeBg }};color:{{ typeFg }}">{{ typeLabel }}</span><sc-if value="{{ hasTmpl }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:#64748b">{{ tmpl }}</span></sc-if><sc-if value="{{ hasSrc }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:#64748b">kaynak <a href="{{ srcHref }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:{{ srcColor }}">{{ srcId }}</a></span></sc-if></div>
+<h1 style="font-size:20px;font-weight:700;margin:0;line-height:1.3">{{ title }}</h1>
+<div style="font-size:13px;color:#64748b;margin-top:4px">{{ svc }} · <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">{{ ci }}</span> · {{ createdText }} · sahibi {{ mgr }}</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+<sc-if value="{{ hasSecondary }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ secondary }}" style="height:34px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid {{ secBorder }};color:{{ secFg }};font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap">{{ secondaryLabel }}</button></sc-if>
+<sc-if value="{{ hasPrimary }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ primary }}" style="height:34px;padding:0 14px;border-radius:6px;background:{{ priBg }};color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap">{{ primaryLabel }}</button></sc-if>
+<span style="position:relative">
+<button type="button" onClick="{{ toggleMore }}" aria-label="Diğer eylemler" style="width:34px;height:34px;border-radius:6px;border:1px solid #e2e8f0;background:{{ moreBg }};color:#334155;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+<sc-if value="{{ moreOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;top:38px;right:0;z-index:40;width:260px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.12);padding:6px">
+<sc-for list="{{ moreItems }}" as="m" hint-placeholder-count="4">
+<div onClick="{{ m.click }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;color:{{ m.color }};font-weight:{{ m.weight }};font-size:13px" style-hover="background:#f8fafc">{{ m.label }}</div>
+</sc-for>
+</div>
+</sc-if>
+</span>
+</div>
+</div>
+
+<sc-if value="{{ hasBanner }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 14px;border-radius:8px;background:{{ bannerBg }};border:1px solid {{ bannerBorder }};color:{{ bannerFg }};font-size:13px;margin-bottom:12px;line-height:1.45"><span style="font-weight:600;white-space:nowrap">{{ bannerTitle }}</span><span style="flex:1 1 240px;min-width:0">{{ bannerText }}</span><sc-if value="{{ bannerHasAction }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ bannerAction }}" style="height:28px;padding:0 10px;border-radius:6px;background:#fff;border:1px solid {{ bannerBorder }};color:{{ bannerFg }};font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">{{ bannerActionLabel }}</button></sc-if></div>
+</sc-if>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(max(150px,33.33% - 1px),1fr));background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(2,6,24,.05);margin-bottom:16px">
+<div onClick="{{ openSt }}" style="background:{{ stCellBg }};padding:12px 14px;cursor:pointer;min-width:0;box-shadow:inset -1px -1px 0 #e2e8f0" style-hover="background:#f8fafc"><div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:4px;white-space:nowrap">Durum <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8"><path d="m6 9 6 6 6-6"></path></svg></div><div style="display:flex;align-items:center;gap:6px;margin-top:6px;font-size:14px;font-weight:600;white-space:nowrap"><span style="width:8px;height:8px;border-radius:50%;background:{{ stDotBg }};border:2px solid {{ stColor }};box-sizing:border-box;flex-shrink:0"></span>{{ stLabel }}</div><div style="font-size:12px;color:{{ stSubColor }};margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{ stSub }}">{{ stSub }}</div></div>
+<div onClick="{{ openRisk }}" style="background:{{ riskCellBg }};padding:12px 14px;cursor:pointer;min-width:0;box-shadow:inset -1px -1px 0 #e2e8f0" style-hover="background:#f8fafc"><div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:4px;white-space:nowrap">Risk <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8"><path d="m6 9 6 6 6-6"></path></svg></div><div style="margin-top:6px;font-size:14px;font-weight:600;color:{{ riskColor }};white-space:nowrap">{{ riskLabel }}</div><div style="font-size:12px;color:#64748b;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{ riskSub }}">{{ riskSub }}</div></div>
+<div style="background:#fff;padding:12px 14px;min-width:0;box-shadow:inset -1px -1px 0 #e2e8f0"><div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap">Onay</div><div style="margin-top:6px;font-size:14px;font-weight:600;color:{{ apColor }};white-space:nowrap">{{ apText }}</div><div style="font-size:12px;color:{{ apSubColor }};margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{ apSub }}">{{ apSub }}</div></div>
+<div onClick="{{ openWin }}" style="background:{{ winCellBg }};padding:12px 14px;cursor:pointer;min-width:0;box-shadow:inset -1px -1px 0 #e2e8f0" style-hover="background:#f8fafc"><div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:4px;white-space:nowrap">Pencere <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8"><path d="m6 9 6 6 6-6"></path></svg></div><div style="margin-top:6px;font-size:14px;font-weight:600;color:{{ winColor }};white-space:nowrap;font-variant-numeric:tabular-nums">{{ winText }}</div><div style="font-size:12px;color:{{ winSubColor }};margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{ winSub }}">{{ winSub }}</div></div>
+<div onClick="{{ openA }}" style="background:{{ aCellBg }};padding:12px 14px;cursor:pointer;min-width:0;box-shadow:inset -1px -1px 0 #e2e8f0" style-hover="background:#f8fafc"><div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:4px;white-space:nowrap">Uygulayan <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8"><path d="m6 9 6 6 6-6"></path></svg></div><div style="margin-top:6px;font-size:14px;font-weight:600;color:{{ aColor }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ aText }}</div><div style="font-size:12px;color:#64748b;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ grp }}</div></div>
+<div style="background:#fff;padding:12px 14px;min-width:0;box-shadow:inset -1px -1px 0 #e2e8f0"><div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap">Görevler</div><div style="margin-top:6px;font-size:14px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums">{{ tasksText }}</div><div style="margin-top:6px;height:4px;border-radius:2px;background:#e2e8f0;overflow:hidden"><div style="height:100%;width:{{ tasksPct }};background:#08748e"></div></div></div>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+<div style="flex:2 1 520px;min-width:0">
+<div style="display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid #e2e8f0;margin-bottom:12px">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+<button type="button" onClick="{{ t.click }}" style="display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 12px;border:0;border-bottom:2px solid {{ t.border }};margin-bottom:-1px;background:transparent;font-weight:{{ t.weight }};color:{{ t.color }};font-size:13px;cursor:pointer">{{ t.label }}<sc-if value="{{ t.hasCount }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:{{ t.pillBg }};color:{{ t.pillFg }}">{{ t.count }}</span></sc-if></button>
+</sc-for>
+</div>
+
+<sc-if value="{{ tabOzet }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;gap:12px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px">
+<div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Gerekçe</div>
+<div style="font-size:13px;line-height:1.6;color:#334155">{{ reason }}</div>
+<div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 8px">Ne değişecek</div>
+<div style="font-size:13px;line-height:1.6;color:#334155">{{ desc }}</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(max(220px,50% - 6px),1fr));gap:12px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px;min-width:0">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em">Uygulama planı</div><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:{{ planBg }};color:{{ planFg }}">{{ planState }}</span></div>
+<ol style="margin:0;padding-left:18px;font-size:13px;line-height:1.7;color:#334155">
+<sc-for list="{{ plan }}" as="p" hint-placeholder-count="4"><li>{{ p }}</li></sc-for>
+</ol>
+</div>
+<div style="background:#fff;border:1px solid {{ rbBorder }};border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px;min-width:0">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em">Geri alma planı</div><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:{{ rbBg }};color:{{ rbFg }}">{{ rbState }}</span></div>
+<sc-if value="{{ hasRollback }}" hint-placeholder-val="{{ true }}"><ol style="margin:0;padding-left:18px;font-size:13px;line-height:1.7;color:#334155"><sc-for list="{{ rollback }}" as="p" hint-placeholder-count="3"><li>{{ p }}</li></sc-for></ol><div style="font-size:12px;color:#64748b;margin-top:8px">Tahmini geri alma süresi {{ rbTime }} · pencere içinde kalır</div></sc-if>
+<sc-if value="{{ noRollback }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#9a5b0a;line-height:1.55">Geri alma planı yazılmadı. Normal ve acil değişiklikte onaya gönderilmeden önce zorunlu.</div><button type="button" onClick="{{ addRollback }}" style="margin-top:10px;height:30px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:12px;font-weight:600;cursor:pointer;color:#334155">Geri alma planı ekle</button></sc-if>
+</div>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em">Etki analizi</div><span style="font-size:12px;color:#64748b">CMDB'den · {{ impactWhen }}</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+<sc-for list="{{ impact }}" as="i" hint-placeholder-count="4">
+<div style="border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;min-width:0"><div style="font-size:11px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ i.label }}</div><div style="font-size:16px;font-weight:700;margin-top:2px;color:{{ i.color }}">{{ i.value }}</div><div style="font-size:11px;color:#64748b;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{ i.sub }}">{{ i.sub }}</div></div>
+</sc-for>
+</div>
+<sc-if value="{{ hasConflicts }}" hint-placeholder-val="{{ false }}">
+<div style="margin-top:12px;display:grid;gap:6px">
+<sc-for list="{{ conflicts }}" as="c" hint-placeholder-count="1">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:#fef4f4;border:1px solid #f3b4b6;font-size:13px;color:#b3282d"><span style="font-weight:600">⚠ Çakışma</span><a href="{{ c.href }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#b3282d">{{ c.id }}</a><span style="color:#334155;flex:1 1 200px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.title }}</span><span style="color:#64748b;white-space:nowrap">{{ c.win }} · {{ c.why }}</span></div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ tabOnay }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;gap:12px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px"><div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em">Onay yolu</div><span style="font-size:12px;color:#64748b">{{ apRoute }}</span></div>
+<sc-if value="{{ noAppr }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#64748b;line-height:1.55">{{ noApprText }}</div></sc-if>
+<div style="display:grid;gap:8px">
+<sc-for list="{{ approvals }}" as="a" hint-placeholder-count="3">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 12px;border:1px solid {{ a.border }};border-radius:8px;background:{{ a.bg }}">
+<span style="width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:{{ a.badgeBg }};color:{{ a.badgeFg }};flex-shrink:0">{{ a.mark }}</span>
+<div style="flex:1 1 200px;min-width:0"><div style="font-size:13px;font-weight:600">{{ a.role }} <span style="font-weight:400;color:#64748b">· {{ a.who }}</span></div><div style="font-size:12px;color:{{ a.subColor }};margin-top:2px">{{ a.sub }}</div></div>
+<sc-if value="{{ a.hasNote }}" hint-placeholder-val="{{ false }}"><div style="flex:1 1 220px;min-width:0;font-size:12px;color:#334155;line-height:1.5;border-left:2px solid #e2e8f0;padding-left:10px">{{ a.note }}</div></sc-if>
+<sc-if value="{{ a.mine }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;gap:6px"><button type="button" onClick="{{ a.approve }}" style="height:28px;padding:0 10px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Onayla</button><button type="button" onClick="{{ a.reject }}" style="height:28px;padding:0 10px;border-radius:6px;background:#fff;color:#b3282d;border:1px solid #f3b4b6;font-size:12px;font-weight:600;cursor:pointer">Reddet</button></span></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px">
+<div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Onay kuralı</div>
+<div style="font-size:13px;line-height:1.6;color:#334155">{{ apRule }}</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ tabGorev }}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px"><div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em">Uygulama görevleri · {{ tasksText }}</div><span style="font-size:12px;color:#64748b">{{ tasksHint }}</span></div>
+<div style="display:grid;gap:6px">
+<sc-for list="{{ tasks }}" as="t" hint-placeholder-count="4">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;background:{{ t.bg }}">
+<span onClick="{{ t.toggle }}" title="{{ t.hint }}" style="width:16px;height:16px;border-radius:4px;border:1px solid {{ t.boxBorder }};background:{{ t.boxBg }};color:#fff;font-size:11px;line-height:16px;text-align:center;cursor:{{ t.cursor }};flex-shrink:0">{{ t.mark }}</span>
+<span style="font-size:12px;color:#94a3b8;width:22px;flex-shrink:0;font-variant-numeric:tabular-nums">{{ t.n }}</span>
+<div style="flex:1 1 220px;min-width:0"><div style="font-size:13px;font-weight:500;color:{{ t.color }};text-decoration:{{ t.deco }}">{{ t.title }}</div><div style="font-size:12px;color:#64748b;margin-top:2px">{{ t.who }} · {{ t.dur }}</div></div>
+<span style="font-size:12px;color:{{ t.stateColor }};white-space:nowrap">{{ t.state }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ tabPir }}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px"><div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em">Uygulama sonrası gözden geçirme (PIR)</div><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:{{ pirBg }};color:{{ pirFg }}">{{ pirState }}</span></div>
+<sc-if value="{{ pirLocked }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#64748b;line-height:1.55">Gözden geçirme, uygulama tamamlandıktan ya da geri alındıktan sonra açılır. Planlanan ve gerçekleşen süre, açılan olaylar ve geri alma bilgisi otomatik dolar; sahibi yalnızca sonuç ve dersleri yazar.</div></sc-if>
+<sc-if value="{{ pirOpen }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px">
+<sc-for list="{{ pirFacts }}" as="f" hint-placeholder-count="4">
+<div style="border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;min-width:0"><div style="font-size:11px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.label }}</div><div style="font-size:15px;font-weight:700;margin-top:2px;color:{{ f.color }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.value }}</div></div>
+</sc-for>
+</div>
+<div style="font-size:12px;font-weight:600;color:#64748b;margin-bottom:6px">Sonuç</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+<sc-for list="{{ pirResults }}" as="o" hint-placeholder-count="3">
+<button type="button" onClick="{{ o.pick }}" style="height:30px;padding:0 12px;border-radius:6px;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.fg }};font-size:12px;font-weight:600;cursor:pointer">{{ o.label }}</button>
+</sc-for>
+</div>
+<div style="font-size:12px;font-weight:600;color:#64748b;margin-bottom:6px">Dersler ve notlar</div>
+<textarea value="{{ pirNote }}" onChange="{{ setPirNote }}" readOnly="{{ pirReadOnly }}" placeholder="Ne planlandı, ne oldu, bir dahaki sefere ne değişecek…" style="width:100%;box-sizing:border-box;min-height:88px;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.5;resize:vertical;background:{{ pirNoteBg }};color:#020618"></textarea>
+<sc-if value="{{ pirCanSave }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:flex-end;margin-top:10px"><button type="button" onClick="{{ savePir }}" style="height:32px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Gözden geçirmeyi kaydet</button></div></sc-if>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ tabIliskili }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;gap:12px">
+<sc-for list="{{ related }}" as="g" hint-placeholder-count="3">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em">{{ g.title }}</div><span style="font-size:12px;color:#64748b">{{ g.hint }}</span></div>
+<sc-if value="{{ g.empty }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#94a3b8">{{ g.emptyText }}</div></sc-if>
+<div style="display:grid;gap:6px">
+<sc-for list="{{ g.items }}" as="i" hint-placeholder-count="2">
+<a href="{{ i.href }}" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;color:inherit;text-decoration:none" style-hover="background:#f8fafc"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:{{ i.idColor }}">{{ i.id }}</span><span style="flex:1 1 200px;min-width:0;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ i.title }}</span><span style="font-size:12px;color:#64748b;white-space:nowrap">{{ i.meta }}</span></a>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+<aside style="flex:1 1 300px;min-width:0;display:grid;gap:12px;align-content:start">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px">
+<div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px">Yaşam döngüsü</div>
+<div style="display:grid;gap:0">
+<sc-for list="{{ lifecycle }}" as="l" hint-placeholder-count="7">
+<div style="display:grid;grid-template-columns:18px 1fr;gap:10px;align-items:start">
+<div style="display:flex;flex-direction:column;align-items:center"><span style="width:12px;height:12px;border-radius:50%;background:{{ l.dotBg }};border:2px solid {{ l.dotBorder }};box-sizing:border-box;margin-top:3px;flex-shrink:0"></span><sc-if value="{{ l.hasLine }}" hint-placeholder-val="{{ true }}"><span style="width:2px;flex:1;min-height:18px;background:{{ l.lineColor }};margin:2px 0"></span></sc-if></div>
+<div style="padding-bottom:10px;min-width:0"><div style="font-size:13px;font-weight:{{ l.weight }};color:{{ l.color }}">{{ l.label }}</div><div style="font-size:12px;color:#64748b;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{ l.sub }}">{{ l.sub }}</div></div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em">Zaman çizelgesi</div><span style="font-size:12px;color:#64748b">{{ logCount }} kayıt</span></div>
+<div style="display:flex;gap:8px;margin-bottom:12px"><input type="text" value="{{ noteDraft }}" onChange="{{ setNote }}" placeholder="Not ekle…" style="flex:1;min-width:0;height:32px;border:1px solid #e2e8f0;border-radius:6px;padding:0 10px;font-size:13px;outline:0;color:#020618"><button type="button" onClick="{{ addNote }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:12px;font-weight:600;cursor:pointer;color:#334155">Ekle</button></div>
+<div style="display:grid;gap:10px">
+<sc-for list="{{ log }}" as="e" hint-placeholder-count="5">
+<div style="display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;min-width:0"><span style="font-size:11px;color:#94a3b8;white-space:nowrap;padding-top:2px;font-variant-numeric:tabular-nums">{{ e.when }}</span><div style="min-width:0"><div style="font-size:13px;line-height:1.45;color:{{ e.color }}">{{ e.text }}</div><div style="font-size:11px;color:#94a3b8;margin-top:1px">{{ e.who }}</div></div></div>
+</sc-for>
+</div>
+</div>
+</aside>
+</div>
+
+</main>
+</div>
+
+<sc-if value="{{ cellOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ cellTop }}px;left:{{ cellLeft }}px;z-index:60;width:{{ cellW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#08748e">{{ id }}</span> · {{ cellField }}</div>
+<sc-for list="{{ cellOptions }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;background:{{ o.bg }}" style-hover="background:#f1f5f9"><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dotBg }};border:2px solid {{ o.dot }};box-sizing:border-box;flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }};white-space:nowrap">{{ o.label }}</span><span style="color:{{ o.descColor }};font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.desc }}</span><span style="margin-left:auto;color:#08748e;font-size:12px;font-weight:600">{{ o.check }}</span></div>
+</sc-for>
+<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px 8px 4px;font-size:11px;color:#94a3b8;line-height:1.4">{{ cellHint }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);font-family:Inter,system-ui,sans-serif;max-width:560px;display:flex;align-items:center;gap:14px;line-height:1.4"><span>{{ toastText }}</span><sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ undo }}" style="height:26px;padding:0 10px;border-radius:6px;background:rgba(255,255,255,.12);color:#7fd6c2;border:0;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Geri al</button></sc-if></div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ustBar&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;acik&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;acik&quot;,&quot;koyu&quot;],&quot;section&quot;:&quot;Kabuk&quot;},&quot;zemin&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;slate-50&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;slate-50&quot;,&quot;slate-100&quot;,&quot;slate-200&quot;,&quot;sogukgri&quot;],&quot;section&quot;:&quot;Kabuk&quot;}}">
+class Component extends DCLogic {
+  static ME = 'admin admin';
+  static ST = { taslak: ['Taslak', '#94a3b8', false], degerlendirme: ['Değerlendirme', '#4c7bd9', true], onay: ['Onay bekliyor', '#e39b2c', true], planlandi: ['Planlandı', '#08748e', true], uygulaniyor: ['Uygulanıyor', '#2fa886', true], pir: ['Gözden geçirme', '#64748b', true], kapali: ['Kapalı', '#64748b', false], reddedildi: ['Reddedildi', '#d23f43', false] };
+  static FLOW = ['taslak', 'degerlendirme', 'onay', 'planlandi', 'uygulaniyor', 'pir', 'kapali'];
+  static STDESC = { taslak: 'kayıt açıldı', degerlendirme: 'risk ve etki değerlendiriliyor', onay: 'onay yolu tamamlanmadı', planlandi: 'onaylandı, pencere bekleniyor', uygulaniyor: 'pencere açık, görevler işleniyor', pir: 'gözden geçirme yazılıyor', kapali: 'sonuç kaydedildi', reddedildi: 'onay verilmedi' };
+  static TYPE = { standart: ['Standart', '#e6f4f1', '#0f5c4d'], normal: ['Normal', '#f1f5f9', '#334155'], acil: ['Acil', '#fbe9ea', '#b3282d'] };
+  static RISK = { dusuk: ['Düşük', '#64748b', 'tek CI, mesai dışı, denenmiş adım'], orta: ['Orta', '#b16a08', 'birden çok hizmet ya da kesinti riski'], yuksek: ['Yüksek', '#d23f43', 'kritik hizmet, geri dönüşü zor adım'] };
+  static FREEZE = { from: 10, to: 12, label: 'Ay sonu kapanış dondurması' };
+  static GROUPS = { 'admin admin': 'Ankara Teknik Destek Grubu', 'Barış Can Ataklı': 'Ankara Teknik Destek Grubu', 'Deniz Acar': 'Level 1 Analist', 'Gökhan Tuna': 'Level 2 Analist', 'Zeynep Ural': 'Ağ ve Güvenlik Ekibi' };
+  static ORDER = ['CHG-124', 'CHG-123', 'CHG-122', 'CHG-121', 'CHG-120', 'CHG-119', 'CHG-118', 'CHG-117', 'CHG-116', 'CHG-115', 'CHG-114', 'CHG-112', 'CHG-110'];
+  static SUMMARY = {
+    'CHG-124': { s: 'Dijital ekran içerik sunucusu taşıma', svc: 'Ortak alan ekranları', ci: 'SIGN-SRV-01', win: null, st: 'taslak' },
+    'CHG-123': { s: 'SAP AS-02 işletim sistemi güvenlik yamaları', svc: 'SAP ERP', ci: 'SAP-AS-02', win: { d: 4, h: 1, m: 0, dur: 2 }, st: 'planlandi' },
+    'CHG-122': { s: 'Şube omurga yönlendiricisi firmware güncellemesi — İstanbul', svc: 'Şube ağı (WAN)', ci: 'RTR-IST-CORE-01', win: { d: 0, h: 23, m: 0, dur: 2 }, st: 'onay' },
+    'CHG-121': { s: 'Exchange taşıma servisi yeniden yapılandırma', svc: 'E-posta (Exchange)', ci: 'EXCH-MBX-01', win: { d: 0, h: 20, m: 0, dur: 3 }, st: 'uygulaniyor' },
+    'CHG-120': { s: 'VPN yoğunlaştırıcı kapasite artırımı', svc: 'VPN', ci: 'VPN-GW-01', win: { d: 10, h: 22, m: 0, dur: 2 }, st: 'degerlendirme' },
+    'CHG-119': { s: 'Bordro sunucusu TLS sertifikası yenileme', svc: 'Bordro', ci: 'PAY-APP-01', win: { d: 2, h: 6, m: 0, dur: 0.5 }, st: 'planlandi' },
+    'CHG-118': { s: 'SAP AS-02 çekirdek yaması (bellek sızıntısı)', svc: 'SAP ERP', ci: 'SAP-AS-02', win: { d: 4, h: 2, m: 0, dur: 2 }, st: 'onay' },
+    'CHG-117': { s: 'Turnike kontrolcüsü tedarikçi yaması v4.2', svc: 'Fiziksel erişim', ci: 'ACC-CTRL-03', win: { d: 6, h: 7, m: 0, dur: 1 }, st: 'onay' },
+    'CHG-116': { s: '3. kat erişim noktası değişimi (4 AP)', svc: 'Kablosuz ağ', ci: 'AP-3F-01…04', win: { d: 4, h: 3, m: 0, dur: 2 }, st: 'planlandi' },
+    'CHG-115': { s: 'CRM rapor veritabanı indeks yenileme', svc: 'CRM', ci: 'CRM-DB-01', win: { d: -2, h: 22, m: 0, dur: 1.5 }, st: 'pir' },
+    'CHG-114': { s: 'Güvenlik duvarı kural değişikliği — misafir ağı', svc: 'Şube ağı (WAN)', ci: 'FW-EDGE-01', win: { d: 1, h: 22, m: 0, dur: 1 }, st: 'reddedildi' },
+    'CHG-112': { s: 'Yazıcı sürücüsü toplu güncelleme', svc: 'Baskı hizmeti', ci: 'PRN-SRV-01', win: { d: -9, h: 19, m: 0, dur: 2 }, st: 'kapali' },
+    'CHG-110': { s: 'Exchange CU14 güncellemesi', svc: 'E-posta (Exchange)', ci: 'EXCH-MBX-01', win: { d: -14, h: 1, m: 0, dur: 4 }, st: 'kapali' },
+    'CHG-102': { s: 'Bordro sunucusu sertifika yenileme ve ACME otomasyonu', svc: 'Bordro', ci: 'PAY-APP-01', win: { d: -8, h: 6, m: 0, dur: 0.5 }, st: 'kapali' },
+    'CHG-097': { s: 'Xerox sürücü 5.9 dağıtımı — tüm istemciler', svc: 'Baskı hizmeti', ci: 'PRN-SRV-01', win: { d: -21, h: 19, m: 0, dur: 2 }, st: 'kapali' }
+  };
+  static DETAIL = {
+    'CHG-118': {
+      type: 'normal', risk: 'yuksek', st: 'onay', created: 'Bugün 08:32', mgr: 'Barış Can Ataklı', a: 'Gökhan Tuna', g: 'Level 2 Analist', src: { k: 'PRB', id: 'PRB-031' },
+      reason: 'PRB-031 kök neden analizi, SAP AS-02 uygulama sunucusunda 14 günden uzun çalışma sürelerinde bellek sızıntısına yol açan çekirdek sürümünü (5.14.0-362) tespit etti. Geçici çözüm (haftalık yeniden başlatma) bilinen hata olarak kayıtlı; kalıcı çözüm çekirdek yaması.',
+      desc: 'SAP-AS-02 üzerinde çekirdek 5.14.0-427 sürümüne yükseltme, SAP uygulama servislerinin kontrollü kapatılıp açılması, 30 dakikalık bellek izleme ve smoke test. Pencere boyunca SAP ERP kullanıcılarına erişim yok; bordro ve satın alma ekipleri bilgilendirildi.',
+      plan: ['SAP uygulama servislerini kontrollü kapat (Basis ekibi)', 'Anlık görüntü (snapshot) al · VMware', 'Çekirdek 5.14.0-427 yükle, yeniden başlat', 'Servisleri aç, 30 dk bellek izleme', 'Smoke test · bordro hesaplama, MM sipariş, FI kapanış'],
+      rollback: ['Servisleri kapat, snapshot\'a geri dön', 'Servisleri aç, 15 dk izleme', 'PRB-031 geçici çözümünü yeniden devreye al'], rbTime: '25 dk',
+      appr: [{ role: 'Hizmet sahibi', who: 'Barış Can Ataklı', ok: true, when: 'Bugün 09:40', note: 'Pencere iş birimleriyle uzlaşıldı; bordro kapanışı 25 Eyl, çakışma yok.' }, { role: 'CAB', who: 'Zeynep Ural', ok: null, when: '', note: '' }, { role: 'Güvenlik', who: 'admin admin', ok: null, when: '', note: '' }],
+      tasks: [{ title: 'Snapshot alındı', who: 'Deniz Acar', dur: '10 dk', done: false }, { title: 'Çekirdek paketi yüklendi', who: 'Gökhan Tuna', dur: '20 dk', done: false }, { title: 'Yeniden başlatma ve servis açılışı', who: 'Gökhan Tuna', dur: '25 dk', done: false }, { title: 'Bellek izleme 30 dk · eşik altı', who: 'Gökhan Tuna', dur: '30 dk', done: false }],
+      impact: [{ label: 'Etkilenen hizmet', value: '1', sub: 'SAP ERP', color: '#020618' }, { label: 'Bağlı CI', value: '6', sub: 'AS-02, DB-01, 4 arayüz', color: '#020618' }, { label: 'Etkilenen kullanıcı', value: '~340', sub: 'bordro, satın alma, finans', color: '#b16a08' }, { label: 'Kesinti', value: '2 sa', sub: 'pencere boyunca erişim yok', color: '#d23f43' }], impactWhen: 'bugün 08:35',
+      incidents: [{ id: 'INC498', title: 'SAP ERP yavaşlığı, bellek eşiği aşıldı', meta: 'Kapalı · PRB-031\'e bağlı' }, { id: 'INC517', title: 'SAP AS-02 yeniden başlatma sonrası oturum kopmaları', meta: 'Çözüldü · geçici çözüm' }],
+      log: [['Bugün 09:40', 'Hizmet sahibi onayı verildi · "Pencere iş birimleriyle uzlaşıldı"', 'Barış Can Ataklı'], ['Bugün 09:12', 'Onaya gönderildi · yol: Hizmet sahibi → CAB → Güvenlik', 'Barış Can Ataklı'], ['Bugün 09:05', 'Risk Yüksek olarak değerlendirildi · kritik hizmet, 2 sa kesinti', 'Barış Can Ataklı'], ['Bugün 08:50', 'Uygulama penceresi seçildi · 23 Eyl 02:00–04:00', 'Gökhan Tuna'], ['Bugün 08:35', 'Etki analizi CMDB\'den çekildi · 6 bağlı CI', 'Sistem'], ['Bugün 08:32', 'PRB-031 kalıcı çözümünden değişiklik kaydı açıldı', 'Barış Can Ataklı']]
+    },
+    'CHG-122': {
+      type: 'acil', risk: 'yuksek', st: 'onay', created: 'Bugün 11:05', mgr: 'admin admin', a: null, g: 'Ankara Teknik Destek Grubu', src: { k: 'INC', id: 'INC521' },
+      reason: 'INC521: İstanbul şubesi omurga yönlendiricisinde firmware hatası; BGP oturumları 20 dakikada bir düşüyor, şube WAN erişimi kesintili. Tedarikçi düzeltme sürümü yayımladı; bekleyecek zaman yok.',
+      desc: 'RTR-IST-CORE-01 firmware 17.9.4a → 17.9.5 yükseltmesi; yedek yönlendirici üzerinden trafiği taşıyıp birincil cihazı güncelleme, BGP oturumlarını doğrulama.',
+      plan: ['Trafiği RTR-IST-CORE-02\'ye aktar (HSRP önceliği)', 'Mevcut firmware ve konfigürasyonu yedekle', 'Firmware 17.9.5 yükle, yeniden başlat', 'BGP ve OSPF komşuluklarını doğrula, trafiği geri al'],
+      rollback: ['Trafiği CORE-02\'de tut', 'Önceki firmware imajına geri dön (bootflash)', 'Konfigürasyonu geri yükle, komşulukları doğrula'], rbTime: '15 dk',
+      appr: [{ role: 'ECAB', who: 'admin admin', ok: null, when: '', note: '' }],
+      tasks: [{ title: 'Trafik yedek cihaza aktarıldı', who: 'Zeynep Ural', dur: '10 dk', done: false }, { title: 'Firmware ve konfigürasyon yedeklendi', who: 'Zeynep Ural', dur: '10 dk', done: false }, { title: 'Firmware yüklendi, cihaz açıldı', who: 'Zeynep Ural', dur: '25 dk', done: false }],
+      impact: [{ label: 'Etkilenen hizmet', value: '3', sub: 'Şube ağı, VPN, IP telefon', color: '#b16a08' }, { label: 'Bağlı CI', value: '2', sub: 'CORE-01, CORE-02', color: '#020618' }, { label: 'Etkilenen kullanıcı', value: '~120', sub: 'İstanbul şubesi', color: '#b16a08' }, { label: 'Kesinti', value: '~5 dk', sub: 'HSRP geçişi sırasında', color: '#64748b' }], impactWhen: 'bugün 11:06',
+      incidents: [{ id: 'INC521', title: 'İstanbul şubesi WAN kesintili · BGP oturumları düşüyor', meta: 'Açık · Kritik · kaynak' }],
+      log: [['Bugün 11:20', 'ECAB onayına gönderildi · acil değişiklik, onay sonradan alınabilir', 'admin admin'], ['Bugün 11:10', 'Risk Yüksek · şube WAN tek noktadan geçiyor', 'admin admin'], ['Bugün 11:05', 'INC521 üzerinden acil değişiklik kaydı açıldı', 'admin admin']]
+    },
+    'CHG-121': {
+      type: 'acil', risk: 'yuksek', st: 'uygulaniyor', created: 'Bugün 15:40', mgr: 'Barış Can Ataklı', a: 'Gökhan Tuna', g: 'Level 2 Analist', src: { k: 'PRB', id: 'PRB-030' },
+      reason: 'PRB-030: Exchange taşıma servisi (MRS) kilitleniyor, posta kutusu taşımaları yığılıyor; 3 gündür 1.200 kullanıcıya gecikmeli teslimat. Kök neden servis yapılandırmasındaki eşzamanlılık sınırı.',
+      desc: 'EXCH-MBX-01 üzerinde MRS yapılandırma dosyasında eşzamanlı taşıma sınırının düşürülmesi, servisin yeniden başlatılması ve kuyruğun boşalmasının izlenmesi.',
+      plan: ['MRS yapılandırmasını yedekle', 'MaxActiveMovesPerTargetMDB 20 → 5', 'Taşıma servisini yeniden başlat', 'Kuyruk boşalmasını 60 dk izle'],
+      rollback: ['Yedek yapılandırmayı geri yükle', 'Servisi yeniden başlat'], rbTime: '10 dk',
+      appr: [{ role: 'ECAB', who: 'Zeynep Ural', ok: null, when: '', note: '' }],
+      tasks: [{ title: 'Yapılandırma yedeklendi', who: 'Gökhan Tuna', dur: '5 dk', done: true }, { title: 'Eşzamanlılık sınırı değiştirildi', who: 'Gökhan Tuna', dur: '5 dk', done: true }, { title: 'Servis yeniden başlatıldı', who: 'Gökhan Tuna', dur: '10 dk', done: false }, { title: 'Kuyruk 60 dk izlendi · eşik altı', who: 'Gökhan Tuna', dur: '60 dk', done: false }, { title: 'PRB-030 kalıcı çözüm notu yazıldı', who: 'Barış Can Ataklı', dur: '10 dk', done: false }],
+      impact: [{ label: 'Etkilenen hizmet', value: '1', sub: 'E-posta (Exchange)', color: '#020618' }, { label: 'Bağlı CI', value: '3', sub: 'MBX-01, MBX-02, CAS-01', color: '#020618' }, { label: 'Etkilenen kullanıcı', value: '1.200', sub: 'taşıma kuyruğundakiler', color: '#b16a08' }, { label: 'Kesinti', value: '~2 dk', sub: 'servis yeniden başlatma', color: '#64748b' }], impactWhen: 'bugün 15:41',
+      incidents: [{ id: 'INC509', title: 'E-posta teslimatında 2 saati aşan gecikme', meta: 'Açık · PRB-030\'a bağlı' }, { id: 'INC512', title: 'Posta kutusu taşıma isteği tamamlanmıyor', meta: 'Açık · PRB-030\'a bağlı' }],
+      log: [['Bugün 20:00', 'Uygulama başladı · pencere açıldı', 'Gökhan Tuna'], ['Bugün 15:55', 'ECAB onayına gönderildi · acil, uygulama onaydan önce', 'Barış Can Ataklı'], ['Bugün 15:40', 'PRB-030 kalıcı çözümünden acil değişiklik açıldı', 'Barış Can Ataklı']]
+    },
+    'CHG-115': {
+      type: 'normal', risk: 'orta', st: 'pir', result: 'Başarılı', created: '12 Eyl 10:15', mgr: 'Barış Can Ataklı', a: 'Gökhan Tuna', g: 'Level 2 Analist', src: null,
+      reason: 'CRM rapor veritabanında parçalanma oranı %40\'ı aştı; gün sonu raporları 25 dakikadan uzun sürüyor.',
+      desc: 'CRM-DB-01 üzerinde rapor şemasındaki 42 indeksin çevrimdışı yeniden oluşturulması, istatistiklerin güncellenmesi.',
+      plan: ['Rapor servisini durdur', 'İndeksleri yeniden oluştur (script v3)', 'İstatistikleri güncelle', 'Rapor servisini aç, örnek raporu koştur'],
+      rollback: ['Rapor servisini aç · indeksler eski hâlde kullanılabilir'], rbTime: '5 dk',
+      appr: [{ role: 'Hizmet sahibi', who: 'Barış Can Ataklı', ok: true, when: '13 Eyl 09:10', note: '' }, { role: 'CAB', who: 'Zeynep Ural', ok: true, when: '15 Eyl 14:00', note: 'CAB 15 Eyl · itiraz yok' }],
+      tasks: [{ title: 'Rapor servisi durduruldu', who: 'Gökhan Tuna', dur: '5 dk', done: true }, { title: 'İndeksler yeniden oluşturuldu', who: 'Gökhan Tuna', dur: '55 dk', done: true }, { title: 'Servis açıldı, örnek rapor 4 dk', who: 'Gökhan Tuna', dur: '10 dk', done: true }],
+      impact: [{ label: 'Etkilenen hizmet', value: '1', sub: 'CRM', color: '#020618' }, { label: 'Bağlı CI', value: '2', sub: 'DB-01, RPT-01', color: '#020618' }, { label: 'Etkilenen kullanıcı', value: '~60', sub: 'satış raporlama', color: '#020618' }, { label: 'Kesinti', value: '1,5 sa', sub: 'yalnızca raporlama', color: '#64748b' }], impactWhen: '12 Eyl 10:20',
+      incidents: [],
+      pirFacts: [['Planlanan süre', '1 sa 30 dk', '#020618'], ['Gerçekleşen', '1 sa 10 dk', '#1f8a6f'], ['Açılan olay', '0', '#1f8a6f'], ['Geri alma', 'Yok', '#64748b']],
+      log: [['17 Eyl 23:12', 'Uygulama tamamlandı · gözden geçirme açıldı', 'Gökhan Tuna'], ['17 Eyl 22:00', 'Uygulama başladı', 'Gökhan Tuna'], ['15 Eyl 14:00', 'CAB onayı · durum Planlandı', 'Zeynep Ural'], ['13 Eyl 09:10', 'Hizmet sahibi onayı', 'Barış Can Ataklı'], ['12 Eyl 10:15', 'Kayıt açıldı', 'Barış Can Ataklı']]
+    },
+    'CHG-124': {
+      type: 'normal', risk: null, st: 'taslak', created: 'Bugün 16:10', mgr: 'Deniz Acar', a: null, g: 'Level 1 Analist', src: null,
+      reason: 'Ortak alan dijital ekranlarının içerik sunucusu (SIGN-SRV-01) garanti dışı donanımda; yeni sanal sunucuya taşınması planlanıyor.',
+      desc: 'İçerik kütüphanesi ve oynatma listelerinin yeni sanal sunucuya taşınması, 14 ekran istemcisinin yeni adrese yönlendirilmesi.',
+      plan: ['İçerik ve veritabanını yedekle', 'Yeni sunucuya kur, içeriği taşı', 'İstemcileri yeni adrese yönlendir', 'Eski sunucuyu 1 hafta beklet'],
+      rollback: null, rbTime: '',
+      appr: [{ role: 'Hizmet sahibi', who: 'Barış Can Ataklı', ok: null, when: '', note: '' }, { role: 'CAB', who: 'Zeynep Ural', ok: null, when: '', note: '' }],
+      tasks: [],
+      impact: [{ label: 'Etkilenen hizmet', value: '1', sub: 'Ortak alan ekranları', color: '#020618' }, { label: 'Bağlı CI', value: '15', sub: 'sunucu + 14 istemci', color: '#020618' }, { label: 'Etkilenen kullanıcı', value: '—', sub: 'iç iletişim ekranları', color: '#64748b' }, { label: 'Kesinti', value: '?', sub: 'değerlendirilecek', color: '#94a3b8' }], impactWhen: 'bugün 16:11',
+      incidents: [],
+      log: [['Bugün 16:10', 'Kayıt açıldı · taslak', 'Deniz Acar']]
+    }
+  };
+  static GENERIC(id) {
+    const s = Component.SUMMARY[id] || { s: id, svc: '—', ci: '—', win: null, st: 'taslak' };
+    const std = { 'CHG-119': 'Sertifika yenileme şablonu', 'CHG-123': 'Aylık OS yama şablonu' }[id];
+    const src = { 'CHG-117': { k: 'PRB', id: 'PRB-027' }, 'CHG-116': { k: 'PRB', id: 'PRB-025' }, 'CHG-120': { k: 'REQ', id: 'REQ-2041' }, 'CHG-114': { k: 'REQ', id: 'REQ-2033' }, 'CHG-112': { k: 'PRB', id: 'PRB-019' }, 'CHG-102': { k: 'PRB', id: 'PRB-022' }, 'CHG-097': { k: 'PRB', id: 'PRB-019' } }[id] || null;
+    const early = s.st === 'taslak' || s.st === 'degerlendirme', rejected = s.st === 'reddedildi';
+    const appr = std ? [] : [{ role: 'Hizmet sahibi', who: 'Barış Can Ataklı', ok: early ? null : true, when: early ? '' : '16 Eyl 09:10', note: '' }, { role: 'CAB', who: 'Zeynep Ural', ok: early || s.st === 'onay' ? null : rejected ? false : true, when: early || s.st === 'onay' ? '' : '17 Eyl 14:00', note: rejected ? 'Gerekçe yetersiz; iş birimi onayı eksik. Tamamlanıp yeniden gönderilmeli.' : '' }];
+    return { type: std ? 'standart' : 'normal', tmpl: std, risk: std ? 'dusuk' : early ? null : 'orta', st: s.st, result: s.st === 'kapali' ? (id === 'CHG-110' ? 'Geri alındı' : 'Başarılı') : undefined, created: '—', mgr: 'Barış Can Ataklı', a: 'Deniz Acar', g: 'Level 1 Analist', src,
+      reason: 'Bu kayıt için örnek içerik girilmedi; alanlar liste özetinden türetildi.', desc: s.s, plan: ['Hazırlık ve yedek', 'Uygulama', 'Doğrulama'], rollback: ['Yedeğe geri dön'], rbTime: '—',
+      appr,
+      tasks: [{ title: 'Hazırlık', who: 'Deniz Acar', dur: '—', done: s.st !== 'planlandi' }, { title: 'Uygulama', who: 'Deniz Acar', dur: '—', done: ['pir', 'kapali'].includes(s.st) }, { title: 'Doğrulama', who: 'Deniz Acar', dur: '—', done: ['pir', 'kapali'].includes(s.st) }],
+      impact: [{ label: 'Etkilenen hizmet', value: '1', sub: s.svc, color: '#020618' }, { label: 'Bağlı CI', value: '1', sub: s.ci, color: '#020618' }], impactWhen: '—', incidents: [], log: [['—', 'Kayıt açıldı', 'Barış Can Ataklı']] };
+  }
+  constructor(props) {
+    super(props);
+    const p = new URLSearchParams(window.location.search);
+    let id = (p.get('id') || 'CHG-118').toUpperCase(); if (!Component.SUMMARY[id]) id = 'CHG-118';
+    const base = Component.DETAIL[id] || Component.GENERIC(id), sum = Component.SUMMARY[id];
+    const rec = JSON.parse(JSON.stringify({ id, ...sum, ...base, win: sum.win }));
+    if (rec.st === 'kapali' && !rec.result) rec.result = id === 'CHG-110' ? 'Geri alındı' : 'Başarılı';
+    if (rec.st === 'kapali' || rec.st === 'pir') { rec.pirFacts = rec.pirFacts || [['Planlanan süre', this.durText(rec.win ? rec.win.dur : 0), '#020618'], ['Gerçekleşen', '—', '#64748b'], ['Açılan olay', '0', '#1f8a6f'], ['Geri alma', rec.result === 'Geri alındı' ? 'Evet' : 'Yok', rec.result === 'Geri alındı' ? '#d23f43' : '#64748b']]; }
+    this.state = { rec, tab: 'ozet', pop: null, cell: null, toast: '', noteDraft: '', pirNote: rec.st === 'kapali' ? 'Uygulama plana uygun tamamlandı.' : '', pirResult: rec.result || null, history: [] };
+  }
+  componentDidMount() { this._kd = ev => { if (ev.key === 'Escape' && this.state.pop) this.setState({ pop: null, cell: null }); }; window.addEventListener('keydown', this._kd); }
+  componentWillUnmount() { clearTimeout(this._tt); window.removeEventListener('keydown', this._kd); }
+  pad(n) { return String(n).padStart(2, '0'); }
+  durText(h) { if (!h) return '—'; const m = Math.round(h * 60); return m >= 60 ? Math.floor(m / 60) + ' sa' + (m % 60 ? ' ' + (m % 60) + ' dk' : '') : m + ' dk'; }
+  fmtDay(days) { const d = new Date(Date.now() + days * 864e5); const ay = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara']; return d.getDate() + ' ' + ay[d.getMonth()]; }
+  fmtTime(w) { const s = w.h * 60 + w.m, e = (s + Math.round(w.dur * 60)) % 1440; return this.pad(w.h) + ':' + this.pad(w.m) + '–' + this.pad(Math.floor(e / 60)) + ':' + this.pad(e % 60); }
+  fmtWin(w) { return (w.d === 0 ? 'Bugün' : w.d === 1 ? 'Yarın' : this.fmtDay(w.d)) + ' ' + this.fmtTime(w); }
+  now() { const d = new Date(); return 'Bugün ' + this.pad(d.getHours()) + ':' + this.pad(d.getMinutes()); }
+  inFreeze(w) { return !!w && w.d >= Component.FREEZE.from && w.d <= Component.FREEZE.to; }
+  startOf(w) { return w.d * 24 + w.h + w.m / 60; }
+  overlaps(a, b) { const sa = this.startOf(a), ea = sa + a.dur, sb = this.startOf(b), eb = sb + b.dur; return sa < eb && sb < ea; }
+  conflicts(rec) { if (!rec.win) return []; const active = k => !['kapali', 'reddedildi', 'pir'].includes(k); return Object.entries(Component.SUMMARY).filter(([id, o]) => id !== rec.id && o.win && active(o.st) && (o.ci === rec.ci || o.svc === rec.svc) && this.overlaps(rec.win, o.win)).map(([id, o]) => ({ id, title: o.s, win: this.fmtWin(o.win), why: o.ci === rec.ci ? 'aynı CI' : 'aynı hizmet', href: 'Degisiklik Detayi.dc.html?id=' + id })); }
+  closed(rec) { return rec.st === 'kapali' || rec.st === 'reddedildi'; }
+  pendingMe(rec) { return !this.closed(rec) && rec.st !== 'taslak' && rec.st !== 'degerlendirme' && rec.appr.some(x => x.ok === null && x.who === Component.ME); }
+  allApproved(rec) { return rec.type === 'standart' || rec.appr.every(x => x.ok === true); }
+  toast(msg, undo) { this.setState({ toast: { text: msg, undo: undo || null } }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: '' }), undo ? 7000 : 3800); }
+  commit(fn, msg, logText, undoMsg) {
+    const prev = JSON.parse(JSON.stringify(this.state.rec));
+    const rec = JSON.parse(JSON.stringify(this.state.rec)); fn(rec);
+    if (logText) rec.log = [[this.now(), logText, Component.ME], ...rec.log];
+    this.setState({ rec, pop: null, cell: null });
+    this.toast(msg, () => { this.setState({ rec: prev }); this.toast(undoMsg || 'Geri alındı'); });
+  }
+  applyField(field, value) {
+    const r = this.state.rec, ST = Component.ST;
+    if (field === 'st') {
+      if (value === r.st) { this.setState({ pop: null, cell: null }); return; }
+      const block = m => { this.setState({ pop: null, cell: null }); this.toast(r.id + ' · ' + m); };
+      if (value === 'onay' && !r.rollback && r.type !== 'standart') return block('onaya göndermek için geri alma planı gerekir');
+      if (value === 'planlandi' && r.type !== 'acil' && !this.allApproved(r)) return block('onay tamamlanmadan Planlandı olamaz; bekleyen: ' + r.appr.filter(x => x.ok !== true).map(x => x.who + ' (' + x.role + ')').join(', '));
+      if (value === 'uygulaniyor' && !r.win) return block('uygulama penceresi planlanmadan Uygulanıyor olamaz');
+      if (value === 'uygulaniyor' && this.inFreeze(r.win)) return block('pencere dondurma döneminde; istisna onayı olmadan uygulanamaz');
+      if (value === 'kapali' && r.st !== 'pir') return block('kapatmak için uygulama sonrası gözden geçirme gerekir');
+      if (value === 'kapali' && !this.state.pirResult) return block('gözden geçirme sonucu seçilmeden kapatılamaz');
+      if (value === 'reddedildi' && r.st !== 'onay') return block('yalnızca onay bekleyen değişiklik reddedilebilir');
+      this.commit(x => { x.st = value; if (value === 'kapali') x.result = this.state.pirResult; if (value === 'reddedildi') x.appr = x.appr.map(a => a.who === Component.ME && a.ok === null ? { ...a, ok: false, when: this.now() } : a); }, r.id + ' · Durum: ' + ST[r.st][0] + ' → ' + ST[value][0], 'Durum ' + ST[r.st][0] + ' → ' + ST[value][0], 'Durum değişikliği geri alındı');
+      return;
+    }
+    if (field === 'risk') { this.commit(x => { x.risk = value; }, r.id + ' · Risk: ' + (r.risk ? Component.RISK[r.risk][0] : '—') + ' → ' + Component.RISK[value][0] + (value === 'yuksek' && r.type === 'normal' ? ' · onay yoluna Güvenlik eklendi' : ''), 'Risk ' + Component.RISK[value][0] + ' olarak değerlendirildi', 'Risk geri alındı'); return; }
+    if (field === 'a') { const a = value || null; this.commit(x => { x.a = a; if (a) x.g = Component.GROUPS[a] || x.g; }, r.id + ' · Uygulayan: ' + (r.a || '—') + ' → ' + (a || '—'), 'Uygulayan ' + (a || 'kaldırıldı'), 'Atama geri alındı'); return; }
+    if (field === 'win') {
+      const cand = this.winCandidates(r)[Number(value)]; if (!cand) return;
+      if (this.inFreeze(cand)) { this.setState({ pop: null, cell: null }); this.toast(r.id + ' · ' + this.fmtWin(cand) + ' dondurma döneminde; planlanamaz'); return; }
+      this.commit(x => { x.win = { ...cand }; if (x.st === 'taslak') x.st = 'degerlendirme'; }, r.id + ' · Pencere: ' + (r.win ? this.fmtWin(r.win) : '—') + ' → ' + this.fmtWin(cand), 'Uygulama penceresi ' + this.fmtWin(cand), 'Pencere geri alındı');
+    }
+  }
+  winCandidates(r) { const dur = r.win ? r.win.dur : 2; return [{ d: 1, h: 22 }, { d: 2, h: 2 }, { d: 3, h: 2 }, { d: 5, h: 2 }, { d: 10, h: 22 }].map(c => ({ d: c.d, h: c.h, m: 0, dur })); }
+  openCell(field, ev) {
+    if (ev && ev.stopPropagation) ev.stopPropagation();
+    const r = this.state.rec;
+    if (field === 'win' && (r.st === 'uygulaniyor' || r.st === 'pir' || this.closed(r))) { this.toast(r.id + ' · bu durumda pencere değiştirilemez'); return; }
+    if (field === 'risk' && (r.st === 'uygulaniyor' || r.st === 'pir' || this.closed(r))) { this.toast(r.id + ' · uygulamaya geçen değişikliğin riski değiştirilemez'); return; }
+    const rc = ev.currentTarget.getBoundingClientRect();
+    const w = field === 'a' ? 280 : field === 'st' ? 360 : field === 'risk' ? 340 : 340, n = field === 'a' ? 6 : field === 'st' ? 8 : field === 'risk' ? 3 : 5;
+    const hgt = 12 + 34 + n * 32 + 34;
+    let top = rc.bottom + 4; if (top + hgt > window.innerHeight - 8) top = Math.max(8, rc.top - hgt - 4);
+    const left = Math.max(8, Math.min(rc.left, window.innerWidth - w - 8));
+    const same = this.state.pop === 'cell' && this.state.cell && this.state.cell.field === field;
+    this.setState(same ? { pop: null, cell: null } : { pop: 'cell', cell: { field, top, left, w } });
+  }
+  approve() {
+    const r = this.state.rec; if (!this.pendingMe(r)) return;
+    let planned = false;
+    this.commit(x => { x.appr = x.appr.map(a => a.who === Component.ME && a.ok === null ? { ...a, ok: true, when: this.now(), note: a.note || 'Onaylandı' } : a); if (x.st === 'onay' && x.appr.every(a => a.ok === true)) { x.st = 'planlandi'; planned = true; } }, r.id + ' · onayınız kaydedildi' + (r.st === 'onay' && r.appr.filter(a => a.ok === null).length === 1 ? ' · son onay, durum Planlandı; uygulayıcı ekibe bildirildi' : r.type === 'acil' && r.st !== 'onay' ? ' · ECAB onayı sonradan tamamlandı' : ' · kalan onaylar bekleniyor'), 'Onay verildi · ' + (r.appr.find(a => a.who === Component.ME && a.ok === null) || {}).role, 'Onay geri alındı');
+  }
+  reject() {
+    const r = this.state.rec; if (!this.pendingMe(r)) return;
+    if (r.st !== 'onay') { this.toast(r.id + ' · uygulanan acil değişiklik reddedilemez; gözden geçirmede değerlendirilir'); return; }
+    this.commit(x => { x.st = 'reddedildi'; x.appr = x.appr.map(a => a.who === Component.ME && a.ok === null ? { ...a, ok: false, when: this.now(), note: 'Gerekçe yetersiz; iş birimi onayı eklenip yeniden gönderilmeli.' } : a); }, r.id + ' · reddedildi; sahibi ve kaynak kayıt bilgilendirildi', 'Reddedildi · gerekçe eklendi', 'Ret geri alındı');
+  }
+  toggleTask(i) {
+    const r = this.state.rec;
+    if (r.st !== 'uygulaniyor') { this.toast(r.id + ' · görevler yalnızca Uygulanıyor durumunda işaretlenir'); return; }
+    const t = r.tasks[i]; if (!t.done && i > 0 && !r.tasks[i - 1].done) { this.toast(r.id + ' · görevler sırayla tamamlanır; önce ' + (i) + '. görev'); return; }
+    if (t.done && i < r.tasks.length - 1 && r.tasks[i + 1].done) { this.toast(r.id + ' · sonraki görev tamamlanmış; önce onu geri alın'); return; }
+    this.commit(x => { x.tasks[i].done = !t.done; }, r.id + ' · görev ' + (i + 1) + (t.done ? ' geri alındı' : ' tamamlandı'), (t.done ? 'Görev geri alındı: ' : 'Görev tamamlandı: ') + t.title, 'Görev değişikliği geri alındı');
+  }
+  primaryFor(r) {
+    const ME = Component.ME, pend = this.pendingMe(r), doneAll = r.tasks.length > 0 && r.tasks.every(t => t.done);
+    if (r.st === 'taslak') return { label: 'Değerlendirmeyi başlat', bg: '#08748e', run: () => this.commit(x => { x.st = 'degerlendirme'; }, r.id + ' · değerlendirme başladı; risk ve pencere bekleniyor', 'Değerlendirme başladı', 'Geri alındı') };
+    if (r.st === 'degerlendirme') { if (!r.risk) return { label: 'Riski değerlendir', bg: '#08748e', run: ev => this.openCell('risk', ev) }; if (!r.win) return { label: 'Pencere seç', bg: '#08748e', run: ev => this.openCell('win', ev) }; if (!r.rollback && r.type !== 'standart') return { label: 'Geri alma planı ekle', bg: '#08748e', run: () => this.addRollback() }; return r.type === 'standart' ? { label: 'Planla', bg: '#08748e', run: () => this.commit(x => { x.st = 'planlandi'; }, r.id + ' · standart değişiklik onay gerektirmez; Planlandı', 'Planlandı · standart, şablon onaylı', 'Geri alındı') } : { label: r.type === 'acil' ? 'Uygulamaya başla · ECAB sonradan' : 'Onaya gönder', bg: '#08748e', run: () => r.type === 'acil' ? this.commit(x => { x.st = 'uygulaniyor'; }, r.id + ' · acil değişiklik uygulamaya alındı; ECAB onayı sonradan alınır', 'Uygulama başladı · ECAB sonradan', 'Geri alındı') : this.commit(x => { x.st = 'onay'; }, r.id + ' · onaya gönderildi; yol: ' + r.appr.map(a => a.role).join(' → '), 'Onaya gönderildi', 'Geri alındı') }; }
+    if (r.st === 'onay') { if (pend) return { label: 'Onayla · ' + r.appr.find(a => a.who === ME && a.ok === null).role, bg: '#08748e', run: () => this.approve() }; if (r.type === 'acil') return { label: 'Uygulamaya başla · ECAB sonradan', bg: '#08748e', run: () => this.commit(x => { x.st = 'uygulaniyor'; }, r.id + ' · acil değişiklik uygulamaya alındı; ECAB onayı sonradan alınır', 'Uygulama başladı · ECAB sonradan', 'Geri alındı') }; return { label: 'Onay bekleniyor · ' + r.appr.filter(a => a.ok === null).map(a => a.who).join(', '), bg: '#94a3b8', run: () => this.toast(r.id + ' · onay ' + r.appr.filter(a => a.ok === null).map(a => a.who + ' (' + a.role + ')').join(', ') + ' üzerinde; hatırlatma gönderildi') }; }
+    if (r.st === 'planlandi') { if (this.inFreeze(r.win)) return { label: 'Dondurma istisnası iste', bg: '#b16a08', run: () => this.toast(r.id + ' · istisna talebi CAB\'a gönderildi; pencere ' + Component.FREEZE.label + ' içinde') }; return { label: r.win && r.win.d === 0 ? 'Uygulamaya başla' : 'Uygulamaya başla · pencere ' + (r.win ? this.fmtWin(r.win) : '—'), bg: r.win && r.win.d === 0 ? '#08748e' : '#64748b', run: () => r.win && r.win.d === 0 ? this.commit(x => { x.st = 'uygulaniyor'; }, r.id + ' · uygulama başladı; görevler açıldı', 'Uygulama başladı', 'Geri alındı') : this.toast(r.id + ' · pencere henüz açılmadı (' + this.fmtWin(r.win) + '); erken başlatma için pencereyi değiştirin') }; }
+    if (r.st === 'uygulaniyor') return doneAll ? { label: 'Uygulamayı tamamla', bg: '#08748e', run: () => this.commit(x => { x.st = 'pir'; x.result = 'Başarılı'; x.pirFacts = [['Planlanan süre', this.durText(x.win ? x.win.dur : 0), '#020618'], ['Gerçekleşen', this.durText((x.win ? x.win.dur : 1) * 0.8), '#1f8a6f'], ['Açılan olay', '0', '#1f8a6f'], ['Geri alma', 'Yok', '#64748b']]; }, r.id + ' · uygulama tamamlandı; gözden geçirme açıldı' + (r.src && r.src.k === 'PRB' ? ' · ' + r.src.id + ' kalıcı çözüm uygulanmış olarak işaretlendi' : ''), 'Uygulama tamamlandı · gözden geçirme açıldı', 'Tamamlama geri alındı') } : { label: 'Görevler · ' + r.tasks.filter(t => t.done).length + '/' + r.tasks.length, bg: '#64748b', run: () => this.setState({ tab: 'gorev' }) };
+    if (r.st === 'pir') return { label: this.state.pirResult ? 'Kapat · ' + this.state.pirResult : 'Gözden geçirmeyi kaydet', bg: '#08748e', run: () => this.state.pirResult ? this.applyField('st', 'kapali') : this.setState({ tab: 'pir' }) };
+    if (r.st === 'reddedildi') return { label: 'Düzenle ve yeniden gönder', bg: '#08748e', run: () => this.commit(x => { x.st = 'degerlendirme'; x.appr = x.appr.map(a => ({ ...a, ok: null, when: '', note: '' })); }, r.id + ' · değerlendirmeye alındı; onaylar sıfırlandı', 'Yeniden değerlendirmeye alındı', 'Geri alındı') };
+    return null;
+  }
+  addRollback() { const r = this.state.rec; this.commit(x => { x.rollback = ['Önceki sürüme / yedeğe geri dön', 'Servisleri aç, 15 dk izle', 'Kaynak kaydın geçici çözümünü yeniden devreye al']; x.rbTime = '20 dk'; }, r.id + ' · geri alma planı şablondan eklendi; adımları düzenleyin', 'Geri alma planı eklendi', 'Geri alma planı kaldırıldı'); }
+  rollbackNow() { const r = this.state.rec; this.commit(x => { x.st = 'pir'; x.result = 'Geri alındı'; x.pirFacts = [['Planlanan süre', this.durText(x.win ? x.win.dur : 0), '#020618'], ['Gerçekleşen', this.durText((x.win ? x.win.dur : 1) * 0.5), '#b16a08'], ['Açılan olay', '1', '#d23f43'], ['Geri alma', 'Evet · ' + (x.rbTime || '—'), '#d23f43']]; }, r.id + ' · geri alma planı çalıştırıldı; gözden geçirme açıldı, sonuç "Geri alındı"' + (r.src ? ' · ' + r.src.id + ' kaydına not düştü' : ''), 'Geri alma çalıştırıldı · ' + (r.rbTime || ''), 'Geri alma iptal edildi'); this.setState({ pirResult: 'Geri alındı' }); }
+  renderVals() {
+    const s = this.state, r = s.rec, ME = Component.ME, ST = Component.ST, TYPE = Component.TYPE, RISK = Component.RISK, F = Component.FREEZE;
+    const zemin = this.props.zemin ?? 'slate-50';
+    const zeminBg = { 'slate-50': '#f8fafc', 'slate-100': '#f1f5f9', 'slate-200': '#e2e8f0', 'sogukgri': '#eef1f6' }[zemin] || '#f8fafc';
+    const idx = Component.ORDER.indexOf(r.id), prevId = Component.ORDER[(idx - 1 + Component.ORDER.length) % Component.ORDER.length], nextId = Component.ORDER[(idx + 1) % Component.ORDER.length];
+    const st = ST[r.st], closed = this.closed(r), pend = this.pendingMe(r), ty = TYPE[r.type], rk = r.risk ? RISK[r.risk] : null;
+    const conflicts = this.conflicts(r);
+    const total = r.appr.length, okN = r.appr.filter(a => a.ok === true).length, pendA = r.appr.filter(a => a.ok === null), me = pendA.find(a => a.who === ME);
+    let ap;
+    if (r.st === 'reddedildi') ap = { text: 'Reddedildi', color: '#d23f43', sub: (r.appr.find(a => a.ok === false) || {}).who + ' · gerekçe Onay sekmesinde', subColor: '#64748b' };
+    else if (r.type === 'standart') ap = { text: 'Gerekmez', color: '#64748b', sub: 'standart · şablon onaylı', subColor: '#64748b' };
+    else if (r.st === 'taslak' || r.st === 'degerlendirme') ap = { text: 'Başlamadı', color: '#94a3b8', sub: 'yol: ' + r.appr.map(a => a.role).join(' → '), subColor: '#94a3b8' };
+    else if (!pendA.length) ap = { text: 'Onaylandı ✓', color: '#1f8a6f', sub: okN + '/' + total + ' · ' + r.appr.map(a => a.role).join(', '), subColor: '#64748b' };
+    else if (r.type === 'acil' && r.st !== 'onay') ap = { text: 'ECAB · sonradan', color: '#b16a08', sub: me ? 'sizi bekliyor · uygulama sürüyor' : 'bekleyen: ' + pendA.map(a => a.who).join(', '), subColor: me ? '#b16a08' : '#64748b' };
+    else ap = { text: okN + '/' + total + ' onay', color: '#b16a08', sub: me ? 'sizi bekliyor · ' + me.role : 'bekleyen: ' + pendA.map(a => a.who + ' (' + a.role + ')').join(', '), subColor: me ? '#b16a08' : '#64748b' };
+    let wi;
+    if (!r.win) wi = { text: 'Planlanmadı', color: '#94a3b8', sub: 'değerlendirme sonrası seçilir', subColor: '#94a3b8' };
+    else if (r.st === 'reddedildi') wi = { text: this.fmtWin(r.win), color: '#94a3b8', sub: 'uygulanmadı', subColor: '#94a3b8' };
+    else if (r.st === 'kapali') wi = { text: this.fmtWin(r.win), color: '#64748b', sub: r.result || 'tamamlandı', subColor: r.result === 'Geri alındı' ? '#d23f43' : '#64748b' };
+    else if (r.st === 'pir') wi = { text: this.fmtWin(r.win), color: '#64748b', sub: (r.result === 'Geri alındı' ? 'geri alındı' : 'tamamlandı') + ' · gözden geçirme bekliyor', subColor: r.result === 'Geri alındı' ? '#d23f43' : '#64748b' };
+    else if (r.st === 'uygulaniyor') wi = { text: this.fmtWin(r.win), color: '#1f8a6f', sub: 'sürüyor · geri alma planı hazır', subColor: '#1f8a6f' };
+    else if (this.inFreeze(r.win)) wi = { text: this.fmtWin(r.win), color: '#d23f43', sub: '⚠ ' + F.label, subColor: '#d23f43' };
+    else if (conflicts.length) wi = { text: this.fmtWin(r.win), color: '#334155', sub: '⚠ ' + conflicts.map(c => c.id).join(', ') + ' ile çakışıyor', subColor: '#d23f43' };
+    else wi = { text: this.fmtWin(r.win), color: r.win.d <= 1 ? '#b16a08' : '#334155', sub: r.win.d === 0 ? 'bugün · ' + this.durText(r.win.dur) : r.win.d === 1 ? 'yarın · ' + this.durText(r.win.dur) : r.win.d + ' gün sonra · ' + this.durText(r.win.dur), subColor: '#64748b' };
+    const doneN = r.tasks.filter(t => t.done).length, taskN = r.tasks.length;
+    const pri = this.primaryFor(r);
+    let sec = null;
+    if (r.st === 'uygulaniyor') sec = { label: 'Geri al (rollback)', border: '#f3b4b6', fg: '#b3282d', run: () => this.rollbackNow() };
+    else if (r.st === 'onay' && pend) sec = { label: 'Reddet', border: '#f3b4b6', fg: '#b3282d', run: () => this.reject() };
+    else if (r.st === 'planlandi') sec = { label: 'Pencereyi değiştir', border: '#e2e8f0', fg: '#334155', run: ev => this.openCell('win', ev) };
+    else if (r.st === 'degerlendirme' && r.win) sec = { label: 'Pencereyi değiştir', border: '#e2e8f0', fg: '#334155', run: ev => this.openCell('win', ev) };
+    let banner = null;
+    if (r.st === 'uygulaniyor') banner = { bg: '#e6f4f1', border: '#9fd8c8', fg: '#0f5c4d', title: 'Uygulama sürüyor', text: 'Pencere ' + (r.win ? this.fmtWin(r.win) : '') + ' · ' + doneN + '/' + taskN + ' görev tamam · geri alma planı ' + (r.rbTime || '—') + (r.type === 'acil' && pendA.length ? ' · ECAB onayı sonradan bekleniyor' : ''), action: 'Görevleri aç', run: () => this.setState({ tab: 'gorev' }) };
+    else if (r.st === 'planlandi' && this.inFreeze(r.win)) banner = { bg: '#fdf1e0', border: '#f3d39b', fg: '#9a5b0a', title: F.label, text: 'Seçilen pencere dondurma döneminde. Uygulama, CAB istisna onayı olmadan başlatılamaz.', action: 'Pencereyi değiştir', run: ev => this.openCell('win', ev) };
+    else if (conflicts.length && !closed && r.st !== 'pir') banner = { bg: '#fef4f4', border: '#f3b4b6', fg: '#b3282d', title: 'Pencere çakışması', text: conflicts.map(c => c.id + ' (' + c.why + ', ' + c.win + ')').join(' · ') + ' ile aynı zaman diliminde. Biri kaydırılmalı ya da CAB birlikte uygulamayı onaylamalı.', action: 'Pencereyi değiştir', run: ev => this.openCell('win', ev) };
+    else if (pend) banner = { bg: '#fdf1e0', border: '#f3d39b', fg: '#9a5b0a', title: 'Onayınız bekleniyor', text: (me ? me.role : '') + ' onayı sizde · ' + (r.type === 'acil' ? 'acil değişiklik; uygulama onaydan bağımsız sürüyor' : 'onay yolu: ' + r.appr.map(a => a.role + (a.ok === true ? ' ✓' : '')).join(' → ')), action: 'Onay sekmesi', run: () => this.setState({ tab: 'onay' }) };
+    else if (r.st === 'reddedildi') banner = { bg: '#fef4f4', border: '#f3b4b6', fg: '#b3282d', title: 'Reddedildi', text: ((r.appr.find(a => a.ok === false) || {}).note || 'gerekçe Onay sekmesinde') + ' · düzenlenip yeniden gönderilebilir', action: null };
+    else if (r.st === 'taslak') banner = { bg: '#f1f5f9', border: '#e2e8f0', fg: '#334155', title: 'Taslak', text: 'Risk, pencere ve geri alma planı girilmeden onaya gönderilemez.', action: null };
+    else if (r.st === 'pir') banner = { bg: '#f1f5f9', border: '#e2e8f0', fg: '#334155', title: 'Gözden geçirme bekliyor', text: 'Uygulama ' + (r.result === 'Geri alındı' ? 'geri alındı' : 'tamamlandı') + '. Sonuç seçilip dersler yazılmadan kayıt kapatılamaz.', action: 'PIR sekmesi', run: () => this.setState({ tab: 'pir' }) };
+    const tabs = [['ozet', 'Özet', 0], ['onay', 'Onay', total ? okN + '/' + total : 0], ['gorev', 'Görevler', taskN ? doneN + '/' + taskN : 0], ['pir', 'Gözden geçirme', 0], ['iliskili', 'İlişkili', (r.incidents ? r.incidents.length : 0) + (r.src ? 1 : 0) + conflicts.length]].map(([k, label, count]) => { const active = s.tab === k; return { label, hasCount: !!count, count, border: active ? '#08748e' : 'transparent', color: active ? '#020618' : '#64748b', weight: active ? 600 : 500, pillBg: active ? '#08748e' : '#f1f5f9', pillFg: active ? '#fff' : '#334155', click: () => this.setState({ tab: k, pop: null, cell: null }) }; });
+    const approvals = r.appr.map(a => {
+      const mine = a.ok === null && a.who === ME && pend;
+      const state = a.ok === true ? 'ok' : a.ok === false ? 'no' : (r.st === 'taslak' || r.st === 'degerlendirme') ? 'wait' : 'pend';
+      return { role: a.role, who: a.who, mine, mark: state === 'ok' ? '✓' : state === 'no' ? '✕' : state === 'pend' ? '…' : '·',
+        badgeBg: state === 'ok' ? '#1f8a6f' : state === 'no' ? '#d23f43' : state === 'pend' ? '#fdf1e0' : '#f1f5f9', badgeFg: state === 'ok' || state === 'no' ? '#fff' : state === 'pend' ? '#9a5b0a' : '#94a3b8',
+        border: mine ? '#f3d39b' : '#e2e8f0', bg: mine ? '#fffaf0' : '#fff',
+        sub: state === 'ok' ? 'Onaylandı · ' + a.when : state === 'no' ? 'Reddedildi · ' + a.when : state === 'pend' ? (mine ? 'Sizi bekliyor' : 'Bekliyor · hatırlatma gönderildi') : 'Onaya gönderildikten sonra', subColor: state === 'ok' ? '#1f8a6f' : state === 'no' ? '#d23f43' : state === 'pend' ? '#b16a08' : '#94a3b8',
+        hasNote: !!a.note, note: a.note, approve: () => this.approve(), reject: () => this.reject() };
+    });
+    const apRule = r.type === 'standart' ? 'Standart değişiklik önceden onaylı şablona dayanır; CAB onayı gerekmez, kayıt doğrudan planlanır.' : r.type === 'acil' ? 'Acil değişiklik önce uygulanır, ECAB onayı 24 saat içinde sonradan alınır; kayıtta "sonradan onay" damgası kalır. Uygulama sırasında ret mümkün değildir; itiraz gözden geçirmede işlenir.' : 'Normal değişiklikte onay yolu tür × risk\'ten türer: Hizmet sahibi her zaman; Orta ve Yüksek riskte CAB; Yüksek riskte ayrıca Güvenlik. Son onay geldiğinde durum kendiliğinden Planlandı olur.';
+    const tasks = r.tasks.map((t, i) => ({ n: i + 1, title: t.title, who: t.who, dur: t.dur, mark: t.done ? '✓' : '', boxBg: t.done ? '#08748e' : '#fff', boxBorder: t.done ? '#08748e' : '#cbd5e1', bg: t.done ? '#f8fafc' : '#fff', color: t.done ? '#64748b' : '#020618', deco: t.done ? 'line-through' : 'none', state: t.done ? 'Tamam' : r.st === 'uygulaniyor' ? (i === doneN ? 'Sırada' : 'Bekliyor') : 'Pencere açılınca', stateColor: t.done ? '#1f8a6f' : i === doneN && r.st === 'uygulaniyor' ? '#b16a08' : '#94a3b8', cursor: r.st === 'uygulaniyor' ? 'pointer' : 'default', hint: r.st === 'uygulaniyor' ? 'Tamamlandı olarak işaretle' : 'Görevler uygulama sırasında işaretlenir', toggle: () => this.toggleTask(i) }));
+    const pirOpen = r.st === 'pir' || r.st === 'kapali';
+    const pirResults = ['Başarılı', 'Kısmen başarılı', 'Geri alındı'].map(l => { const on = s.pirResult === l; const col = l === 'Geri alındı' ? '#d23f43' : l === 'Kısmen başarılı' ? '#b16a08' : '#1f8a6f'; return { label: l, border: on ? col : '#e2e8f0', bg: on ? col : '#fff', fg: on ? '#fff' : '#334155', pick: () => { if (r.st === 'kapali') { this.toast(r.id + ' · kapalı kayıtta sonuç değiştirilemez'); return; } this.setState({ pirResult: l }); } }; });
+    const lifecycle = Component.FLOW.map((k, i) => {
+      const cur = r.st === k, curIdx = Component.FLOW.indexOf(r.st === 'reddedildi' ? 'onay' : r.st), past = i < curIdx;
+      const col = ST[k][1];
+      const evt = r.log.find(e => e[1].toLocaleLowerCase('tr').includes({ taslak: 'açıldı', degerlendirme: 'değerlendirme', onay: 'onaya gönderildi', planlandi: 'planlandı', uygulaniyor: 'uygulama başladı', pir: 'gözden geçirme açıldı', kapali: 'kapatıldı' }[k]));
+      const rejectedHere = r.st === 'reddedildi' && k === 'onay';
+      return { label: rejectedHere ? 'Onay · Reddedildi' : ST[k][0], sub: rejectedHere ? (r.appr.find(a => a.ok === false) || {}).when || '' : cur ? Component.STDESC[k] : past ? (evt ? evt[0] + ' · ' + evt[2] : 'tamamlandı') : k === 'planlandi' && r.type === 'standart' ? 'onay gerekmez' : k === 'onay' && r.type === 'acil' ? 'ECAB sonradan' : '', weight: cur || rejectedHere ? 600 : 500, color: rejectedHere ? '#d23f43' : cur ? '#020618' : past ? '#334155' : '#94a3b8', dotBg: rejectedHere ? '#d23f43' : cur ? col : past ? '#08748e' : '#fff', dotBorder: rejectedHere ? '#d23f43' : cur ? col : past ? '#08748e' : '#cbd5e1', hasLine: i < Component.FLOW.length - 1, lineColor: past ? '#08748e' : '#e2e8f0' };
+    });
+    const related = [
+      { title: 'Kaynak kayıt', hint: r.src ? (r.src.k === 'PRB' ? 'kalıcı çözüm bu değişiklik' : r.src.k === 'INC' ? 'acil düzeltme' : 'talep') : '', empty: !r.src, emptyText: 'Bu değişiklik bir problem, olay ya da talepten doğmadı.', items: r.src ? [{ id: r.src.id, title: r.src.k === 'PRB' ? 'Problem kaydı · kök neden ve geçici çözüm orada' : r.src.k === 'INC' ? 'Olay kaydı · kesinti sürüyor' : 'Hizmet talebi', meta: r.src.k === 'PRB' ? 'Kök neden bulundu' : r.src.k === 'INC' ? 'Açık · Kritik' : 'Onaylandı', idColor: r.src.k === 'INC' ? '#b3282d' : '#08748e', href: (r.src.k === 'PRB' ? 'Problem Detayi.dc.html' : r.src.k === 'INC' ? 'Olay Detayi.dc.html' : 'Talep Detayi.dc.html') + '?id=' + r.src.id }] : [] },
+      { title: 'Bağlı olaylar', hint: r.incidents.length ? r.incidents.length + ' kayıt · kapanışta bilgilendirilir' : '', empty: !r.incidents.length, emptyText: 'Bağlı olay yok.', items: r.incidents.map(i => ({ id: i.id, title: i.title, meta: i.meta, idColor: '#b3282d', href: 'Olay Detayi.dc.html?id=' + i.id })) },
+      { title: 'Aynı CI / hizmette çakışan değişiklikler', hint: conflicts.length ? 'pencereler kesişiyor' : '', empty: !conflicts.length, emptyText: 'Bu pencerede aynı CI ya da hizmette başka değişiklik yok.', items: conflicts.map(c => ({ id: c.id, title: c.title, meta: c.win + ' · ' + c.why, idColor: '#b3282d', href: c.href })) }
+    ];
+    const moreItems = [
+      ['Değişiklik listesine dön', () => { window.location.href = 'Degisiklik Listesi.dc.html'; }, '#020618', 500],
+      ['Takvimde göster', () => { window.location.href = 'Degisiklik Listesi.dc.html?view=takvim'; }, '#020618', 500],
+      ...(r.src ? [[r.src.id + ' kaydını aç', () => { window.location.href = related[0].items[0].href; }, '#020618', 500]] : []),
+      ...(!closed && r.st !== 'uygulaniyor' && r.st !== 'pir' ? [['Uygulayanı değiştir…', ev => this.openCell('a', ev), '#020618', 500]] : []),
+      ...(r.type === 'normal' && !closed && r.st !== 'uygulaniyor' && r.st !== 'pir' ? [['Acil değişikliğe çevir', () => this.commit(x => { x.type = 'acil'; x.appr = [{ role: 'ECAB', who: 'Zeynep Ural', ok: null, when: '', note: '' }]; }, r.id + ' · Acil türüne çevrildi; onay yolu ECAB (sonradan)', 'Tür Normal → Acil', 'Tür geri alındı'), '#b3282d', 500]] : []),
+      ...(r.st === 'planlandi' || r.st === 'onay' || r.st === 'degerlendirme' ? [['İptal et', () => this.commit(x => { x.st = 'kapali'; x.result = 'İptal'; }, r.id + ' · iptal edildi; kaynak kayıt bilgilendirildi', 'İptal edildi', 'İptal geri alındı'), '#b3282d', 500]] : [])
+    ].map(([label, fn, color, weight]) => ({ label, color, weight, click: ev => { this.setState({ pop: null }); fn(ev); } }));
+    const opt = (label, on, extra) => ({ label, hasDot: false, dot: '', dotBg: '', desc: '', descColor: '#64748b', weight: 500, color: '#020618', check: on ? '✓' : '', bg: on ? '#f8fafc' : 'transparent', ...extra });
+    const field = s.pop === 'cell' && s.cell ? s.cell.field : null;
+    const cellOptions = !field ? [] : field === 'st' ? Object.keys(ST).map(k => opt(ST[k][0], r.st === k, { hasDot: true, dot: ST[k][1], dotBg: ST[k][2] ? ST[k][1] : '#fff', desc: Component.STDESC[k], pick: () => this.applyField('st', k) }))
+      : field === 'risk' ? Object.keys(RISK).map(k => opt(RISK[k][0], r.risk === k, { weight: 600, color: RISK[k][1], desc: RISK[k][2], pick: () => this.applyField('risk', k) }))
+      : field === 'a' ? [['', '— Atanmamış'], [ME, 'admin admin (ben)'], ['Barış Can Ataklı', 'Barış Can Ataklı'], ['Deniz Acar', 'Deniz Acar'], ['Gökhan Tuna', 'Gökhan Tuna'], ['Zeynep Ural', 'Zeynep Ural']].map(([v, label]) => opt(label, (r.a || '') === v, { desc: Component.GROUPS[v] || '', pick: () => this.applyField('a', v) }))
+      : this.winCandidates(r).map((c, i) => { const cur = !!r.win && r.win.d === c.d && r.win.h === c.h; const others = Object.entries(Component.SUMMARY).filter(([id, o]) => id !== r.id && o.win && !['kapali', 'reddedildi', 'pir'].includes(o.st) && (o.ci === r.ci || o.svc === r.svc) && this.overlaps(c, o.win)).map(([id]) => id); const fr = this.inFreeze(c); return opt(this.fmtWin(c), cur, { weight: 600, color: fr ? '#94a3b8' : '#020618', desc: fr ? '⚠ dondurma dönemi · planlanamaz' : others.length ? '⚠ ' + others.join(', ') + ' ile çakışıyor' : 'uygun · mesai dışı', descColor: fr || others.length ? '#d23f43' : '#1f8a6f', pick: () => this.applyField('win', String(i)) }); });
+    return {
+      ustBar: this.props.ustBar ?? 'acik', zeminBg,
+      id: r.id, title: r.s, svc: r.svc, ci: r.ci, createdText: 'açıldı ' + r.created, mgr: r.mgr,
+      prevId, nextId, prevHref: 'Degisiklik Detayi.dc.html?id=' + prevId, nextHref: 'Degisiklik Detayi.dc.html?id=' + nextId,
+      typeLabel: ty[0], typeBg: ty[1], typeFg: ty[2], hasTmpl: r.type === 'standart' && !!r.tmpl, tmpl: r.tmpl || '',
+      hasSrc: !!r.src, srcId: r.src ? r.src.id : '', srcColor: r.src && r.src.k === 'INC' ? '#b3282d' : '#08748e', srcHref: r.src ? related[0].items[0].href : '#',
+      hasPrimary: !!pri, primaryLabel: pri ? pri.label : '', priBg: pri ? pri.bg : '#08748e', primary: ev => { if (pri) pri.run(ev); },
+      hasSecondary: !!sec, secondaryLabel: sec ? sec.label : '', secBorder: sec ? sec.border : '#e2e8f0', secFg: sec ? sec.fg : '#334155', secondary: ev => { if (sec) sec.run(ev); },
+      moreOpen: s.pop === 'more', moreBg: s.pop === 'more' ? '#f1f5f9' : '#fff', toggleMore: ev => { if (ev && ev.stopPropagation) ev.stopPropagation(); this.setState({ pop: s.pop === 'more' ? null : 'more', cell: null }); }, moreItems,
+      hasPop: !!s.pop, closePop: () => this.setState({ pop: null, cell: null }),
+      hasBanner: !!banner, bannerBg: banner ? banner.bg : '', bannerBorder: banner ? banner.border : '', bannerFg: banner ? banner.fg : '', bannerTitle: banner ? banner.title : '', bannerText: banner ? banner.text : '', bannerHasAction: !!(banner && banner.action), bannerActionLabel: banner && banner.action ? banner.action : '', bannerAction: ev => { if (banner && banner.run) banner.run(ev); },
+      stLabel: st[0], stColor: st[1], stDotBg: st[2] ? st[1] : '#fff', stSub: r.st === 'kapali' ? 'sonuç: ' + (r.result || '—') : Component.STDESC[r.st], stSubColor: r.result === 'Geri alındı' && r.st === 'kapali' ? '#d23f43' : '#64748b', stCellBg: field === 'st' ? '#f1f5f9' : '#fff', openSt: ev => this.openCell('st', ev),
+      riskLabel: rk ? rk[0] : 'Değerlendirilmedi', riskColor: rk ? rk[1] : '#94a3b8', riskSub: rk ? rk[2] : 'değerlendirme adımında girilir', riskCellBg: field === 'risk' ? '#f1f5f9' : '#fff', openRisk: ev => this.openCell('risk', ev),
+      apText: ap.text, apColor: ap.color, apSub: ap.sub, apSubColor: ap.subColor,
+      winText: wi.text, winColor: wi.color, winSub: wi.sub, winSubColor: wi.subColor, winCellBg: field === 'win' ? '#f1f5f9' : '#fff', openWin: ev => this.openCell('win', ev),
+      aText: r.a || 'Atanmamış', aColor: r.a ? '#020618' : '#9a5b0a', grp: r.g, aCellBg: field === 'a' ? '#f1f5f9' : '#fff', openA: ev => this.openCell('a', ev),
+      tasksText: taskN ? doneN + '/' + taskN : '—', tasksPct: (taskN ? Math.round(doneN / taskN * 100) : 0) + '%',
+      tabs, tabOzet: s.tab === 'ozet', tabOnay: s.tab === 'onay', tabGorev: s.tab === 'gorev', tabPir: s.tab === 'pir', tabIliskili: s.tab === 'iliskili',
+      reason: r.reason, desc: r.desc, plan: r.plan, planState: r.st === 'uygulaniyor' ? 'uygulanıyor' : ['pir', 'kapali'].includes(r.st) ? 'uygulandı' : r.st === 'taslak' ? 'taslak' : 'hazır', planBg: r.st === 'uygulaniyor' ? '#e6f4f1' : '#f1f5f9', planFg: r.st === 'uygulaniyor' ? '#0f5c4d' : '#334155',
+      hasRollback: !!r.rollback, noRollback: !r.rollback, rollback: r.rollback || [], rbTime: r.rbTime || '—', rbState: r.rollback ? (r.result === 'Geri alındı' ? 'çalıştırıldı' : 'hazır') : 'eksik', rbBg: r.rollback ? (r.result === 'Geri alındı' ? '#fbe9ea' : '#e6f4f1') : '#fdf1e0', rbFg: r.rollback ? (r.result === 'Geri alındı' ? '#b3282d' : '#0f5c4d') : '#9a5b0a', rbBorder: r.rollback ? '#e2e8f0' : '#f3d39b', addRollback: () => this.addRollback(),
+      impact: r.impact, impactWhen: r.impactWhen, hasConflicts: conflicts.length > 0, conflicts,
+      approvals, noAppr: r.type === 'standart', noApprText: 'Standart değişiklik: ' + (r.tmpl || 'şablon') + ' önceden onaylı; bu kayıt için onay adımı yok.', apRoute: r.type === 'standart' ? 'onay gerekmez' : 'yol: ' + r.appr.map(a => a.role).join(' → ') + (r.type === 'acil' ? ' · sonradan' : ''), apRule,
+      tasks, tasksHint: r.st === 'uygulaniyor' ? 'sırayla işaretlenir; hepsi tamamlanınca "Uygulamayı tamamla" açılır' : taskN ? 'pencere açılınca işaretlenebilir' : 'görevler değerlendirme adımında planlanır',
+      pirState: r.st === 'kapali' ? 'kaydedildi · ' + (r.result || '') : r.st === 'pir' ? 'yazılıyor' : 'kilitli', pirBg: r.st === 'kapali' ? '#e6f4f1' : r.st === 'pir' ? '#fdf1e0' : '#f1f5f9', pirFg: r.st === 'kapali' ? '#0f5c4d' : r.st === 'pir' ? '#9a5b0a' : '#64748b',
+      pirLocked: !pirOpen, pirOpen, pirFacts: (r.pirFacts || []).map(([label, value, color]) => ({ label, value, color })), pirResults, pirNote: s.pirNote, setPirNote: ev => this.setState({ pirNote: ev.target.value }), pirReadOnly: r.st === 'kapali', pirNoteBg: r.st === 'kapali' ? '#f8fafc' : '#fff',
+      pirCanSave: r.st === 'pir', savePir: () => { if (!s.pirResult) { this.toast(r.id + ' · önce sonucu seçin'); return; } this.applyField('st', 'kapali'); },
+      related,
+      lifecycle, logCount: r.log.length, log: r.log.map(e => ({ when: e[0], text: e[1], who: e[2], color: e[1].startsWith('Not:') ? '#334155' : '#020618' })),
+      noteDraft: s.noteDraft, setNote: ev => this.setState({ noteDraft: ev.target.value }), addNote: () => { const t = s.noteDraft.trim(); if (!t) return; const rec = JSON.parse(JSON.stringify(r)); rec.log = [[this.now(), 'Not: ' + t, ME], ...rec.log]; this.setState({ rec, noteDraft: '' }); this.toast('Not eklendi'); },
+      cellOpen: !!field, cellTop: field ? s.cell.top : 0, cellLeft: field ? s.cell.left : 0, cellW: field ? s.cell.w : 200, cellField: field ? ({ st: 'Durum', risk: 'Risk', a: 'Uygulayan', win: 'Uygulama penceresi' })[field] : '', cellOptions,
+      cellHint: field === 'st' ? 'Onaysız Planlandı, penceresiz Uygulanıyor, gözden geçirmesiz Kapalı olmaz · Esc kapatır' : field === 'win' ? 'Aday pencereler mesai dışı; çakışma ve dondurma denetlenir · Esc kapatır' : field === 'risk' ? 'Yüksek risk onay yoluna Güvenlik ekler · Esc kapatır' : 'Seçim anında kaydedilir · Esc kapatır',
+      hasToast: !!s.toast, toastText: s.toast ? s.toast.text : '', hasUndo: !!(s.toast && s.toast.undo), undo: () => { const u = s.toast && s.toast.undo; if (u) u(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

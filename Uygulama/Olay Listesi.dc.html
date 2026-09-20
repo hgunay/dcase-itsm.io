@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
+</helmet>
+<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap;overflow:hidden"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Ekran analizi 04 · Olay Listesi konsepti</span><span style="color:#64748b;overflow:hidden;text-overflow:ellipsis">Deneyin: sekmeleri değiştir · başlığa tıkla → sırala · satır seç → toplu eylem (probleme / büyük olaya bağla) · Durum / Öncelik / Atanan hücresine tıkla → anında kayıt, "Geri al" · büyük olay şeridi · filtre çipleri</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Olay Listesi Analizi.dc.html" style="color:#fff">Analiz</a><a href="Uzerimdeki Talepler.dc.html" style="color:#fff">← Talep kuyruğu</a><a href="Olay Detayi.dc.html" style="color:#fff">Olay detayı →</a></div>
+<div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" tema="{{ ustBar }}" hint-size="100%,49px"></dc-import></div>
+<div style="display:flex;align-items:flex-start">
+<div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" aktif="olaylar" style="height:100%" hint-size="256px,100%"></dc-import></div>
+<main data-screen-label="Olay Listesi prototipi" style="flex:1;min-width:0;padding:16px 24px 48px;background:{{ zeminBg }};min-height:calc(100vh - 77px);box-sizing:border-box">
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:10px">
+<div style="margin-right:auto"><h1 style="font-size:20px;font-weight:700;margin:0">{{ pageTitle }}</h1><div style="font-size:12px;color:#64748b;margin-top:2px">{{ headerCount }}</div></div>
+<button type="button" onClick="{{ saveView }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Görünümü kaydet</button>
+<button type="button" onClick="{{ newIncident }}" style="height:32px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>Yeni olay</button>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid #e2e8f0;margin-bottom:12px">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
+<button type="button" onClick="{{ t.click }}" style="display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 12px;border:0;border-bottom:2px solid {{ t.border }};margin-bottom:-1px;background:transparent;font-weight:{{ t.weight }};color:{{ t.color }};font-size:13px;cursor:pointer">{{ t.label }} <span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:{{ t.pillBg }};color:{{ t.pillFg }}">{{ t.count }}</span></button>
+</sc-for>
+</div>
+
+<sc-if value="{{ hasPop }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closePop }}" style="position:fixed;inset:0;z-index:30"></div></sc-if>
+
+<sc-if value="{{ showBanner }}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{ majors }}" as="m" hint-placeholder-count="1">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 14px;border:1px solid #f3c1c3;border-radius:8px;background:#fbe9ea;margin-bottom:12px;font-size:13px;color:#020618">
+<span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 7px;border-radius:4px;background:#d23f43;color:#fff">BÜYÜK OLAY</span>
+<span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#b3282d">{{ m.id }}</span>
+<span style="font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ m.s }}</span>
+<span style="color:#7a1f23">{{ m.svc }} · {{ m.scope }}</span>
+<span style="color:#7a1f23">{{ m.linked }} bağlı olay · Köprü açık, {{ m.since }}'den beri</span>
+<span style="margin-left:auto;display:inline-flex;gap:6px;flex-wrap:wrap">
+<button type="button" onClick="{{ m.show }}" style="height:28px;padding:0 10px;border-radius:6px;background:#fff;color:#b3282d;border:1px solid #f3c1c3;font-size:12px;font-weight:600;cursor:pointer">Bağlı olayları göster</button>
+<button type="button" onClick="{{ m.open }}" style="height:28px;padding:0 10px;border-radius:6px;background:#d23f43;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer">Büyük olayı aç</button>
+</span>
+</div>
+</sc-for>
+</sc-if>
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px">
+<span style="display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;width:280px;box-sizing:border-box;color:#94a3b8"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="text" value="{{ q }}" onChange="{{ setQ }}" placeholder="Numara, özet, bildiren ve hizmette ara" style="border:0;outline:0;font-size:13px;flex:1;min-width:0;background:transparent;color:#020618;padding:0"></span>
+
+<sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+<span style="position:relative">
+<button type="button" onClick="{{ f.toggle }}" style="height:32px;padding:0 10px;border:{{ f.border }};border-radius:6px;background:{{ f.bg }};color:{{ f.fg }};font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;cursor:pointer;max-width:320px"><span style="color:#94a3b8;font-size:15px;line-height:1">⊕</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ f.chip }}</span></button>
+<sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;top:36px;left:0;z-index:40;width:{{ f.w }}px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.12);padding:6px">
+<sc-for list="{{ f.options }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.toggle }}" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border-radius:6px;font-size:13px;cursor:pointer" style-hover="background:#f8fafc"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ o.boxBorder }};background:{{ o.boxBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;flex-shrink:0">{{ o.mark }}</span><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dotBg }};border:2px solid {{ o.dot }};box-sizing:border-box;flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.label }}</span><span style="color:#64748b;white-space:nowrap">{{ o.desc }}</span></div>
+</sc-for>
+<sc-if value="{{ f.has }}" hint-placeholder-val="{{ false }}"><div onClick="{{ f.clear }}" style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px;text-align:center;font-size:12px;color:#08748e;cursor:pointer">Filtreyi temizle</div></sc-if>
+</div>
+</sc-if>
+</span>
+</sc-for>
+
+<button type="button" onClick="{{ toggleSlaRisk }}" style="height:32px;padding:0 10px;border:1px solid {{ riskBorder }};border-radius:6px;background:{{ riskBg }};color:{{ riskFg }};font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;cursor:pointer">SLA riski · {{ riskCount }}</button>
+
+<span style="margin-left:auto;font-size:12px;color:#64748b">Son güncelleme {{ refresh }} · <a href="#" onClick="{{ doRefresh }}">Yenile</a></span>
+<span style="position:relative">
+<button type="button" onClick="{{ toggleColsPop }}" style="height:32px;padding:0 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:#334155"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16"></path><path d="M4 12h10"></path><path d="M4 18h6"></path></svg>Sütunlar</button>
+<sc-if value="{{ colsOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;top:36px;right:0;z-index:40;width:190px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.12);padding:6px">
+<sc-for list="{{ colOptions }}" as="o" hint-placeholder-count="3">
+<div onClick="{{ o.toggle }}" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border-radius:6px;font-size:13px;cursor:pointer" style-hover="background:#f8fafc"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ o.boxBorder }};background:{{ o.boxBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;flex-shrink:0">{{ o.mark }}</span>{{ o.label }}</div>
+</sc-for>
+<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px;font-size:12px;color:#64748b;line-height:1.4">Tercihler kullanıcı başına saklanır.</div>
+</div>
+</sc-if>
+</span>
+</div>
+
+<sc-if value="{{ hasSelection }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:#020618;color:#fff;margin-bottom:10px;font-size:13px">
+<span style="font-weight:600;margin-right:6px">{{ selCount }} olay seçildi</span>
+<button type="button" onClick="{{ bulkAssign }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Ata</button>
+<button type="button" onClick="{{ bulkStatus }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Çalışılıyor yap</button>
+<button type="button" onClick="{{ bulkProblem }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Probleme bağla</button>
+<button type="button" onClick="{{ bulkMajor }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Büyük olaya bağla</button>
+<button type="button" onClick="{{ bulkClose }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Kapat</button>
+<button type="button" onClick="{{ clearSel }}" style="margin-left:auto;height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#cbd5e1;border:0;font-size:12px;cursor:pointer">Seçimi kaldır</button>
+</div>
+</sc-if>
+
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);overflow-x:auto">
+<table style="width:100%;min-width:{{ tableMinWidth }};table-layout:fixed;border-collapse:collapse;font-size:13px">
+<thead>
+<tr style="background:#f8fafc">
+<th style="width:40px;box-sizing:border-box;padding:10px 0 10px 14px;border-bottom:1px solid #e2e8f0;text-align:left"><span onClick="{{ toggleAll }}" style="display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid {{ allBoxBorder }};background:{{ allBoxBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;cursor:pointer;vertical-align:middle">{{ allMark }}</span></th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:96px">Olay No</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap">Özet</th>
+<th onClick="{{ sortPrio }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:110px;cursor:pointer;display:{{ colPrio }};color:{{ prioHeadColor }}">Öncelik {{ prioSortMark }}</th>
+<th onClick="{{ sortSt }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:136px;cursor:pointer;color:{{ stHeadColor }}">Durum {{ stSortMark }}</th>
+<th onClick="{{ sortSvc }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:176px;cursor:pointer;display:{{ colSvc }};color:{{ svcHeadColor }}">Etkilenen hizmet {{ svcSortMark }}</th>
+<th onClick="{{ sortSla }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:132px;cursor:pointer;color:{{ slaHeadColor }}">Kalan SLA {{ slaSortMark }}</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:140px;display:{{ colAssignee }}">Atanan</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:130px;display:{{ colGroup }}">Grup</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:100px;display:{{ colType }}">Olay türü</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:140px;display:{{ colReporter }}">Bildiren</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:220px;display:{{ colCategory }}">Kategori</th>
+<th onClick="{{ sortCreated }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:150px;cursor:pointer;display:{{ colCreated }};color:{{ createdHeadColor }}">Oluşturulma {{ createdSortMark }}</th>
+<th onClick="{{ sortUpd }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:104px;cursor:pointer;display:{{ colUpdated }};color:{{ updHeadColor }}">Güncelleme {{ updSortMark }}</th>
+<th style="width:{{ actW }}px;box-sizing:border-box;padding:10px 8px;border-bottom:1px solid #e2e8f0"></th>
+</tr>
+</thead>
+<tbody>
+<sc-for list="{{ rows }}" as="r" hint-placeholder-count="8">
+<tr onMouseEnter="{{ r.enter }}" onMouseLeave="{{ r.leave }}" onClick="{{ r.open }}" style="background:{{ r.bg }};cursor:pointer">
+<td style="padding:10px 0 10px 14px;border-top:1px solid #f1f5f9;vertical-align:middle"><span onClick="{{ r.toggle }}" style="display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid {{ r.cbBorder }};background:{{ r.cbBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;cursor:pointer;vertical-align:middle">{{ r.cbMark }}</span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;white-space:nowrap"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#08748e">{{ r.id }}</span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;overflow:hidden"><div style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:6px"><sc-if value="{{ r.major }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:4px;background:#d23f43;color:#fff;flex-shrink:0">BÜYÜK OLAY</span></sc-if><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.s }}</span></div><div style="font-size:12px;color:#64748b;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.sub }}<sc-if value="{{ r.hasLink }}" hint-placeholder-val="{{ false }}"><span style="margin-left:6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:{{ r.linkColor }}">{{ r.linkText }}</span></sc-if></div></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colPrio }}"><span onClick="{{ r.editP }}" title="Önceliği değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;background:{{ r.pCellBg }}" style-hover="background:#e2e8f0"><span style="font-weight:600;color:{{ r.prioColor }}">{{ r.prioLabel }}</span><span style="font-size:12px;color:#64748b">{{ r.prioName }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><span onClick="{{ r.editSt }}" title="Durumu değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;background:{{ r.stCellBg }}" style-hover="background:#e2e8f0"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.stDotBg }};border:2px solid {{ r.stColor }};box-sizing:border-box;flex-shrink:0"></span>{{ r.stLabel }}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span><sc-if value="{{ r.hasStSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:#64748b;margin-top:1px;white-space:nowrap">{{ r.stSub }}</div></sc-if></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colSvc }};overflow:hidden"><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.svc }}</div><div style="font-size:11px;color:#64748b;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.scope }}</div></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><div style="font-weight:600;color:{{ r.slaColor }};font-variant-numeric:tabular-nums;white-space:nowrap">{{ r.slaText }}</div><sc-if value="{{ r.slaHasBar }}" hint-placeholder-val="{{ false }}"><div style="height:3px;border-radius:2px;background:#f1f5f9;margin-top:4px"><div style="width:{{ r.slaBar }};height:100%;border-radius:2px;background:{{ r.slaBarColor }}"></div></div></sc-if><sc-if value="{{ r.slaHasSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:{{ r.slaSubColor }};margin-top:3px;white-space:nowrap">{{ r.slaSub }}</div></sc-if></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colAssignee }};white-space:nowrap;overflow:hidden"><span onClick="{{ r.editA }}" title="Atananı değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;background:{{ r.aCellBg }}" style-hover="background:#e2e8f0"><span style="overflow:hidden;text-overflow:ellipsis;color:{{ r.assigneeColor }}">{{ r.assigneeText }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colGroup }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:{{ r.groupColor }}">{{ r.group }}</td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colType }};white-space:nowrap">{{ r.typeText }}</td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colReporter }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.reporter }}</td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colCategory }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#334155" title="{{ r.category }}">{{ r.category }}</td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colCreated }};color:#64748b;white-space:nowrap">{{ r.createdText }}</td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colUpdated }};color:#64748b;white-space:nowrap">{{ r.updatedText }}</td>
+<td style="padding:6px 10px 6px 0;border-top:1px solid #f1f5f9;vertical-align:middle"><div style="display:flex;align-items:center;justify-content:flex-end;gap:6px">
+<sc-if value="{{ r.showPrimary }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ r.primary }}" style="height:28px;padding:0 10px;border-radius:6px;background:#fff;color:#334155;border:1px solid #e2e8f0;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>Düzenle</button></sc-if>
+<button type="button" onClick="{{ r.menu }}" aria-label="Satır eylemleri" style="width:28px;height:28px;border-radius:6px;border:1px solid {{ r.kebabBorder }};background:{{ r.kebabBg }};color:{{ r.kebabFg }};display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+</div></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+<sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:32px;text-align:center;font-size:13px;color:#64748b;display:flex;justify-content:center;align-items:center;gap:8px">Bu filtrelerle olay yok.<button type="button" onClick="{{ clearAll }}" style="border:0;background:transparent;color:#08748e;font-size:13px;font-weight:500;cursor:pointer;padding:0">Filtreleri temizle</button></div></sc-if>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:10px 14px;border-top:1px solid #e2e8f0;background:#f8fafc;font-size:12px;color:#64748b">
+<span style="margin-right:auto">{{ footerText }}</span>
+<span>Sayfa başına <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;color:#020618">25 <span style="font-size:10px;color:#94a3b8">▾</span></span></span>
+<span>Sayfa 1 / 1</span>
+<span style="display:inline-flex;gap:4px;color:#cbd5e1"><span style="width:26px;height:26px;border:1px solid #e2e8f0;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;background:#fff">‹</span><span style="width:26px;height:26px;border:1px solid #e2e8f0;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;background:#fff">›</span></span>
+</div>
+</div>
+
+</main>
+</div>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ menuTop }}px;right:{{ menuRight }}px;z-index:60;width:244px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#08748e">{{ menuId }}</span> · {{ menuSummary }}</div>
+<div onClick="{{ mOpen }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>Detayı aç</div>
+<div onClick="{{ mEdit }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>Düzenle</div>
+<div onClick="{{ mMajor }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d23f43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>{{ menuMajorLabel }}</div>
+<div onClick="{{ mProblem }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>{{ menuProblemLabel }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ cellOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ cellTop }}px;left:{{ cellLeft }}px;z-index:60;width:{{ cellW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#08748e">{{ cellId }}</span> · {{ cellField }}</div>
+<sc-for list="{{ cellOptions }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;background:{{ o.bg }}" style-hover="background:#f1f5f9"><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dotBg }};border:2px solid {{ o.dot }};box-sizing:border-box;flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }}">{{ o.label }}</span><span style="color:#64748b;font-size:12px">{{ o.desc }}</span><span style="margin-left:auto;color:#08748e;font-size:12px;font-weight:600">{{ o.check }}</span></div>
+</sc-for>
+<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px 8px 4px;font-size:11px;color:#94a3b8;line-height:1.4">Seçim anında kaydedilir · Esc kapatır</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);font-family:Inter,system-ui,sans-serif;max-width:480px;display:flex;align-items:center;gap:14px"><span>{{ toastText }}</span><sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ undo }}" style="height:26px;padding:0 10px;border-radius:6px;background:rgba(255,255,255,.12);color:#7fd6c2;border:0;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Geri al</button></sc-if></div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;satirEylemi&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;menu&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;menu&quot;,&quot;birincil&quot;],&quot;section&quot;:&quot;Satır eylemleri&quot;},&quot;buyukOlaySeridi&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Büyük olay&quot;},&quot;ustBar&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;acik&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;acik&quot;,&quot;koyu&quot;],&quot;section&quot;:&quot;Kabuk&quot;},&quot;zemin&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;slate-50&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;slate-50&quot;,&quot;slate-100&quot;,&quot;slate-200&quot;,&quot;sogukgri&quot;],&quot;section&quot;:&quot;Kabuk&quot;}}">
+class Component extends DCLogic {
+  static ME = 'admin admin';
+  static ST = { acik: ['Açık', '#4c7bd9', true], atandi: ['Atandı', '#4c7bd9', false], calisiliyor: ['Çalışılıyor', '#e39b2c', true], beklemede: ['Beklemede', '#94a3b8', true], cozuldu: ['Çözüldü', '#2fa886', true], kapali: ['Kapalı', '#64748b', false] };
+  static ORDER = ['acik', 'atandi', 'calisiliyor', 'beklemede', 'cozuldu', 'kapali'];
+  static WAIT = { musteri: 'Müşteri yanıtı', tedarikci: 'Tedarikçi', kargo: 'Kargo / kurye' };
+  static PC = { 1: '#d23f43', 2: '#b16a08', 3: '#334155', 4: '#64748b', 5: '#94a3b8' };
+  static PD = { 1: 'Kritik', 2: 'Yüksek', 3: 'Orta', 4: 'Düşük', 5: 'Çok Düşük' };
+  static TYPE = { kesinti: 'Kesinti', yavaslik: 'Yavaşlık', kalite: 'Kalite' };
+  static GROUPS = { 'admin admin': 'Level 1 Analist', 'Barış Can Ataklı': 'Level 1 Analist', 'Deniz Acar': 'Level 1 Analist', 'Gökhan Tuna': 'Level 2 Analist', 'Zeynep Ural': 'Level 2 Analist' };
+  static TABS = [['all', 'Tümü', 'Olay Listesi'], ['mine', 'Üzerimdeki', 'Üzerimdeki Olaylar'], ['team', 'Ekibimin', 'Ekibimin Olayları'], ['unassigned', 'Atanmamış', 'Atanmamış Olaylar'], ['major', 'Büyük olaylar', 'Büyük Olaylar'], ['problem', 'Sorundan etkilenen', 'Sorundan Etkilenen Olaylar']];
+  static DATA = [
+    { id: 'INC546', s: 'E-posta hizmeti erişilemiyor', rep: 'İzleme (Zabbix)', type: 'kesinti', svc: 'E-posta (Exchange)', scope: 'Kurum geneli · ~1.200 kullanıcı', cat: 'Sistem Hizmetleri › E-posta › Erişilemiyor', p: 1, st: 'calisiliyor', w: null, sla: 19, tot: 240, resp: -12, u: 8, a: 'Gökhan Tuna', major: true, prb: null, parent: null },
+    { id: 'INC538', s: 'Kart okuyucu turnikeler yanıt vermiyor', rep: 'Güvenlik', type: 'kesinti', svc: 'Fiziksel erişim', scope: 'Bina · Ana giriş', cat: 'Erişim Hizmetleri › Fiziksel Erişim › Turnike', p: 2, st: 'acik', w: null, sla: 44, tot: 480, resp: -5, u: 5, a: null, major: false, prb: null, parent: null },
+    { id: 'INC548', s: 'SAP oturum açma 30 saniyenin üzerinde', rep: 'Ayşe Kaya', type: 'yavaslik', svc: 'SAP ERP', scope: 'Bölüm · Finans, 60 kullanıcı', cat: 'Sistem Hizmetleri › SAP › Performans', p: 2, st: 'calisiliyor', w: null, sla: 65, tot: 480, resp: 'ok', u: 25, a: 'admin admin', major: false, prb: 'PRB-031', parent: null },
+    { id: 'INC536', s: 'E-posta gönderimi gecikiyor', rep: 'Pelin Er', type: 'kesinti', svc: 'E-posta (Exchange)', scope: 'Bölüm · Pazarlama', cat: 'Sistem Hizmetleri › E-posta › Gecikme', p: 3, st: 'calisiliyor', w: null, sla: 100, tot: 960, resp: 'ok', u: 30, a: 'Gökhan Tuna', major: false, prb: null, parent: 'INC546' },
+    { id: 'INC539', s: 'Ortak klasöre erişim yetki hatası', rep: 'Can Yıldız', type: 'kesinti', svc: 'Dosya paylaşımı', scope: 'Ekip · 6 kullanıcı', cat: 'Erişim Hizmetleri › Hesap Operasyonları › Yetki Operasyonları', p: 3, st: 'acik', w: null, sla: 150, tot: 960, resp: 20, u: 12, a: null, major: false, prb: null, parent: null },
+    { id: 'INC541', s: 'Teams görüşmelerinde ses kesintisi', rep: 'Selin Koç', type: 'kalite', svc: 'Teams', scope: 'Bölüm · Satış', cat: 'İletişim › Teams › Ses kalitesi', p: 4, st: 'acik', w: null, sla: 254, tot: 2880, resp: 'ok', u: 300, a: 'Barış Can Ataklı', major: false, prb: null, parent: null },
+    { id: 'INC545', s: 'Wi-Fi kopmaları — 3. kat toplantı odaları', rep: 'Elif Aydın', type: 'yavaslik', svc: 'Kablosuz ağ', scope: 'Kat · 3. kat, 4 oda', cat: 'Ağ Hizmetleri › Kablosuz › Kopma', p: 3, st: 'atandi', w: null, sla: 280, tot: 960, resp: 'ok', u: 90, a: 'Deniz Acar', major: false, prb: null, parent: null },
+    { id: 'INC540', s: 'Bilgisayar açılışı 10 dakika sürüyor', rep: 'Hakan Öz', type: 'yavaslik', svc: 'İstemci bilgisayar', scope: 'Tek kullanıcı · Muhasebe', cat: 'Sistem Hizmetleri › Diğer Sistem Hizmetleri › Bilgisayar Arızası', p: 3, st: 'acik', w: null, sla: 474, tot: 960, resp: 'ok', u: 400, a: 'Gökhan Tuna', major: false, prb: null, parent: null },
+    { id: 'INC537', s: 'VPN bağlantısı sık kopuyor', rep: 'Tolga Işık', type: 'yavaslik', svc: 'VPN', scope: 'Uzak çalışanlar · ~15 kullanıcı', cat: 'Erişim Hizmetleri › VPN › Kopma', p: 3, st: 'atandi', w: null, sla: 700, tot: 960, resp: 'ok', u: 700, a: 'Zeynep Ural', major: false, prb: 'PRB-028', parent: null },
+    { id: 'INC542', s: 'CRM rapor ekranı zaman aşımı veriyor', rep: 'Ece Tan', type: 'yavaslik', svc: 'CRM', scope: 'Tek kullanıcı', cat: 'Sistem Hizmetleri › CRM › Raporlama', p: 4, st: 'acik', w: null, sla: 1860, tot: 2880, resp: 35, u: 40, a: null, major: false, prb: null, parent: null },
+    { id: 'INC535', s: 'Outlook açılmıyor — sertifika hatası', rep: 'Berk Uçar', type: 'kesinti', svc: 'E-posta (Exchange)', scope: 'Tek kullanıcı', cat: 'Sistem Hizmetleri › E-posta › İstemci', p: 4, st: 'acik', w: null, sla: 2500, tot: 2880, resp: 'ok', u: 50, a: null, major: false, prb: null, parent: 'INC546' },
+    { id: 'INC543', s: 'Şube internet erişimi yok', rep: 'Şube müdürü — Kızılay', type: 'kesinti', svc: 'Şube ağı (WAN)', scope: 'Şube · Ankara Kızılay, 40 kullanıcı', cat: 'Ağ Hizmetleri › WAN › Kesinti', p: 2, st: 'beklemede', w: 'kargo', sla: null, tot: 480, resp: 'ok', u: 180, a: 'admin admin', major: false, prb: null, parent: null },
+    { id: 'INC547', s: 'Dosya sunucusu yavaş — Finans katı', rep: 'Mehmet Arslan', type: 'yavaslik', svc: 'Dosya paylaşımı', scope: 'Kat · Finans, 25 kullanıcı', cat: 'Sistem Hizmetleri › Dosya › Performans', p: 3, st: 'beklemede', w: 'musteri', sla: null, tot: 960, resp: 'ok', u: 600, a: 'Barış Can Ataklı', major: false, prb: null, parent: null },
+    { id: 'INC544', s: 'Yazıcı kuyruğu takılıyor', rep: 'İK Servisi', type: 'yavaslik', svc: 'Baskı hizmeti', scope: 'Bölüm · İK', cat: 'Sistem Hizmetleri › Baskı › Kuyruk', p: 4, st: 'beklemede', w: 'tedarikci', sla: null, tot: 2880, resp: 'ok', u: 1500, a: 'Deniz Acar', major: false, prb: null, parent: null },
+    { id: 'INC533', s: 'SAP raporları geç açılıyor', rep: 'Finans', type: 'yavaslik', svc: 'SAP ERP', scope: 'Bölüm · Finans', cat: 'Sistem Hizmetleri › SAP › Performans', p: 3, st: 'cozuldu', w: null, sla: null, tot: 960, resp: 'ok', u: 2000, a: 'admin admin', major: false, prb: 'PRB-031', parent: null, sub: '2s 10dk kala' },
+    { id: 'INC530', s: 'Bordro uygulaması açılmıyor', rep: 'İK Servisi', type: 'kesinti', svc: 'Bordro', scope: 'Bölüm · İK, 8 kullanıcı', cat: 'Sistem Hizmetleri › Bordro › Erişilemiyor', p: 2, st: 'kapali', w: null, sla: null, tot: 480, resp: 'ok', u: 4400, a: 'Barış Can Ataklı', major: false, prb: null, parent: null, closeBreach: 633 }
+  ];
+  state = {
+    queue: (() => { const q = new URLSearchParams(window.location.search).get('queue'); return Component.TABS.some(t => t[0] === q) ? q : 'all'; })(), q: '', status: [], prio: [], svc: [], type: [], slaRisk: false,
+    sort: { key: 'sla', dir: 'asc' }, selected: [], hover: null, pop: null, menu: null, cell: null,
+    cols: { prio: true, svc: true, assignee: true, updated: true, group: false, type: false, reporter: false, category: false, created: false }, toast: '', refresh: '09:12',
+    rows: Component.DATA.map((r, i) => ({ ...r, g: r.a ? Component.GROUPS[r.a] : 'Level 1 Analist', cr: r.u + 90 + (i * 53) % 700 + (r.u > 1440 ? 2880 : 0) }))
+  };
+  closed(r) { return r.st === 'cozuldu' || r.st === 'kapali'; }
+  risk(r) { return !this.closed(r) && ((r.sla !== null && r.sla < 60) || (typeof r.resp === 'number' && r.resp < 0)); }
+  inQ(r, k) {
+    const ME = Component.ME;
+    if (k === 'all') return true;
+    if (k === 'mine') return r.a === ME;
+    if (k === 'team') return !!r.a && r.a !== ME;
+    if (k === 'unassigned') return !r.a && !this.closed(r);
+    if (k === 'major') return !!r.major || !!r.parent;
+    if (k === 'problem') return !!r.prb;
+    return false;
+  }
+  toast(msg, undo) { this.setState({ toast: { text: msg, undo: undo || null } }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: '' }), undo ? 6500 : 3200); }
+  componentDidMount() { this._kd = ev => { if (ev.key === 'Escape' && this.state.pop) this.setState({ pop: null, cell: null, menu: null }); }; window.addEventListener('keydown', this._kd); }
+  componentWillUnmount() { clearTimeout(this._tt); window.removeEventListener('keydown', this._kd); }
+  fmtSla(m) { m = Math.abs(m); if (m >= 1440) return Math.floor(m / 1440) + 'g ' + String(Math.floor((m % 1440) / 60)).padStart(2, '0') + 's'; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
+  fmtDate(m) { const d = new Date(Date.now() - m * 60000); const ay = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara']; return d.getDate() + ' ' + ay[d.getMonth()] + ' ' + d.getFullYear() + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
+  fmtAgo(m) { if (m < 1) return 'az önce'; if (m < 60) return m + ' dk önce'; if (m < 1440) return Math.floor(m / 60) + ' sa önce'; return Math.floor(m / 1440) + ' gün önce'; }
+  slaInfo(r) {
+    const o = { text: '', color: '#334155', hasBar: false, bar: '0%', barColor: '#94a3b8', hasSub: false, sub: '', subColor: '#64748b' };
+    if (this.closed(r)) {
+      if (r.closeBreach) { o.text = 'İhlal · ' + this.fmtSla(r.closeBreach); o.color = '#d23f43'; o.sub = 'kapanışta donduruldu'; }
+      else { o.text = 'Tutuldu ✓'; o.color = '#1f8a6f'; o.sub = r.sub || 'zamanında'; }
+      o.hasSub = true; return o;
+    }
+    if (r.st === 'beklemede' || r.sla === null) { o.text = 'Duraklatıldı'; o.color = '#64748b'; o.sub = Component.WAIT[r.w] || 'beklemede'; o.hasSub = true; return o; }
+    if (r.sla < 0) { o.text = 'İhlal · ' + this.fmtSla(r.sla); o.color = '#d23f43'; o.hasBar = true; o.bar = '100%'; o.barColor = '#d23f43'; }
+    else { o.text = this.fmtSla(r.sla); o.hasBar = true; o.bar = Math.max(4, Math.round((1 - r.sla / r.tot) * 100)) + '%'; if (r.sla < 60) { o.color = '#d23f43'; o.barColor = '#d23f43'; } else if (r.sla < 240) { o.color = '#b16a08'; o.barColor = '#e39b2c'; } else { o.color = '#334155'; o.barColor = '#94a3b8'; } }
+    if (r.resp === 'ok') { o.sub = 'Yanıt tutuldu ✓'; o.hasSub = true; }
+    else if (typeof r.resp === 'number' && r.resp < 0) { o.sub = 'Yanıt ihlali · ' + this.fmtSla(r.resp); o.subColor = '#d23f43'; o.hasSub = true; }
+    else if (typeof r.resp === 'number') { o.sub = 'Yanıt: ' + this.fmtSla(r.resp) + ' kaldı'; o.subColor = '#b16a08'; o.hasSub = true; }
+    return o;
+  }
+  updRows(ids, fn) { this.setState(st => ({ rows: st.rows.map(r => ids.includes(r.id) ? fn({ ...r }) : r) })); }
+  toggleSel(id) { this.setState(st => ({ selected: st.selected.includes(id) ? st.selected.filter(x => x !== id) : [...st.selected, id] })); }
+  openCell(r, field, ev) {
+    const rc = ev.currentTarget.getBoundingClientRect();
+    const w = field === 'a' ? 240 : field === 'st' ? 236 : 200, n = field === 'a' ? 6 : field === 'st' ? 8 : 5;
+    const hgt = 12 + 34 + n * 32 + 34;
+    let top = rc.bottom + 4; if (top + hgt > window.innerHeight - 8) top = Math.max(8, rc.top - hgt - 4);
+    const left = Math.max(8, Math.min(rc.left, window.innerWidth - w - 8));
+    const c = this.state.cell, same = this.state.pop === 'cell' && c && c.id === r.id && c.field === field;
+    this.setState(same ? { pop: null, cell: null } : { pop: 'cell', cell: { id: r.id, field, top, left, w }, menu: null });
+  }
+  applyField(id, field, value) {
+    const before = this.state.rows.find(x => x.id === id); if (!before) return;
+    const snap = { ...before }, ME = Component.ME, ST = Component.ST;
+    const stKey = field === 'st' ? value.split(':')[0] : null, wKey = field === 'st' ? (value.split(':')[1] || null) : null;
+    const label = field === 'st' ? 'Durum: ' + ST[before.st][0] + ' → ' + ST[stKey][0] + (wKey ? ' (' + Component.WAIT[wKey] + ')' : '') : field === 'p' ? 'Öncelik: P' + before.p + ' → P' + value : 'Atanan: ' + (before.a || '—') + ' → ' + (value || '—');
+    this.updRows([id], r => {
+      if (field === 'st') {
+        const prevSla = r.sla; r.st = stKey; r.w = wKey;
+        if (this.closed(r)) { r.closeBreach = prevSla !== null && prevSla < 0 ? -prevSla : null; r.sla = null; r.sub = 'zamanında'; }
+        else if (stKey === 'beklemede') { r.sla = null; r.closeBreach = null; }
+        else { r.closeBreach = null; if (r.sla === null) r.sla = Math.round(r.tot * 0.6); if (stKey !== 'acik' && typeof r.resp === 'number' && r.resp > 0) r.resp = 'ok'; }
+        if (stKey === 'atandi' && !r.a) { r.a = ME; r.g = Component.GROUPS[ME]; }
+      }
+      if (field === 'p') r.p = Number(value);
+      if (field === 'a') { const a = value || null; r.a = a; if (a) r.g = Component.GROUPS[a] || r.g; if (a && r.st === 'acik') r.st = 'atandi'; if (!a && r.st === 'atandi') r.st = 'acik'; }
+      r.u = 0; return r;
+    });
+    this.setState({ pop: null, cell: null });
+    this.toast(id + ' · ' + label, () => { this.setState(st => ({ rows: st.rows.map(x => x.id === id ? snap : x) })); this.toast(id + ' · değişiklik geri alındı'); });
+  }
+  bulk(kind) {
+    const ids = this.state.selected, n = ids.length; if (!n) return;
+    if (kind === 'assign') { this.updRows(ids, r => { r.a = 'Deniz Acar'; r.g = 'Level 1 Analist'; if (r.st === 'acik') r.st = 'atandi'; r.u = 0; return r; }); this.toast(n + " olay Deniz Acar'a atandı"); }
+    if (kind === 'status') { this.updRows(ids, r => { if (!this.closed(r)) { r.st = 'calisiliyor'; r.w = null; r.closeBreach = null; if (r.sla === null) r.sla = Math.round(r.tot * 0.6); if (typeof r.resp === 'number' && r.resp > 0) r.resp = 'ok'; } r.u = 0; return r; }); this.toast(n + ' olay Çalışılıyor durumuna alındı'); }
+    if (kind === 'problem') { this.updRows(ids, r => { r.prb = r.prb || 'PRB-031'; r.u = 0; return r; }); this.toast(n + ' olay PRB-031 problemine bağlandı'); }
+    if (kind === 'major') {
+      const majors = this.state.rows.filter(r => r.major && !this.closed(r));
+      if (!majors.length) { this.toast('Aktif büyük olay yok; satır menüsünden ilan edin'); return; }
+      const m = majors[0].id;
+      this.updRows(ids, r => { if (r.id !== m) { r.parent = m; r.major = false; } r.u = 0; return r; });
+      this.toast(n + ' olay ' + m + ' büyük olayına bağlandı');
+    }
+    if (kind === 'close') { this.updRows(ids, r => { r.closeBreach = r.sla !== null && r.sla < 0 ? -r.sla : null; r.st = 'kapali'; r.w = null; r.sla = null; r.sub = 'zamanında'; r.u = 0; return r; }); this.toast(n + ' olay kapatıldı'); }
+    this.setState({ selected: [] });
+  }
+  openMenu(r, ev) {
+    const rc = ev.currentTarget.getBoundingClientRect();
+    const hgt = 12 + 34 + 4 * 32 + 9;
+    let top = rc.bottom + 4; if (top + hgt > window.innerHeight - 8) top = Math.max(8, rc.top - hgt - 4);
+    const same = this.state.pop === 'row' && this.state.menu && this.state.menu.id === r.id;
+    this.setState(same ? { pop: null, menu: null } : { pop: 'row', menu: { id: r.id, top, right: Math.max(8, window.innerWidth - rc.right) } });
+  }
+  sortBy(key) { this.setState(st => ({ sort: st.sort.key === key ? { key, dir: st.sort.dir === 'asc' ? 'desc' : 'asc' } : { key, dir: 'asc' } })); }
+  renderVals() {
+    const s = this.state, ME = Component.ME, ST = Component.ST, ORDER = Component.ORDER;
+    const variant = this.props.satirEylemi ?? 'menu';
+    const zemin = this.props.zemin ?? 'slate-50';
+    const zeminBg = { 'slate-50': '#f8fafc', 'slate-100': '#f1f5f9', 'slate-200': '#e2e8f0', 'sogukgri': '#eef1f6' }[zemin] || '#f8fafc';
+    const actW = variant === 'birincil' ? 148 : 52;
+    const inQueue = s.rows.filter(r => this.inQ(r, s.queue));
+    const openRows = inQueue.filter(r => !this.closed(r));
+    const riskCount = inQueue.filter(r => this.risk(r)).length;
+    const majorRows = s.rows.filter(r => r.major && !this.closed(r));
+    let list = inQueue;
+    if (s.q.trim()) { const k = s.q.toLocaleLowerCase('tr'); list = list.filter(r => (r.id + ' ' + r.s + ' ' + r.rep + ' ' + r.svc).toLocaleLowerCase('tr').includes(k)); }
+    if (s.status.length) list = list.filter(r => s.status.includes(r.st));
+    if (s.prio.length) list = list.filter(r => s.prio.includes(r.p));
+    if (s.svc.length) list = list.filter(r => s.svc.includes(r.svc));
+    if (s.type.length) list = list.filter(r => s.type.includes(r.type));
+    if (s.slaRisk) list = list.filter(r => this.risk(r));
+    const keyFn = { sla: r => this.closed(r) ? 1e12 : r.sla === null ? 1e11 : r.sla, prio: r => r.p, updated: r => r.u, created: r => r.cr, status: r => ORDER.indexOf(r.st), svc: r => r.svc }[s.sort.key];
+    const dir = s.sort.dir === 'asc' ? 1 : -1;
+    list = [...list].sort((a, b) => { const x = keyFn(a), y = keyFn(b); return (typeof x === 'string' ? x.localeCompare(y, 'tr') : x - y) * dir; });
+    const visibleIds = list.map(r => r.id);
+    const allSel = visibleIds.length > 0 && visibleIds.every(id => s.selected.includes(id));
+    const someSel = !allSel && visibleIds.some(id => s.selected.includes(id));
+    const tab = Component.TABS.find(t => t[0] === s.queue);
+    const showAssignee = s.cols.assignee && s.queue !== 'mine';
+    const rows = list.map(r => {
+      const sel = s.selected.includes(r.id), hov = s.hover === r.id, st = ST[r.st], sla = this.slaInfo(r);
+      const isMenu = s.pop === 'row' && !!s.menu && s.menu.id === r.id;
+      const cellIs = f => s.pop === 'cell' && !!s.cell && s.cell.id === r.id && s.cell.field === f;
+      const isCell = s.pop === 'cell' && !!s.cell && s.cell.id === r.id;
+      const bg = sel ? '#e6f4f1' : (hov || isMenu || isCell) ? '#f8fafc' : '#fff';
+      const stop = fn => ev => { if (ev && ev.stopPropagation) ev.stopPropagation(); fn(); };
+      const stopEv = fn => ev => { if (ev && ev.stopPropagation) ev.stopPropagation(); fn(ev); };
+      const links = []; if (r.parent) links.push('↳ ' + r.parent); if (r.prb) links.push(r.prb);
+      return {
+        id: r.id, s: r.s, sub: r.rep + ' · ' + Component.TYPE[r.type], major: !!r.major, hasLink: links.length > 0, linkText: links.join(' · '), linkColor: r.parent ? '#b3282d' : '#08748e',
+        svc: r.svc, scope: r.scope, stLabel: st[0], stColor: st[1], stDotBg: st[2] ? st[1] : '#fff', hasStSub: r.st === 'beklemede' && !!r.w, stSub: Component.WAIT[r.w] || '',
+        prioLabel: 'P' + r.p, prioName: Component.PD[r.p], prioColor: Component.PC[r.p],
+        slaText: sla.text, slaColor: sla.color, slaHasBar: sla.hasBar, slaBar: sla.bar, slaBarColor: sla.barColor, slaHasSub: sla.hasSub, slaSub: sla.sub, slaSubColor: sla.subColor,
+        assigneeText: r.a || 'Atanmamış', assigneeColor: r.a ? '#020618' : '#9a5b0a', group: r.g || '—', groupColor: r.g ? '#020618' : '#94a3b8', typeText: Component.TYPE[r.type], reporter: r.rep, category: r.cat,
+        createdText: this.fmtDate(r.cr), updatedText: this.fmtAgo(r.u),
+        bg, cbBg: sel ? '#08748e' : '#fff', cbBorder: sel ? '#08748e' : '#cbd5e1', cbMark: sel ? '✓' : '',
+        kebabBorder: (hov || isMenu) ? '#e2e8f0' : 'transparent', kebabBg: isMenu ? '#f1f5f9' : (hov ? '#fff' : 'transparent'), kebabFg: (hov || isMenu) ? '#334155' : '#94a3b8',
+        showPrimary: variant === 'birincil' && (hov || isMenu), primary: stop(() => { window.location.href = 'Olay Detayi.dc.html?id=' + r.id + '&mode=edit'; }),
+        menu: stopEv(ev => this.openMenu(r, ev)),
+        aff: (hov || isCell) ? 1 : 0, stCellBg: cellIs('st') ? '#e2e8f0' : 'transparent', pCellBg: cellIs('p') ? '#e2e8f0' : 'transparent', aCellBg: cellIs('a') ? '#e2e8f0' : 'transparent',
+        editSt: stopEv(ev => this.openCell(r, 'st', ev)), editP: stopEv(ev => this.openCell(r, 'p', ev)), editA: stopEv(ev => this.openCell(r, 'a', ev)),
+        toggle: stop(() => this.toggleSel(r.id)), enter: () => this.setState({ hover: r.id }), leave: () => this.setState({ hover: null }),
+        open: stop(() => { window.location.href = 'Olay Detayi.dc.html?id=' + r.id; })
+      };
+    });
+    const tabs = Component.TABS.map(([k, label]) => {
+      const active = s.queue === k, count = s.rows.filter(r => this.inQ(r, k)).length;
+      const warm = k === 'unassigned' && count > 0, hot = k === 'major' && count > 0;
+      return { key: k, label, count, border: active ? '#08748e' : 'transparent', color: active ? '#020618' : '#64748b', weight: active ? 600 : 500,
+        pillBg: active ? '#08748e' : hot ? '#fbe9ea' : warm ? '#fdf1e0' : '#f1f5f9', pillFg: active ? '#fff' : hot ? '#b3282d' : warm ? '#9a5b0a' : '#334155',
+        click: () => this.setState({ queue: k, selected: [], hover: null, pop: null, menu: null, cell: null }) };
+    });
+    const box = on => ({ mark: on ? '✓' : '', boxBg: on ? '#08748e' : '#fff', boxBorder: on ? '#08748e' : '#cbd5e1' });
+    const mkFilter = (key, label, w, opts) => {
+      const sel = s[key], on = sel.length > 0;
+      return {
+        key, w, chip: on ? label + ' · ' + opts.filter(o => sel.includes(o.v)).map(o => o.label).join(', ') : label,
+        border: on ? '1px solid #08748e' : '1px dashed #cbd5e1', bg: on ? '#e6f4f1' : '#fff', fg: on ? '#0f5c4d' : '#334155',
+        open: s.pop === key, toggle: () => this.setState({ pop: s.pop === key ? null : key }), has: on, clear: () => this.setState({ [key]: [], pop: null }),
+        options: opts.map(o => { const isOn = sel.includes(o.v); return { label: o.label, desc: o.desc || '', hasDot: !!o.dot, dot: o.dot || '', dotBg: o.dotBg || o.dot || '', weight: o.weight || 500, color: o.color || '#020618', ...box(isOn), toggle: () => this.setState(st => ({ [key]: isOn ? st[key].filter(x => x !== o.v) : [...st[key], o.v] })) }; })
+      };
+    };
+    const services = [...new Set(Component.DATA.map(r => r.svc))].sort((a, b) => a.localeCompare(b, 'tr'));
+    const filters = [
+      mkFilter('status', 'Durum', 200, ORDER.map(k => ({ v: k, label: ST[k][0], dot: ST[k][1], dotBg: ST[k][2] ? ST[k][1] : '#fff' }))),
+      mkFilter('prio', 'Öncelik', 190, [1, 2, 3, 4, 5].map(p => ({ v: p, label: 'P' + p, desc: Component.PD[p], weight: 600, color: Component.PC[p] }))),
+      mkFilter('svc', 'Hizmet', 220, services.map(n => ({ v: n, label: n }))),
+      mkFilter('type', 'Olay türü', 170, Object.keys(Component.TYPE).map(k => ({ v: k, label: Component.TYPE[k] })))
+    ];
+    const sortMark = k => s.sort.key === k ? (s.sort.dir === 'asc' ? '↑' : '↓') : '';
+    const headColor = k => s.sort.key === k ? '#08748e' : '#64748b';
+    const n = list.length;
+    const mr = s.pop === 'row' && s.menu ? s.rows.find(x => x.id === s.menu.id) : null;
+    const cr = s.pop === 'cell' && s.cell ? s.rows.find(x => x.id === s.cell.id) : null;
+    const opt = (label, on, extra) => ({ label, hasDot: false, dot: '', dotBg: '', desc: '', weight: 500, color: '#020618', check: on ? '✓' : '', bg: on ? '#f8fafc' : 'transparent', ...extra });
+    const stOpts = [['acik'], ['atandi'], ['calisiliyor'], ['beklemede', 'musteri'], ['beklemede', 'tedarikci'], ['beklemede', 'kargo'], ['cozuldu'], ['kapali']];
+    const cellOptions = !cr ? [] : s.cell.field === 'st' ? stOpts.map(([k, w]) => opt(ST[k][0], cr.st === k && (w || null) === (cr.st === 'beklemede' ? cr.w : null), { hasDot: true, dot: ST[k][1], dotBg: ST[k][2] ? ST[k][1] : '#fff', desc: w ? Component.WAIT[w] : '', pick: () => this.applyField(cr.id, 'st', w ? k + ':' + w : k) }))
+      : s.cell.field === 'p' ? [1, 2, 3, 4, 5].map(p => opt('P' + p, cr.p === p, { desc: Component.PD[p], weight: 600, color: Component.PC[p], pick: () => this.applyField(cr.id, 'p', String(p)) }))
+      : [['', '— Atanmamış'], [ME, 'admin admin (ben)'], ['Barış Can Ataklı', 'Barış Can Ataklı'], ['Deniz Acar', 'Deniz Acar'], ['Gökhan Tuna', 'Gökhan Tuna'], ['Zeynep Ural', 'Zeynep Ural']].map(([v, label]) => opt(label, (cr.a || '') === v, { desc: Component.GROUPS[v] || '', pick: () => this.applyField(cr.id, 'a', v) }));
+    const act = fn => () => { this.setState({ pop: null, menu: null }); if (mr) fn(); };
+    const cell = k => s.cols[k] ? 'table-cell' : 'none';
+    const W_ = { prio: 110, svc: 176, updated: 104, group: 130, type: 100, reporter: 140, category: 220, created: 150 };
+    const minW = 40 + 96 + 260 + 136 + 132 + actW + (showAssignee ? 140 : 0) + Object.keys(W_).reduce((a, k) => a + (s.cols[k] ? W_[k] : 0), 0);
+    const majors = majorRows.map(m => ({ id: m.id, s: m.s, svc: m.svc, scope: m.scope, since: '08:42', linked: s.rows.filter(r => r.parent === m.id).length,
+      show: () => this.setState({ queue: 'major', selected: [], pop: null }), open: () => { window.location.href = 'Olay Detayi.dc.html?id=' + m.id; } }));
+    return {
+      ustBar: this.props.ustBar ?? 'acik', zeminBg,
+      pageTitle: tab[2], headerCount: openRows.length + ' açık olay · ' + majorRows.length + ' büyük olay · ' + riskCount + ' SLA riski',
+      saveView: () => this.toast('Görünüm kaydedildi: ' + tab[1] + ' · ' + (s.sort.key === 'sla' ? "SLA'ya göre" : 'özel sıralama')),
+      newIncident: () => this.toast('Yeni olay kaydı formu — sıradaki ekran'),
+      tabs, q: s.q, setQ: ev => this.setState({ q: ev.target.value }),
+      hasPop: !!s.pop, closePop: () => this.setState({ pop: null, menu: null, cell: null }),
+      showBanner: (this.props.buyukOlaySeridi ?? true) && majors.length > 0, majors,
+      filters,
+      toggleSlaRisk: () => this.setState({ slaRisk: !s.slaRisk }), riskCount, riskBorder: s.slaRisk ? '#d23f43' : (riskCount ? '#f3c1c3' : '#e2e8f0'), riskBg: s.slaRisk ? '#d23f43' : (riskCount ? '#fbe9ea' : '#fff'), riskFg: s.slaRisk ? '#fff' : (riskCount ? '#b3282d' : '#64748b'),
+      refresh: s.refresh, doRefresh: ev => { if (ev && ev.preventDefault) ev.preventDefault(); const d = new Date(); this.setState({ refresh: String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0') }); this.toast('Liste yenilendi'); },
+      colsOpen: s.pop === 'cols', toggleColsPop: () => this.setState({ pop: s.pop === 'cols' ? null : 'cols' }),
+      colOptions: [['prio', 'Öncelik'], ['svc', 'Etkilenen hizmet'], ['assignee', 'Atanan'], ['group', 'Grup'], ['type', 'Olay türü'], ['reporter', 'Bildiren'], ['category', 'Kategori'], ['created', 'Oluşturulma'], ['updated', 'Güncelleme']].map(([k, label]) => ({ label, ...box(s.cols[k]), toggle: () => this.setState(st => ({ cols: { ...st.cols, [k]: !st.cols[k] } })) })),
+      hasSelection: s.selected.length > 0, selCount: s.selected.length,
+      bulkAssign: () => this.bulk('assign'), bulkStatus: () => this.bulk('status'), bulkProblem: () => this.bulk('problem'), bulkMajor: () => this.bulk('major'), bulkClose: () => this.bulk('close'), clearSel: () => this.setState({ selected: [] }),
+      allMark: allSel ? '✓' : someSel ? '–' : '', allBoxBg: allSel || someSel ? '#08748e' : '#fff', allBoxBorder: allSel || someSel ? '#08748e' : '#cbd5e1',
+      toggleAll: () => this.setState({ selected: allSel ? [] : visibleIds }),
+      sortSla: () => this.sortBy('sla'), sortPrio: () => this.sortBy('prio'), sortUpd: () => this.sortBy('updated'), sortSt: () => this.sortBy('status'), sortCreated: () => this.sortBy('created'), sortSvc: () => this.sortBy('svc'),
+      slaSortMark: sortMark('sla'), prioSortMark: sortMark('prio'), updSortMark: sortMark('updated'), stSortMark: sortMark('status'), createdSortMark: sortMark('created'), svcSortMark: sortMark('svc'),
+      slaHeadColor: headColor('sla'), prioHeadColor: headColor('prio'), updHeadColor: headColor('updated'), stHeadColor: headColor('status'), createdHeadColor: headColor('created'), svcHeadColor: headColor('svc'),
+      colPrio: cell('prio'), colSvc: cell('svc'), colUpdated: cell('updated'), colAssignee: showAssignee ? 'table-cell' : 'none', colGroup: cell('group'), colType: cell('type'), colReporter: cell('reporter'), colCategory: cell('category'), colCreated: cell('created'),
+      tableMinWidth: minW + 'px', actW,
+      rows, isEmpty: n === 0, clearAll: () => this.setState({ q: '', status: [], prio: [], svc: [], type: [], slaRisk: false }),
+      footerText: n ? n + ' sonuçtan 1–' + n + ' arası gösteriliyor' : '0 sonuç',
+      menuOpen: !!mr, menuTop: mr ? s.menu.top : 0, menuRight: mr ? s.menu.right : 0, menuId: mr ? mr.id : '', menuSummary: mr ? mr.s : '',
+      menuMajorLabel: mr && mr.major ? 'Büyük olay işaretini kaldır' : 'Büyük olay ilan et', menuProblemLabel: mr && mr.prb ? 'Problem bağını kaldır' : 'Probleme bağla',
+      mOpen: act(() => { window.location.href = 'Olay Detayi.dc.html?id=' + mr.id; }), mEdit: act(() => { window.location.href = 'Olay Detayi.dc.html?id=' + mr.id + '&mode=edit'; }),
+      mMajor: act(() => { const was = mr.major; this.updRows([mr.id], r => { r.major = !was; if (!was) r.parent = null; r.u = 0; return r; }); this.toast(mr.id + (was ? ' · büyük olay işareti kaldırıldı' : ' · büyük olay ilan edildi; şerit ve köprü kanalı açıldı')); }),
+      mProblem: act(() => { const had = mr.prb; this.updRows([mr.id], r => { r.prb = had ? null : 'PRB-031'; r.u = 0; return r; }); this.toast(mr.id + (had ? ' · ' + had + ' bağı kaldırıldı' : ' · PRB-031 problemine bağlandı')); }),
+      cellOpen: !!cr, cellTop: cr ? s.cell.top : 0, cellLeft: cr ? s.cell.left : 0, cellW: cr ? s.cell.w : 200, cellId: cr ? cr.id : '', cellField: cr ? ({ st: 'Durum', p: 'Öncelik', a: 'Atanan' })[s.cell.field] : '', cellOptions,
+      hasToast: !!s.toast, toastText: s.toast ? s.toast.text : '', hasUndo: !!(s.toast && s.toast.undo), undo: () => { const u = s.toast && s.toast.undo; if (u) u(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

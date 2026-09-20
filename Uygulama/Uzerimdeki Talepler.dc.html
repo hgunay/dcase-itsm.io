@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
+</helmet>
+<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap;overflow:hidden"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Ekran analizi 02 · Üzerimdeki Talepler konsepti</span><span style="color:#64748b;overflow:hidden;text-overflow:ellipsis">Deneyin: sekmeleri değiştir · başlığa tıkla → sırala · satır seç → toplu eylem · Durum / Öncelik / Atanan hücresine tıkla → anında kayıt, "Geri al" · filtre çipleri</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Talep Listesi Analizi.dc.html" style="color:#fff">Analiz</a><a href="Talep Detayi.dc.html" style="color:#fff">Detay →</a></div>
+<div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" tema="{{ ustBar }}" hint-size="100%,49px"></dc-import></div>
+<div style="display:flex;align-items:flex-start">
+<div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" aktif="uzerimdeki" style="height:100%" hint-size="256px,100%"></dc-import></div>
+<main data-screen-label="Üzerimdeki Talepler prototipi" style="flex:1;min-width:0;padding:16px 24px 48px;background:{{ zeminBg }};min-height:calc(100vh - 77px);box-sizing:border-box">
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:10px">
+<div style="margin-right:auto"><h1 style="font-size:20px;font-weight:700;margin:0">{{ pageTitle }}</h1><div style="font-size:12px;color:#64748b;margin-top:2px">{{ headerCount }}</div></div>
+<button type="button" onClick="{{ saveView }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Görünümü kaydet</button>
+<button type="button" onClick="{{ newRequest }}" style="height:32px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>Yeni talep</button>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid #e2e8f0;margin-bottom:12px">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+<button type="button" onClick="{{ t.click }}" style="display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 12px;border:0;border-bottom:2px solid {{ t.border }};margin-bottom:-1px;background:transparent;font-weight:{{ t.weight }};color:{{ t.color }};font-size:13px;cursor:pointer">{{ t.label }} <span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:{{ t.pillBg }};color:{{ t.pillFg }}">{{ t.count }}</span></button>
+</sc-for>
+</div>
+
+<sc-if value="{{ hasPop }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closePop }}" style="position:fixed;inset:0;z-index:30"></div></sc-if>
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px">
+<span style="display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;width:260px;box-sizing:border-box;color:#94a3b8"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="text" value="{{ q }}" onChange="{{ setQ }}" placeholder="Numara, özet ve talep edende ara" style="border:0;outline:0;font-size:13px;flex:1;min-width:0;background:transparent;color:#020618;padding:0"></span>
+
+<span style="position:relative">
+<button type="button" onClick="{{ toggleStatusPop }}" style="height:32px;padding:0 10px;border:{{ statusBorderCss }};border-radius:6px;background:{{ statusBg }};color:{{ statusFg }};font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;cursor:pointer"><span style="color:#94a3b8;font-size:15px;line-height:1">⊕</span>{{ statusChip }}</button>
+<sc-if value="{{ statusOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;top:36px;left:0;z-index:40;width:200px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.12);padding:6px">
+<sc-for list="{{ statusOptions }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.toggle }}" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border-radius:6px;font-size:13px;cursor:pointer" style-hover="background:#f8fafc"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ o.boxBorder }};background:{{ o.boxBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;flex-shrink:0">{{ o.mark }}</span><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dot }};flex-shrink:0"></span>{{ o.label }}</div>
+</sc-for>
+<sc-if value="{{ statusHas }}" hint-placeholder-val="{{ false }}"><div onClick="{{ clearStatus }}" style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px;text-align:center;font-size:12px;color:#08748e;cursor:pointer">Filtreyi temizle</div></sc-if>
+</div>
+</sc-if>
+</span>
+
+<span style="position:relative">
+<button type="button" onClick="{{ togglePrioPop }}" style="height:32px;padding:0 10px;border:{{ prioBorderCss }};border-radius:6px;background:{{ prioBg }};color:{{ prioFg }};font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;cursor:pointer"><span style="color:#94a3b8;font-size:15px;line-height:1">⊕</span>{{ prioChip }}</button>
+<sc-if value="{{ prioOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;top:36px;left:0;z-index:40;width:180px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.12);padding:6px">
+<sc-for list="{{ prioOptions }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.toggle }}" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border-radius:6px;font-size:13px;cursor:pointer" style-hover="background:#f8fafc"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ o.boxBorder }};background:{{ o.boxBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;flex-shrink:0">{{ o.mark }}</span><span style="font-weight:600;color:{{ o.dot }}">{{ o.label }}</span><span style="color:#64748b">{{ o.desc }}</span></div>
+</sc-for>
+<sc-if value="{{ prioHas }}" hint-placeholder-val="{{ false }}"><div onClick="{{ clearPrio }}" style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px;text-align:center;font-size:12px;color:#08748e;cursor:pointer">Filtreyi temizle</div></sc-if>
+</div>
+</sc-if>
+</span>
+
+<button type="button" onClick="{{ toggleSlaRisk }}" style="height:32px;padding:0 10px;border:1px solid {{ riskBorder }};border-radius:6px;background:{{ riskBg }};color:{{ riskFg }};font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;cursor:pointer">SLA riski · {{ riskCount }}</button>
+
+<span style="margin-left:auto;font-size:12px;color:#64748b">Son güncelleme {{ refresh }} · <a href="#" onClick="{{ doRefresh }}">Yenile</a></span>
+<span style="position:relative">
+<button type="button" onClick="{{ toggleColsPop }}" style="height:32px;padding:0 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:#334155"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16"></path><path d="M4 12h10"></path><path d="M4 18h6"></path></svg>Sütunlar</button>
+<sc-if value="{{ colsOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;top:36px;right:0;z-index:40;width:180px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.12);padding:6px">
+<sc-for list="{{ colOptions }}" as="o" hint-placeholder-count="3">
+<div onClick="{{ o.toggle }}" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border-radius:6px;font-size:13px;cursor:pointer" style-hover="background:#f8fafc"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ o.boxBorder }};background:{{ o.boxBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;flex-shrink:0">{{ o.mark }}</span>{{ o.label }}</div>
+</sc-for>
+<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px;font-size:12px;color:#64748b;line-height:1.4">Tercihler kullanıcı başına saklanır.</div>
+</div>
+</sc-if>
+</span>
+</div>
+
+<sc-if value="{{ hasSelection }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:#020618;color:#fff;margin-bottom:10px;font-size:13px">
+<span style="font-weight:600;margin-right:6px">{{ selCount }} talep seçildi</span>
+<button type="button" onClick="{{ bulkAssign }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Ata</button>
+<button type="button" onClick="{{ bulkStatus }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Çalışılıyor yap</button>
+<button type="button" onClick="{{ bulkMerge }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Birleştir</button>
+<button type="button" onClick="{{ bulkClose }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Kapat</button>
+<button type="button" onClick="{{ clearSel }}" style="margin-left:auto;height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#cbd5e1;border:0;font-size:12px;cursor:pointer">Seçimi kaldır</button>
+</div>
+</sc-if>
+
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);overflow-x:auto">
+<table style="width:100%;min-width:{{ tableMinWidth }};table-layout:fixed;border-collapse:collapse;font-size:13px">
+<thead>
+<tr style="background:#f8fafc">
+<th style="width:40px;box-sizing:border-box;padding:10px 0 10px 14px;border-bottom:1px solid #e2e8f0;text-align:left"><span onClick="{{ toggleAll }}" style="display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid {{ allBoxBorder }};background:{{ allBoxBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;cursor:pointer;vertical-align:middle">{{ allMark }}</span></th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:104px">Talep No</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap">Özet</th>
+<th onClick="{{ sortSt }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:124px;cursor:pointer;color:{{ stHeadColor }}">Durum {{ stSortMark }}</th>
+<th onClick="{{ sortPrio }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:80px;cursor:pointer;display:{{ colPrio }};color:{{ prioHeadColor }}">Öncelik {{ prioSortMark }}</th>
+<th onClick="{{ sortSla }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:116px;cursor:pointer;color:{{ slaHeadColor }}">Kalan SLA {{ slaSortMark }}</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:140px;display:{{ colWaiting }}">Bekleyen</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:130px;display:{{ colAtanan }}">Atanan</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:120px;display:{{ colGrup }}">Grup</th>
+<th onClick="{{ sortCreated }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:150px;cursor:pointer;display:{{ colCreated }};color:{{ createdHeadColor }}">Oluşturulma {{ createdSortMark }}</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:130px;display:{{ colRequester }}">Talebi İleten</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:140px;display:{{ colType }}">Talep Tipi</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:130px;display:{{ colCatalog }}">Katalog Öğesi</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:130px;display:{{ colItem }}">Talep Öğesi</th>
+<th onClick="{{ sortUpd }}" style="text-align:left;font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;box-sizing:border-box;width:112px;cursor:pointer;display:{{ colUpdated }};color:{{ updHeadColor }}">Güncelleme {{ updSortMark }}</th>
+<th style="width:{{ actW }}px;box-sizing:border-box;padding:10px 8px;border-bottom:1px solid #e2e8f0"></th>
+</tr>
+</thead>
+<tbody>
+<sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+<tr onMouseEnter="{{ r.enter }}" onMouseLeave="{{ r.leave }}" onClick="{{ r.open }}" style="background:{{ r.bg }};cursor:pointer">
+<td style="padding:10px 0 10px 14px;border-top:1px solid #f1f5f9;vertical-align:middle"><span onClick="{{ r.toggle }}" style="display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid {{ r.cbBorder }};background:{{ r.cbBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;cursor:pointer;vertical-align:middle">{{ r.cbMark }}</span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;white-space:nowrap"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#08748e">{{ r.id }}</span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;overflow:hidden"><div style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.s }}</div><div style="font-size:12px;color:#64748b;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.sub }}</div></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><span onClick="{{ r.editSt }}" title="Durumu değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;background:{{ r.stCellBg }}" style-hover="background:#e2e8f0"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.stColor }};flex-shrink:0"></span>{{ r.stLabel }}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colPrio }}"><span onClick="{{ r.editP }}" title="Önceliği değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;background:{{ r.pCellBg }}" style-hover="background:#e2e8f0"><span style="font-weight:600;color:{{ r.prioColor }}">{{ r.prioLabel }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><div style="font-weight:600;color:{{ r.slaColor }};font-variant-numeric:tabular-nums;white-space:nowrap">{{ r.slaText }}</div><sc-if value="{{ r.slaHasBar }}" hint-placeholder-val="{{ false }}"><div style="height:3px;border-radius:2px;background:#f1f5f9;margin-top:4px"><div style="width:{{ r.slaBar }};height:100%;border-radius:2px;background:{{ r.slaBarColor }}"></div></div></sc-if><sc-if value="{{ r.slaHasSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:#94a3b8;margin-top:2px;white-space:nowrap">{{ r.slaSub }}</div></sc-if></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colWaiting }}"><span style="font-size:12px;font-weight:500;padding:2px 8px;border-radius:999px;background:{{ r.waitBg }};color:{{ r.waitFg }};white-space:nowrap">{{ r.waitLabel }}</span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colAtanan }};white-space:nowrap;overflow:hidden"><span onClick="{{ r.editA }}" title="Atananı değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;background:{{ r.aCellBg }}" style-hover="background:#e2e8f0"><span style="overflow:hidden;text-overflow:ellipsis;color:{{ r.assigneeColor }}">{{ r.assigneeText }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colGrup }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><sc-if value="{{ r.hasGroup }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:500;padding:2px 8px;border-radius:999px;background:#e6f4f1;color:#0f5c4d">{{ r.group }}</span></sc-if></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colCreated }};color:#64748b;white-space:nowrap">{{ r.createdText }}</td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colRequester }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.requester }}</td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colType }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-size:12px;font-weight:500;padding:2px 8px;border-radius:6px;background:#f1f5f9;color:#334155">{{ r.type }}</span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colCatalog }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:{{ r.catalogColor }}">{{ r.catalog }}</td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colItem }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:{{ r.itemColor }}">{{ r.item }}</td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colUpdated }};color:#64748b;white-space:nowrap">{{ r.updatedText }}</td>
+<td style="padding:6px 10px 6px 0;border-top:1px solid #f1f5f9;vertical-align:middle"><div style="display:flex;align-items:center;justify-content:flex-end;gap:6px">
+<sc-if value="{{ r.showPrimary }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ r.primary }}" style="height:28px;padding:0 10px;border-radius:6px;background:#fff;color:#334155;border:1px solid #e2e8f0;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>Düzenle</button></sc-if>
+<button type="button" onClick="{{ r.menu }}" aria-label="Satır eylemleri" style="width:28px;height:28px;border-radius:6px;border:1px solid {{ r.kebabBorder }};background:{{ r.kebabBg }};color:{{ r.kebabFg }};display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+</div></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+<sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:32px;text-align:center;font-size:13px;color:#64748b;display:flex;justify-content:center;align-items:center;gap:8px">Bu filtrelerle talep yok.<button type="button" onClick="{{ clearAll }}" style="border:0;background:transparent;color:#08748e;font-size:13px;font-weight:500;cursor:pointer;padding:0">Filtreleri temizle</button></div></sc-if>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:10px 14px;border-top:1px solid #e2e8f0;background:#f8fafc;font-size:12px;color:#64748b">
+<span style="margin-right:auto">{{ footerText }}</span>
+<span>Sayfa başına <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;color:#020618">25 <span style="font-size:10px;color:#94a3b8">▾</span></span></span>
+<span>Sayfa 1 / 1</span>
+<span style="display:inline-flex;gap:4px;color:#cbd5e1"><span style="width:26px;height:26px;border:1px solid #e2e8f0;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;background:#fff">‹</span><span style="width:26px;height:26px;border:1px solid #e2e8f0;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;background:#fff">›</span></span>
+</div>
+</div>
+
+</main>
+</div>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ menuTop }}px;right:{{ menuRight }}px;z-index:60;width:232px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#08748e">{{ menuId }}</span> · {{ menuSummary }}</div>
+<div onClick="{{ mEdit }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>Düzenle</div>
+<div onClick="{{ mOpen }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>Detayı aç</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ cellOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:{{ cellTop }}px;left:{{ cellLeft }}px;z-index:60;width:{{ cellW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#08748e">{{ cellId }}</span> · {{ cellField }}</div>
+<sc-for list="{{ cellOptions }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;background:{{ o.bg }}" style-hover="background:#f1f5f9"><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dot }};flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }}">{{ o.label }}</span><span style="color:#64748b;font-size:12px">{{ o.desc }}</span><span style="margin-left:auto;color:#08748e;font-size:12px;font-weight:600">{{ o.check }}</span></div>
+</sc-for>
+<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px 8px 4px;font-size:11px;color:#94a3b8;line-height:1.4">Seçim anında kaydedilir · Esc kapatır</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);font-family:Inter,system-ui,sans-serif;max-width:480px;display:flex;align-items:center;gap:14px"><span>{{ toastText }}</span><sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ undo }}" style="height:26px;padding:0 10px;border-radius:6px;background:rgba(255,255,255,.12);color:#7fd6c2;border:0;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Geri al</button></sc-if></div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;satirEylemi&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;menu&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;menu&quot;,&quot;birincil&quot;],&quot;section&quot;:&quot;Satır eylemleri&quot;},&quot;ustBar&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;acik&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;acik&quot;,&quot;koyu&quot;],&quot;section&quot;:&quot;Kabuk&quot;},&quot;zemin&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;slate-50&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;slate-50&quot;,&quot;slate-100&quot;,&quot;slate-200&quot;,&quot;sogukgri&quot;],&quot;section&quot;:&quot;Kabuk&quot;}}">
+class Component extends DCLogic {
+  static ME = 'admin admin';
+  static ST = { acik: ['Açık', '#4c7bd9'], calisiliyor: ['Çalışılıyor', '#e39b2c'], bekleniyor: ['Bekleniyor', '#94a3b8'], cozuldu: ['Çözüldü', '#2fa886'] };
+  static ORDER = ['acik', 'calisiliyor', 'bekleniyor', 'cozuldu'];
+  static PC = { 1: '#d23f43', 2: '#b16a08', 3: '#334155', 4: '#64748b' };
+  static PD = { 1: 'Kritik', 2: 'Yüksek', 3: 'Orta', 4: 'Düşük' };
+  static GROUPS = { 'Deniz Acar': 'Destek Grup', 'Gökhan Tuna': 'Destek Grup', 'Zeynep Ural': 'Erişim Ekibi' };
+  static TABS = [['mine', 'Üzerimdeki', 'Üzerimdeki Talepler'], ['team', 'Ekibimin', 'Ekibimin Talepleri'], ['unassigned', 'Atanmamış', 'Atanmamış Talepler'], ['watching', 'Takip ettiğim', 'Takip Ettiğim Talepler'], ['approval', 'Onayımı bekleyen', 'Onayımı Bekleyen Talepler']];
+  static DATA = [
+    { id: 'REQ-282', s: 'VPN erişimi — yeni personel', r: 'Ayşe Kaya', c: 'Erişim Hizmetleri › VPN', st: 'calisiliyor', p: 2, sla: 42, tot: 480, w: 'ben', u: 120, a: 'admin admin', q: ['mine'] },
+    { id: 'REQ-278', s: 'Şifre değiştirme talebi', r: 'Burak Şen', c: 'Erişim › Parola', st: 'acik', p: 3, sla: 190, tot: 480, w: 'ben', u: 1440, a: 'admin admin', q: ['mine'] },
+    { id: 'REQ-268', s: 'Ortak klasöre yazma yetkisi', r: 'Elif Aydın', c: 'Erişim Hizmetleri › Dosya paylaşımı', st: 'acik', p: 3, sla: 385, tot: 960, w: 'ben', u: 5760, a: 'admin admin', q: ['mine'] },
+    { id: 'REQ-263', s: 'Yeni grup tanımı — Destek Grup', r: 'Can Yıldız', c: 'Hesap Operasyonları › Grup', st: 'calisiliyor', p: 4, sla: 1562, tot: 2880, w: 'ucuncu', u: 7200, a: 'admin admin', q: ['mine'] },
+    { id: 'REQ-273', s: 'Test ve canlı ortamlarda workflow erişim hatası', r: 'Mehmet Arslan', c: 'Uygulamalar › Workflow', st: 'bekleniyor', p: 2, sla: null, tot: 480, w: 'musteri', u: 4320, a: 'admin admin', q: ['mine'] },
+    { id: 'REQ-259', s: 'E-posta dağıtım listesi güncellemesi', r: 'Selin Koç', c: 'Hesap Operasyonları › E-posta', st: 'cozuldu', p: 4, sla: null, tot: 960, w: null, u: 8640, a: 'admin admin', q: ['mine'], sub: '1s 40dk kala' },
+    { id: 'REQ-284', s: 'Yazıcı sürücüsü kurulumu', r: 'Hakan Öz', c: 'Donanım › Yazıcı', st: 'acik', p: 3, sla: 255, tot: 480, w: 'ben', u: 45, a: 'Deniz Acar', q: ['team'] },
+    { id: 'REQ-283', s: 'SAP yetki genişletme', r: 'Nur Çelik', c: 'Uygulamalar › SAP', st: 'calisiliyor', p: 2, sla: -25, tot: 480, w: 'ben', u: 30, a: 'Gökhan Tuna', q: ['team'] },
+    { id: 'REQ-281', s: 'Dizüstü değişimi', r: 'Ozan Kaya', c: 'Donanım › Dizüstü', st: 'bekleniyor', p: 3, sla: null, tot: 960, w: 'ucuncu', u: 2880, a: 'Zeynep Ural', q: ['team'] },
+    { id: 'REQ-280', s: 'Toplantı odası ekran arızası', r: 'Pelin Er', c: 'Donanım › Ekran', st: 'acik', p: 2, sla: 95, tot: 480, w: 'ben', u: 300, a: 'Deniz Acar', q: ['team'] },
+    { id: 'REQ-277', s: 'Mobil cihaz MDM kaydı', r: 'Kerem Ak', c: 'Erişim Hizmetleri › MDM', st: 'calisiliyor', p: 3, sla: 610, tot: 960, w: 'ben', u: 1500, a: 'Gökhan Tuna', q: ['team'] },
+    { id: 'REQ-275', s: 'Eski çalışan hesabı kapatma', r: 'İK Servisi', c: 'Hesap Operasyonları › Hesap kapatma', st: 'acik', p: 1, sla: 38, tot: 240, w: 'ben', u: 20, a: 'Zeynep Ural', q: ['team'] },
+    { id: 'REQ-271', s: 'Lisans yenileme — Adobe', r: 'Melis Ay', c: 'Yazılım › Lisans', st: 'bekleniyor', p: 4, sla: null, tot: 2880, w: 'musteri', u: 5000, a: 'Deniz Acar', q: ['team'] },
+    { id: 'REQ-266', s: 'VPN token yenileme', r: 'Tolga Işık', c: 'Erişim Hizmetleri › VPN', st: 'cozuldu', p: 3, sla: null, tot: 480, w: null, u: 6000, a: 'Gökhan Tuna', q: ['team'], sub: '3s 05dk kala' },
+    { id: 'REQ-286', s: 'Yeni personel donanım seti', r: 'İK Servisi', c: 'Donanım › Başlangıç seti', st: 'acik', p: 2, sla: 210, tot: 480, w: 'atama', u: 15, a: null, q: ['unassigned'] },
+    { id: 'REQ-285', s: 'Outlook takvim paylaşımı', r: 'Seda Kurt', c: 'Uygulamalar › Outlook', st: 'acik', p: 3, sla: 440, tot: 480, w: 'atama', u: 40, a: null, q: ['unassigned'] },
+    { id: 'REQ-279', s: 'Ortak yazıcı erişimi', r: 'Emre Sarı', c: 'Donanım › Yazıcı', st: 'acik', p: 4, sla: 1380, tot: 1440, w: 'atama', u: 900, a: null, q: ['unassigned'] },
+    { id: 'REQ-276', s: 'Teams telefon hattı', r: 'Berk Uçar', c: 'İletişim › Teams', st: 'acik', p: 3, sla: 300, tot: 480, w: 'atama', u: 200, a: null, q: ['unassigned'] },
+    { id: 'REQ-274', s: 'İnternet sitesi engel kaldırma', r: 'Lale Gür', c: 'Erişim Hizmetleri › Proxy', st: 'acik', p: 3, sla: 120, tot: 480, w: 'atama', u: 500, a: null, q: ['unassigned'] },
+    { id: 'REQ-272', s: 'Yedekleme raporu talebi', r: 'Ali Vural', c: 'Raporlama › Yedekleme', st: 'acik', p: 4, sla: 1900, tot: 2880, w: 'atama', u: 1300, a: null, q: ['unassigned'] },
+    { id: 'REQ-270', s: 'Kablosuz ağ erişimi — misafir', r: 'Resepsiyon', c: 'Erişim Hizmetleri › Wi-Fi', st: 'acik', p: 2, sla: 58, tot: 240, w: 'atama', u: 600, a: null, q: ['unassigned'] },
+    { id: 'REQ-269', s: 'Bordro uygulaması yavaşlık', r: 'Finans', c: 'Uygulamalar › Bordro', st: 'calisiliyor', p: 2, sla: 150, tot: 480, w: 'ben', u: 90, a: 'Zeynep Ural', q: ['team', 'watching'] },
+    { id: 'REQ-265', s: 'Ortak sürücü kotası', r: 'Satış', c: 'Altyapı › Depolama', st: 'bekleniyor', p: 3, sla: null, tot: 960, w: 'ucuncu', u: 2000, a: 'Deniz Acar', q: ['team', 'watching'] },
+    { id: 'REQ-262', s: 'CRM raporu erişimi', r: 'Ece Tan', c: 'Uygulamalar › CRM', st: 'acik', p: 3, sla: 700, tot: 960, w: 'ben', u: 2500, a: 'Gökhan Tuna', q: ['team', 'watching'] },
+    { id: 'REQ-287', s: 'Yazılım satın alma — Figma, 5 lisans', r: 'Tasarım Ekibi', c: 'Yazılım › Satın alma', st: 'bekleniyor', p: 3, sla: 400, tot: 960, w: 'onay', u: 60, a: 'Deniz Acar', q: ['team', 'approval'] },
+    { id: 'REQ-267', s: 'Yönetici erişimi — sunucu', r: 'Umut Kar', c: 'Erişim Hizmetleri › Sunucu', st: 'bekleniyor', p: 2, sla: 180, tot: 480, w: 'onay', u: 700, a: 'Zeynep Ural', q: ['team', 'approval'] }
+  ];
+  state = {
+    queue: 'mine', q: '', status: [], prio: [], slaRisk: false,
+    sort: { key: 'sla', dir: 'asc' }, selected: [], hover: null, pop: null,
+    menu: null, cell: null, cols: { prio: true, waiting: true, atanan: false, grup: false, created: false, requester: false, type: true, catalog: false, item: false, updated: true }, toast: '', refresh: '14:32',
+    rows: Component.DATA.map((r, i) => ({ ...r, cr: r.u + 60 + (i * 37) % 900 + (r.u > 1440 ? 1440 : 0), g: r.a ? (Component.GROUPS[r.a] || null) : (i % 3 === 0 ? 'Destek Grup' : null) }))
+  };
+  toast(msg, undo) { this.setState({ toast: { text: msg, undo: undo || null } }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: '' }), undo ? 6500 : 3200); }
+  componentDidMount() { this._kd = ev => { if (ev.key === 'Escape' && this.state.pop) this.setState({ pop: null, cell: null, menu: null }); }; window.addEventListener('keydown', this._kd); }
+  componentWillUnmount() { clearTimeout(this._tt); window.removeEventListener('keydown', this._kd); }
+  fmtSla(m) { m = Math.abs(m); if (m >= 1440) return Math.floor(m / 1440) + 'g ' + String(Math.floor((m % 1440) / 60)).padStart(2, '0') + 's'; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
+  fmtDate(m) { const d = new Date(Date.now() - m * 60000); const ay = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara']; return d.getDate() + ' ' + ay[d.getMonth()] + ' ' + d.getFullYear() + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); }
+  fmtAgo(m) { if (m < 1) return 'az önce'; if (m < 60) return m + ' dk önce'; if (m < 1440) return Math.floor(m / 60) + ' sa önce'; return Math.floor(m / 1440) + ' gün önce'; }
+  waitInfo(r) {
+    if (r.st === 'cozuldu' || !r.w) return ['—', 'transparent', '#94a3b8'];
+    if (r.w === 'ben') return r.a === Component.ME ? ['Benim sıramda', '#e6f4f1', '#0f5c4d'] : ['Atananda', '#f1f5f9', '#334155'];
+    if (r.w === 'musteri') return ['Müşteri yanıtı', '#fdf1e0', '#9a5b0a'];
+    if (r.w === 'ucuncu') return ['Üçüncü taraf', '#f1f5f9', '#334155'];
+    if (r.w === 'atama') return ['Atama bekliyor', '#fdf1e0', '#9a5b0a'];
+    if (r.w === 'onay') return ['Onayım bekleniyor', '#fdf1e0', '#9a5b0a'];
+    return ['—', 'transparent', '#94a3b8'];
+  }
+  updRows(ids, fn) { this.setState(st => ({ rows: st.rows.map(r => ids.includes(r.id) ? fn({ ...r }) : r) })); }
+  toggleSel(id) { this.setState(st => ({ selected: st.selected.includes(id) ? st.selected.filter(x => x !== id) : [...st.selected, id] })); }
+  openCell(r, field, ev) {
+    const rc = ev.currentTarget.getBoundingClientRect();
+    const w = field === 'a' ? 236 : 200, n = field === 'a' ? 5 : 4;
+    const hgt = 12 + 34 + n * 32 + 34;
+    let top = rc.bottom + 4; if (top + hgt > window.innerHeight - 8) top = Math.max(8, rc.top - hgt - 4);
+    const left = Math.max(8, Math.min(rc.left, window.innerWidth - w - 8));
+    const c = this.state.cell, same = this.state.pop === 'cell' && c && c.id === r.id && c.field === field;
+    this.setState(same ? { pop: null, cell: null } : { pop: 'cell', cell: { id: r.id, field, top, left, w }, menu: null });
+  }
+  applyField(id, field, value) {
+    const before = this.state.rows.find(x => x.id === id); if (!before) return;
+    const snap = { ...before, q: [...before.q] }, ME = Component.ME, ST = Component.ST;
+    const label = field === 'st' ? 'Durum: ' + ST[before.st][0] + ' → ' + ST[value][0] : field === 'p' ? 'Öncelik: P' + before.p + ' → P' + value : 'Atanan: ' + (before.a || '—') + ' → ' + (value || '—');
+    this.updRows([id], r => {
+      if (field === 'st') { const prev = r.st; r.st = value; if (r.st === 'cozuldu') { r.sla = null; r.w = null; r.sub = 'zamanında'; } else if (r.st === 'bekleniyor') { if (prev !== 'bekleniyor') { r.sla = null; r.w = 'musteri'; } } else { if (r.sla === null) r.sla = Math.round(r.tot * 0.6); if (!r.w || r.w === 'musteri' || r.w === 'ucuncu') r.w = r.a ? 'ben' : 'atama'; } }
+      if (field === 'p') r.p = Number(value);
+      if (field === 'a') { const a = value || null; r.a = a; const q = a === ME ? 'mine' : a ? 'team' : 'unassigned'; r.q = [q, ...r.q.filter(x => x === 'watching' || x === 'approval')]; if (r.st !== 'cozuldu') r.w = a ? ((r.w === 'musteri' || r.w === 'ucuncu') ? r.w : 'ben') : 'atama'; if (a) r.g = Component.GROUPS[a] || (a === ME ? 'Destek Grup' : r.g); }
+      r.u = 0; return r;
+    });
+    this.setState({ pop: null, cell: null });
+    this.toast(id + ' · ' + label, () => { this.setState(st => ({ rows: st.rows.map(x => x.id === id ? snap : x) })); this.toast(id + ' · değişiklik geri alındı'); });
+  }
+  bulk(kind) {
+    const ids = this.state.selected, n = ids.length; if (!n) return;
+    if (kind === 'assign') { this.updRows(ids, r => { r.a = 'Deniz Acar'; r.q = ['team']; r.w = 'ben'; r.g = 'Destek Grup'; return r; }); this.toast(n + " talep Deniz Acar'a atandı"); }
+    if (kind === 'status') { this.updRows(ids, r => { if (r.st !== 'cozuldu') r.st = 'calisiliyor'; return r; }); this.toast(n + ' talep Çalışılıyor durumuna alındı'); }
+    if (kind === 'close') { this.updRows(ids, r => { r.st = 'cozuldu'; r.sla = null; r.w = null; r.sub = 'zamanında'; return r; }); this.toast(n + ' talep çözüldü olarak kapatıldı'); }
+    if (kind === 'merge') {
+      if (n < 2) { this.toast('Birleştirmek için en az iki talep seçin'); return; }
+      const [first, ...rest] = ids;
+      this.setState(st => ({ rows: st.rows.filter(r => !rest.includes(r.id)) }));
+      this.toast(rest.join(', ') + ' → ' + first + ' altında birleştirildi');
+    }
+    this.setState({ selected: [] });
+  }
+  openMenu(r, ev) {
+    const rc = ev.currentTarget.getBoundingClientRect();
+    const items = 2;
+    const hgt = 12 + 34 + items * 32 + 9;
+    let top = rc.bottom + 4; if (top + hgt > window.innerHeight - 8) top = Math.max(8, rc.top - hgt - 4);
+    const same = this.state.pop === 'row' && this.state.menu && this.state.menu.id === r.id;
+    this.setState(same ? { pop: null, menu: null } : { pop: 'row', menu: { id: r.id, top, right: Math.max(8, window.innerWidth - rc.right) } });
+  }
+  sortBy(key) { this.setState(st => ({ sort: st.sort.key === key ? { key, dir: st.sort.dir === 'asc' ? 'desc' : 'asc' } : { key, dir: 'asc' } })); }
+  renderVals() {
+    const s = this.state, ME = Component.ME, ST = Component.ST, ORDER = Component.ORDER;
+    const variant = this.props.satirEylemi ?? 'menu';
+    const zemin = this.props.zemin ?? 'slate-50';
+    const zeminBg = { 'slate-50': '#f8fafc', 'slate-100': '#f1f5f9', 'slate-200': '#e2e8f0', 'sogukgri': '#eef1f6' }[zemin] || '#f8fafc';
+    const actW = variant === 'birincil' ? 148 : 52;
+    const inQueue = s.rows.filter(r => r.q.includes(s.queue));
+    const riskCount = inQueue.filter(r => r.sla !== null && r.sla < 60 && r.st !== 'cozuldu').length;
+    let list = inQueue;
+    if (s.q.trim()) { const k = s.q.toLocaleLowerCase('tr'); list = list.filter(r => (r.id + ' ' + r.s + ' ' + r.r).toLocaleLowerCase('tr').includes(k)); }
+    if (s.status.length) list = list.filter(r => s.status.includes(r.st));
+    if (s.prio.length) list = list.filter(r => s.prio.includes(r.p));
+    if (s.slaRisk) list = list.filter(r => r.sla !== null && r.sla < 60 && r.st !== 'cozuldu');
+    const keyFn = { sla: r => r.st === 'cozuldu' ? 1e12 : r.sla === null ? 1e11 : r.sla, prio: r => r.p, updated: r => r.u, created: r => r.cr, status: r => ORDER.indexOf(r.st) }[s.sort.key];
+    const dir = s.sort.dir === 'asc' ? 1 : -1;
+    list = [...list].sort((a, b) => (keyFn(a) - keyFn(b)) * dir);
+    const visibleIds = list.map(r => r.id);
+    const allSel = visibleIds.length > 0 && visibleIds.every(id => s.selected.includes(id));
+    const someSel = !allSel && visibleIds.some(id => s.selected.includes(id));
+    const tab = Component.TABS.find(t => t[0] === s.queue);
+    const rows = list.map(r => {
+      const sel = s.selected.includes(r.id), hov = s.hover === r.id, st = ST[r.st];
+      let slaText, slaColor, slaHasBar = false, slaBar = '0%', slaBarColor = '#94a3b8', slaSub = '';
+      if (r.st === 'cozuldu') { slaText = 'Tutuldu ✓'; slaColor = '#1f8a6f'; slaSub = r.sub || ''; }
+      else if (r.sla === null) { slaText = 'Duraklatıldı'; slaColor = '#64748b'; slaSub = r.w === 'musteri' ? 'müşteri yanıtı' : 'üçüncü taraf'; }
+      else if (r.sla < 0) { slaText = 'İhlal · ' + this.fmtSla(r.sla); slaColor = '#d23f43'; slaHasBar = true; slaBar = '100%'; slaBarColor = '#d23f43'; }
+      else { slaText = this.fmtSla(r.sla); slaHasBar = true; slaBar = Math.max(4, Math.round((1 - r.sla / r.tot) * 100)) + '%'; if (r.sla < 60) { slaColor = '#d23f43'; slaBarColor = '#d23f43'; } else if (r.sla < 240) { slaColor = '#b16a08'; slaBarColor = '#e39b2c'; } else { slaColor = '#334155'; slaBarColor = '#94a3b8'; } }
+      const W = this.waitInfo(r);
+      const cat = r.c.split(' › ');
+      const isMenu = s.pop === 'row' && !!s.menu && s.menu.id === r.id;
+      const cellIs = f => s.pop === 'cell' && !!s.cell && s.cell.id === r.id && s.cell.field === f;
+      const isCell = s.pop === 'cell' && !!s.cell && s.cell.id === r.id;
+      const bg = sel ? '#e6f4f1' : (hov || isMenu || isCell) ? '#f8fafc' : '#fff';
+      const stop = fn => ev => { if (ev && ev.stopPropagation) ev.stopPropagation(); fn(); };
+      const stopEv = fn => ev => { if (ev && ev.stopPropagation) ev.stopPropagation(); fn(ev); };
+      return {
+        id: r.id, s: r.s, sub: r.r + ' · ' + r.c, stLabel: st[0], stColor: st[1], prioLabel: 'P' + r.p, prioColor: Component.PC[r.p],
+        slaText, slaColor, slaHasBar, slaBar, slaBarColor, slaHasSub: !!slaSub, slaSub,
+        waitLabel: W[0], waitBg: W[1], waitFg: W[2], assigneeText: r.a || '—', assigneeColor: r.a ? '#020618' : '#94a3b8', updatedText: this.fmtAgo(r.u),
+        hasGroup: !!r.g, group: r.g || '', createdText: this.fmtDate(r.cr), requester: r.r, type: cat[0], catalog: cat[1] || '—', catalogColor: cat[1] ? '#020618' : '#94a3b8', item: cat[2] || '—', itemColor: cat[2] ? '#020618' : '#94a3b8',
+        bg, cbBg: sel ? '#08748e' : '#fff', cbBorder: sel ? '#08748e' : '#cbd5e1', cbMark: sel ? '✓' : '',
+        kebabBorder: (hov || isMenu) ? '#e2e8f0' : 'transparent', kebabBg: isMenu ? '#f1f5f9' : (hov ? '#fff' : 'transparent'), kebabFg: (hov || isMenu) ? '#334155' : '#94a3b8',
+        showPrimary: variant === 'birincil' && (hov || isMenu), primary: stop(() => { window.location.href = 'Talep Detayi.dc.html?id=' + r.id + '&mode=edit'; }),
+        menu: stopEv(ev => this.openMenu(r, ev)),
+        aff: (hov || isCell) ? 1 : 0, stCellBg: cellIs('st') ? '#e2e8f0' : 'transparent', pCellBg: cellIs('p') ? '#e2e8f0' : 'transparent', aCellBg: cellIs('a') ? '#e2e8f0' : 'transparent',
+        editSt: stopEv(ev => this.openCell(r, 'st', ev)), editP: stopEv(ev => this.openCell(r, 'p', ev)), editA: stopEv(ev => this.openCell(r, 'a', ev)),
+        toggle: stop(() => this.toggleSel(r.id)), enter: () => this.setState({ hover: r.id }), leave: () => this.setState({ hover: null }),
+        open: stop(() => { window.location.href = 'Talep Detayi.dc.html?id=' + r.id; })
+      };
+    });
+    const tabs = Component.TABS.map(([k, label]) => { const active = s.queue === k; return { key: k, label, count: s.rows.filter(r => r.q.includes(k)).length, border: active ? '#08748e' : 'transparent', color: active ? '#020618' : '#64748b', weight: active ? 600 : 500, pillBg: active ? '#08748e' : k === 'unassigned' ? '#fdf1e0' : '#f1f5f9', pillFg: active ? '#fff' : k === 'unassigned' ? '#9a5b0a' : '#334155', click: () => this.setState({ queue: k, selected: [], hover: null, pop: null, menu: null, cell: null }) }; });
+    const chip = (on) => on ? { border: '1px solid #08748e', bg: '#e6f4f1', fg: '#0f5c4d' } : { border: '1px dashed #cbd5e1', bg: '#fff', fg: '#334155' };
+    const sc = chip(s.status.length > 0), pc = chip(s.prio.length > 0);
+    const box = on => ({ mark: on ? '✓' : '', boxBg: on ? '#08748e' : '#fff', boxBorder: on ? '#08748e' : '#cbd5e1' });
+    const sortMark = k => s.sort.key === k ? (s.sort.dir === 'asc' ? '↑' : '↓') : '';
+    const headColor = k => s.sort.key === k ? '#08748e' : '#64748b';
+    const n = list.length;
+    const mr = s.pop === 'row' && s.menu ? s.rows.find(x => x.id === s.menu.id) : null;
+    const cr = s.pop === 'cell' && s.cell ? s.rows.find(x => x.id === s.cell.id) : null;
+    const opt = (label, on, extra) => ({ label, hasDot: false, dot: '', desc: '', weight: 500, color: '#020618', check: on ? '✓' : '', bg: on ? '#f8fafc' : 'transparent', ...extra });
+    const cellOptions = !cr ? [] : s.cell.field === 'st' ? ORDER.map(k => opt(ST[k][0], cr.st === k, { hasDot: true, dot: ST[k][1], pick: () => this.applyField(cr.id, 'st', k) }))
+      : s.cell.field === 'p' ? [1, 2, 3, 4].map(p => opt('P' + p, cr.p === p, { desc: Component.PD[p], weight: 600, color: Component.PC[p], pick: () => this.applyField(cr.id, 'p', String(p)) }))
+      : [['', '— Atanmamış'], [ME, 'admin admin (ben)'], ['Deniz Acar', 'Deniz Acar'], ['Gökhan Tuna', 'Gökhan Tuna'], ['Zeynep Ural', 'Zeynep Ural']].map(([v, label]) => opt(label, (cr.a || '') === v, { desc: v === ME ? 'Destek Grup' : (Component.GROUPS[v] || ''), pick: () => this.applyField(cr.id, 'a', v) }));
+    const act = fn => () => { this.setState({ pop: null, menu: null }); if (mr) fn(); };
+    const showAtanan = s.cols.atanan || s.queue !== 'mine';
+    const cell = k => s.cols[k] ? 'table-cell' : 'none';
+    const W_ = { prio: 80, waiting: 140, updated: 112, grup: 120, created: 150, requester: 130, type: 140, catalog: 130, item: 130 };
+    const minW = 40 + 104 + 260 + 124 + 116 + actW + (showAtanan ? 130 : 0) + Object.keys(W_).reduce((a, k) => a + (s.cols[k] ? W_[k] : 0), 0);
+    return {
+      ustBar: this.props.ustBar ?? 'acik', zeminBg,
+      pageTitle: tab[2], headerCount: inQueue.length + ' talep · ' + riskCount + ' SLA riski',
+      saveView: () => this.toast('Görünüm kaydedildi: ' + tab[1] + ' · ' + (s.sort.key === 'sla' ? "SLA'ya göre" : 'özel sıralama')),
+      newRequest: () => this.toast('Yeni talep formu — sıradaki ekran'),
+      tabs, q: s.q, setQ: ev => this.setState({ q: ev.target.value }),
+      hasPop: !!s.pop, closePop: () => this.setState({ pop: null, menu: null, cell: null }),
+      cellOpen: !!cr, cellTop: cr ? s.cell.top : 0, cellLeft: cr ? s.cell.left : 0, cellW: cr ? s.cell.w : 200, cellId: cr ? cr.id : '', cellField: cr ? ({ st: 'Durum', p: 'Öncelik', a: 'Atanan' })[s.cell.field] : '', cellOptions,
+      actW, menuOpen: !!mr, menuTop: mr ? s.menu.top : 0, menuRight: mr ? s.menu.right : 0, menuId: mr ? mr.id : '', menuSummary: mr ? mr.s : '',
+      mOpen: act(() => { window.location.href = 'Talep Detayi.dc.html?id=' + mr.id; }), mEdit: act(() => { window.location.href = 'Talep Detayi.dc.html?id=' + mr.id + '&mode=edit'; }),
+      statusChip: s.status.length ? 'Durum · ' + s.status.map(k => ST[k][0]).join(', ') : 'Durum', statusBorderCss: sc.border, statusBg: sc.bg, statusFg: sc.fg,
+      statusOpen: s.pop === 'status', toggleStatusPop: () => this.setState({ pop: s.pop === 'status' ? null : 'status' }), statusHas: s.status.length > 0, clearStatus: () => this.setState({ status: [], pop: null }),
+      statusOptions: ORDER.map(k => { const on = s.status.includes(k); return { label: ST[k][0], dot: ST[k][1], ...box(on), toggle: () => this.setState(st => ({ status: on ? st.status.filter(x => x !== k) : [...st.status, k] })) }; }),
+      prioChip: s.prio.length ? 'Öncelik · ' + s.prio.slice().sort().map(p => 'P' + p).join(', ') : 'Öncelik', prioBorderCss: pc.border, prioBg: pc.bg, prioFg: pc.fg,
+      prioOpen: s.pop === 'prio', togglePrioPop: () => this.setState({ pop: s.pop === 'prio' ? null : 'prio' }), prioHas: s.prio.length > 0, clearPrio: () => this.setState({ prio: [], pop: null }),
+      prioOptions: [1, 2, 3, 4].map(p => { const on = s.prio.includes(p); return { label: 'P' + p, desc: Component.PD[p], dot: Component.PC[p], ...box(on), toggle: () => this.setState(st => ({ prio: on ? st.prio.filter(x => x !== p) : [...st.prio, p] })) }; }),
+      toggleSlaRisk: () => this.setState({ slaRisk: !s.slaRisk }), riskCount, riskBorder: s.slaRisk ? '#d23f43' : (riskCount ? '#f3c1c3' : '#e2e8f0'), riskBg: s.slaRisk ? '#d23f43' : (riskCount ? '#fbe9ea' : '#fff'), riskFg: s.slaRisk ? '#fff' : (riskCount ? '#b3282d' : '#64748b'),
+      refresh: s.refresh, doRefresh: ev => { if (ev && ev.preventDefault) ev.preventDefault(); const d = new Date(); this.setState({ refresh: String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0') }); this.toast('Liste yenilendi'); },
+      colsOpen: s.pop === 'cols', toggleColsPop: () => this.setState({ pop: s.pop === 'cols' ? null : 'cols' }),
+      colOptions: [['prio', 'Öncelik'], ['waiting', 'Bekleyen'], ['atanan', 'Atanan'], ['grup', 'Grup'], ['created', 'Oluşturulma'], ['requester', 'Talebi İleten'], ['type', 'Talep Tipi'], ['catalog', 'Katalog Öğesi'], ['item', 'Talep Öğesi'], ['updated', 'Güncelleme']].map(([k, label]) => ({ label, ...box(s.cols[k]), toggle: () => this.setState(st => ({ cols: { ...st.cols, [k]: !st.cols[k] } })) })),
+      hasSelection: s.selected.length > 0, selCount: s.selected.length,
+      bulkAssign: () => this.bulk('assign'), bulkStatus: () => this.bulk('status'), bulkMerge: () => this.bulk('merge'), bulkClose: () => this.bulk('close'), clearSel: () => this.setState({ selected: [] }),
+      allMark: allSel ? '✓' : someSel ? '–' : '', allBoxBg: allSel || someSel ? '#08748e' : '#fff', allBoxBorder: allSel || someSel ? '#08748e' : '#cbd5e1',
+      toggleAll: () => this.setState({ selected: allSel ? [] : visibleIds }),
+      sortSla: () => this.sortBy('sla'), sortPrio: () => this.sortBy('prio'), sortUpd: () => this.sortBy('updated'), sortSt: () => this.sortBy('status'), sortCreated: () => this.sortBy('created'),
+      slaSortMark: sortMark('sla'), prioSortMark: sortMark('prio'), updSortMark: sortMark('updated'), stSortMark: sortMark('status'), createdSortMark: sortMark('created'),
+      slaHeadColor: headColor('sla'), prioHeadColor: headColor('prio'), updHeadColor: headColor('updated'), stHeadColor: headColor('status'), createdHeadColor: headColor('created'),
+      colPrio: cell('prio'), colWaiting: cell('waiting'), colUpdated: cell('updated'), colAtanan: showAtanan ? 'table-cell' : 'none', colGrup: cell('grup'), colCreated: cell('created'), colRequester: cell('requester'), colType: cell('type'), colCatalog: cell('catalog'), colItem: cell('item'),
+      tableMinWidth: minW + 'px',
+      rows, isEmpty: n === 0, clearAll: () => this.setState({ q: '', status: [], prio: [], slaRisk: false }),
+      footerText: n ? n + ' sonuçtan 1–' + n + ' arası gösteriliyor' : '0 sonuç',
+      hasToast: !!s.toast, toastText: s.toast ? s.toast.text : '', hasUndo: !!(s.toast && s.toast.undo), undo: () => { const u = s.toast && s.toast.undo; if (u) u(); }
+    };
+  }
+}
+</script>
+</body>
+</html>
