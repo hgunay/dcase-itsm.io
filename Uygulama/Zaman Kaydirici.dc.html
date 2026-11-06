@@ -10,10 +10,10 @@
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} input,button{font-family:inherit;}</style>
+<style>body{margin:0;background:#fff;} a{color:#007a55;text-decoration:none;} a:hover{color:#006045;text-decoration:underline;} input,button{font-family:inherit;}</style>
 </helmet>
-<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
-<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 3 · Zaman kaydırıcı</span><span style="color:#64748b">Deneyin: "Geçmiş" → kaydırıcıyı sürükle ya da bir olaya tıkla → "Karşılaştır" → "Oynat"</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Kademe 3 Konseptler.dc.html#k3" style="color:#fff">Analiz</a></div>
+<div lang="tr" style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#00bc7d;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 3 · Zaman kaydırıcı</span><span style="color:#64748b">Deneyin: "Geçmiş" → kaydırıcıyı sürükle ya da bir olaya tıkla → "Karşılaştır" → "Oynat"</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a></div>
 <div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" hint-size="100%,49px"></dc-import></div>
 <div style="display:flex;align-items:flex-start">
 <div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" style="height:100%" hint-size="256px,100%"></dc-import></div>
@@ -32,11 +32,11 @@
 <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;margin-bottom:34px"><span>14 Eyl 00:00</span><span>14 Eyl 12:00</span><span>15 Eyl 00:00</span><span style="font-weight:600;color:#020618">Şimdi 14:32</span></div>
 <div style="position:relative;height:20px">
 <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:6px;border-radius:3px;background:#e2e8f0"></div>
-<div style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:6px;border-radius:3px;background:#08748e;width:{{ pct }}%"></div>
+<div style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:6px;border-radius:3px;background:#007a55;width:{{ pct }}%"></div>
 <sc-for list="{{ events }}" as="e" hint-placeholder-count="3"><button type="button" onClick="{{ e.jump }}" title="{{ e.id }} · {{ e.time }}" style="position:absolute;left:{{ e.pct }}%;top:50%;transform:translate(-50%,-50%) rotate(45deg);width:11px;height:11px;border-radius:{{ e.radius }};background:{{ e.color }};border:2px solid #fff;box-shadow:0 0 0 1px {{ e.color }};padding:0;cursor:pointer;z-index:2"></button></sc-for>
 <div style="position:absolute;left:{{ pct }}%;top:-34px;transform:translateX(-50%);padding:3px 8px;border-radius:6px;background:#020618;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;z-index:3">{{ timeLabel }}</div>
 <input type="range" min="0" max="1000" value="{{ t }}" onChange="{{ setT }}" disabled="{{ isCanli }}" aria-label="Zaman" style="position:absolute;inset:0;width:100%;height:20px;margin:0;opacity:0;cursor:{{ cursor }};z-index:4">
-<div style="position:absolute;left:{{ pct }}%;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid #08748e;box-shadow:0 1px 4px rgba(2,6,24,.25);z-index:1;pointer-events:none"></div>
+<div style="position:absolute;left:{{ pct }}%;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid #007a55;box-shadow:0 1px 4px rgba(2,6,24,.25);z-index:1;pointer-events:none"></div>
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:12px;color:#475569;align-items:center">
 <sc-for list="{{ events }}" as="e" hint-placeholder-count="3"><button type="button" onClick="{{ e.jump }}" style="display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;padding:0;font-size:12px;color:#475569;cursor:pointer"><span style="width:8px;height:8px;background:{{ e.color }};border-radius:{{ e.radius }};transform:rotate(45deg);display:inline-block"></span>{{ e.id }} · {{ e.time }} · {{ e.label }}</button></sc-for>
@@ -49,7 +49,7 @@
 </div>
 
 <sc-if value="{{ showBanner }}" hint-placeholder-val="{{ false }}">
-<div style="padding:10px 16px;border-radius:12px;background:#fff8e6;border:1px solid #f1dfae;font-size:13px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:14px"><span style="font-weight:600">{{ timeLabel }} görüntüsünü izliyorsunuz.</span><span style="color:#64748b">Tüm widget'lar o anın verisini gösteriyor; drill-down o anki listeye iner.</span><button type="button" onClick="{{ setCanli }}" style="margin-left:auto;border:0;background:transparent;color:#08748e;font-weight:600;font-size:13px;cursor:pointer;padding:0">Canlıya dön</button></div>
+<div style="padding:10px 16px;border-radius:12px;background:#fff8e6;border:1px solid #f1dfae;font-size:13px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:14px"><span style="font-weight:600">{{ timeLabel }} görüntüsünü izliyorsunuz.</span><span style="color:#64748b">Tüm widget'lar o anın verisini gösteriyor; drill-down o anki listeye iner.</span><button type="button" onClick="{{ setCanli }}" style="margin-left:auto;border:0;background:transparent;color:#007a55;font-weight:600;font-size:13px;cursor:pointer;padding:0">Canlıya dön</button></div>
 </sc-if>
 
 <sc-if value="{{ single }}" hint-placeholder-val="{{ true }}">
@@ -62,8 +62,8 @@
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:14px">
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
 <div style="font-size:14px;font-weight:600;margin-bottom:14px">Durum dağılımı · Olay · {{ timeLabel }}</div>
-<div style="display:flex;height:16px;border-radius:8px;overflow:hidden;gap:2px"><div style="width:{{ a.s0 }}%;background:#4c7bd9"></div><div style="width:{{ a.s1 }}%;background:#e39b2c"></div><div style="width:{{ a.s2 }}%;background:#b8bfc9"></div><div style="width:{{ a.s3 }}%;background:#2fa886"></div></div>
-<div style="display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:#475569;margin-top:12px"><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#4c7bd9"></span>Açık {{ a.c0 }}</span><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#e39b2c"></span>Çalışılıyor {{ a.c1 }}</span><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#b8bfc9"></span>Bekleniyor {{ a.c2 }}</span><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#2fa886"></span>Çözüldü (bugün) {{ a.c3 }}</span></div>
+<div style="display:flex;height:16px;border-radius:8px;overflow:hidden;gap:2px"><div style="width:{{ a.s0 }}%;background:#4c7bd9"></div><div style="width:{{ a.s1 }}%;background:#e39b2c"></div><div style="width:{{ a.s2 }}%;background:#b8bfc9"></div><div style="width:{{ a.s3 }}%;background:#00bc7d"></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:#475569;margin-top:12px"><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#4c7bd9"></span>Açık {{ a.c0 }}</span><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#e39b2c"></span>Çalışılıyor {{ a.c1 }}</span><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#b8bfc9"></span>Beklemede {{ a.c2 }}</span><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#00bc7d"></span>Çözüldü (bugün) {{ a.c3 }}</span></div>
 </div>
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
 <div style="font-size:14px;font-weight:600;margin-bottom:10px">O anda aktif olaylar</div>
@@ -83,18 +83,18 @@
 <div style="padding:10px 12px;border-radius:10px;background:#f8fafc"><div style="font-size:26px;font-weight:600;line-height:1.1">{{ a.p1 }}</div><div style="font-size:12px;color:#64748b;margin-top:4px">Aktif P1</div></div>
 </div>
 <div style="font-size:12px;color:#64748b;margin:16px 0 6px">Durum dağılımı · Olay</div>
-<div style="display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px"><div style="width:{{ a.s0 }}%;background:#4c7bd9"></div><div style="width:{{ a.s1 }}%;background:#e39b2c"></div><div style="width:{{ a.s2 }}%;background:#b8bfc9"></div><div style="width:{{ a.s3 }}%;background:#2fa886"></div></div>
+<div style="display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px"><div style="width:{{ a.s0 }}%;background:#4c7bd9"></div><div style="width:{{ a.s1 }}%;background:#e39b2c"></div><div style="width:{{ a.s2 }}%;background:#b8bfc9"></div><div style="width:{{ a.s3 }}%;background:#00bc7d"></div></div>
 </div>
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
-<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;background:#08748e;color:#fff">ŞİMDİ 14:32</span><span style="font-size:12px;color:#64748b">fark, kesite göre</span></div>
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;background:#007a55;color:#fff">ŞİMDİ 14:32</span><span style="font-size:12px;color:#64748b">fark, kesite göre</span></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
 <sc-for list="{{ deltas }}" as="d" hint-placeholder-count="4"><div style="padding:10px 12px;border-radius:10px;background:{{ d.bg }}"><div style="display:flex;align-items:baseline;gap:8px"><div style="font-size:26px;font-weight:600;line-height:1.1">{{ d.now }}</div><div style="font-size:13px;font-weight:600;color:{{ d.fg }}">{{ d.diff }}</div></div><div style="font-size:12px;color:#64748b;margin-top:4px">{{ d.label }}</div></div></sc-for>
 </div>
 <div style="font-size:12px;color:#64748b;margin:16px 0 6px">Durum dağılımı · Olay</div>
-<div style="display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px"><div style="width:{{ n.s0 }}%;background:#4c7bd9"></div><div style="width:{{ n.s1 }}%;background:#e39b2c"></div><div style="width:{{ n.s2 }}%;background:#b8bfc9"></div><div style="width:{{ n.s3 }}%;background:#2fa886"></div></div>
+<div style="display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px"><div style="width:{{ n.s0 }}%;background:#4c7bd9"></div><div style="width:{{ n.s1 }}%;background:#e39b2c"></div><div style="width:{{ n.s2 }}%;background:#b8bfc9"></div><div style="width:{{ n.s3 }}%;background:#00bc7d"></div></div>
 </div>
 </div>
-<div style="margin-top:14px;padding:12px 16px;border-radius:12px;background:#fff;border:1px solid #e2e8f0;font-size:13px;line-height:1.55;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center"><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #08748e;color:#08748e">AI</span><span>{{ insight }}</span><a href="#" style="font-weight:500">Değişiklikle ilişkilendir</a></div>
+<div style="margin-top:14px;padding:12px 16px;border-radius:12px;background:#fff;border:1px solid #e2e8f0;font-size:13px;line-height:1.55;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center"><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #007a55;color:#007a55">AI</span><span>{{ insight }}</span><a href="#" style="font-weight:500">Değişiklikle ilişkilendir</a></div>
 </sc-if>
 </main>
 </div>
@@ -140,7 +140,7 @@ class Component extends DCLogic {
     const seg = (on) => ({ bg: on ? '#fff' : 'transparent', fg: on ? '#020618' : '#64748b', w: on ? 600 : 500, shadow: on ? '0 1px 2px rgba(2,6,24,.08)' : 'none' });
     const c = seg(isCanli), g = seg(!isCanli);
     const jumpTo = (hh) => () => { this.stop(); this.setState({ mode: 'gecmis', t: hh / HOURS * 1000 }); };
-    const dl = (label, key) => { const diff = n[key] - a[key]; const bad = diff > 0; return { label, now: n[key], diff: (diff > 0 ? '+' : '') + diff, bg: diff === 0 ? '#f8fafc' : bad ? (key === 'sla' || key === 'p1' ? '#fbe9ea' : '#fdf6e8') : '#e6f4f1', fg: diff === 0 ? '#64748b' : bad ? (key === 'sla' || key === 'p1' ? '#b3282d' : '#b16a08') : '#1f8a6f' }; };
+    const dl = (label, key) => { const diff = n[key] - a[key]; const bad = diff > 0; return { label, now: n[key], diff: (diff > 0 ? '+' : '') + diff, bg: diff === 0 ? '#f8fafc' : bad ? (key === 'sla' || key === 'p1' ? '#fbe9ea' : '#fdf6e8') : '#ecfdf5', fg: diff === 0 ? '#64748b' : bad ? (key === 'sla' || key === 'p1' ? '#b3282d' : '#b16a08') : '#007a55' }; };
     const active = [a.p1 ? 'INC-20481 E-posta kesintisi (P1) sürüyor.' : 'Aktif major incident yok.', h >= 33.67 && h < 37.83 ? 'CHG-1123 devrede; Hesap Operasyonları kuyruğu büyüyor.' : '', h < 9 ? 'Gece vardiyası; 2 otomatik uyarı kapatıldı.' : '', a.un > 4 ? a.un + ' kayıt atanmamış, en eskisi 42 dk.' : 'Atanmamış kuyruk normal seviyede.'].filter(Boolean).join(' ');
     const growth = n.open - a.open;
     const insight = h < 33.67 ? 'Açık olay sayısı kesitten bu yana ' + growth + ' arttı; artışın büyük bölümü 09:40–11:00 arasında, CHG-1123 devreye alındıktan 20 dk sonra başlıyor.' : h < 37.83 ? 'Kesit CHG-1123 sonrasında: açık olaylar ' + growth + ' arttı, 13:50\'de P1 açıldı. Değişiklik ile olay arasında zaman ilişkisi güçlü.' : 'Kesit P1 açıldıktan sonra; kuyruk büyümesi yavaşladı, atanmamış kayıt sabit.';

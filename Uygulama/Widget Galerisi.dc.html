@@ -10,10 +10,10 @@
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} input,button,select{font-family:inherit;}</style>
+<style>body{margin:0;background:#fff;} a{color:#007a55;text-decoration:none;} a:hover{color:#006045;text-decoration:underline;} input,button,select{font-family:inherit;}</style>
 </helmet>
-<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
-<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 5 · Sektör widget paketleri</span><span style="color:#64748b">Deneyin: soldan sektör seç → "Paketi kur" → alanları eşle → widget'ları ekle · arama kutusu çalışır</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Kademe 3 Konseptler.dc.html#k5" style="color:#fff">Analiz</a></div>
+<div lang="tr" style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#00bc7d;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 5 · Sektör widget paketleri</span><span style="color:#64748b">Deneyin: soldan sektör seç → "Paketi kur" → alanları eşle → widget'ları ekle · arama kutusu çalışır</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a></div>
 <div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" hint-size="100%,49px"></dc-import></div>
 <div style="display:flex;align-items:flex-start">
 <div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" style="height:100%" hint-size="256px,100%"></dc-import></div>
@@ -26,7 +26,7 @@
 
 <div style="display:grid;grid-template-columns:190px minmax(0,1fr);gap:16px;align-items:start">
 <div style="display:grid;gap:2px;font-size:13px">
-<sc-for list="{{ sectors }}" as="s" hint-placeholder-count="6"><button type="button" onClick="{{ s.select }}" style="height:34px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:6px;border:1px solid {{ s.border }};background:{{ s.bg }};font-size:13px;font-weight:{{ s.w }};color:#020618;cursor:pointer;text-align:left"><span style="flex:1">{{ s.label }}</span><sc-if value="{{ s.installed }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1f8a6f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></button></sc-for>
+<sc-for list="{{ sectors }}" as="s" hint-placeholder-count="6"><button type="button" onClick="{{ s.select }}" style="height:34px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:6px;border:1px solid {{ s.border }};background:{{ s.bg }};font-size:13px;font-weight:{{ s.w }};color:#020618;cursor:pointer;text-align:left"><span style="flex:1">{{ s.label }}</span><sc-if value="{{ s.installed }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007a55" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></button></sc-for>
 <div style="margin-top:10px;padding:10px;border-radius:8px;background:#f8fafc;font-size:12px;color:#64748b;line-height:1.5">Kurulu paket: {{ installedCount }} · Eklenen widget: {{ addedCount }}</div>
 </div>
 
@@ -34,15 +34,15 @@
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px">
 <div style="margin-right:auto;min-width:0"><div style="font-size:16px;font-weight:600">{{ pack.name }}</div><div style="font-size:13px;color:#64748b;margin-top:2px">{{ pack.desc }}</div></div>
 <span style="font-size:12px;color:{{ pack.readyColor }}">{{ pack.readyText }}</span>
-<sc-if value="{{ pack.notInstalled }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ openInstall }}" style="height:32px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Paketi kur</button></sc-if>
-<sc-if value="{{ pack.installed }}" hint-placeholder-val="{{ false }}"><span style="height:32px;padding:0 12px;border-radius:6px;background:#e6f4f1;color:#0f5c4d;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Kurulu</span><button type="button" onClick="{{ openInstall }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Alan eşlemesi</button></sc-if>
+<sc-if value="{{ pack.notInstalled }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ openInstall }}" style="height:32px;padding:0 14px;border-radius:6px;background:#007a55;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Paketi kur</button></sc-if>
+<sc-if value="{{ pack.installed }}" hint-placeholder-val="{{ false }}"><span style="height:32px;padding:0 12px;border-radius:6px;background:#ecfdf5;color:#006045;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Kurulu</span><button type="button" onClick="{{ openInstall }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Alan eşlemesi</button></sc-if>
 </div>
 
 <sc-if value="{{ isTelco }}" hint-placeholder-val="{{ true }}">
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px"><div style="font-size:14px;font-weight:600">Öne çıkan · Hücre / saha kesinti haritası</div><span style="font-size:12px;color:#64748b">önizleme · demo verisi</span></div>
 <div style="display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:14px">
-<div style="min-height:200px;border-radius:10px;border:1px dashed #cbd5e1;background:#f8fafc;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px"><div style="font-size:13px;color:#64748b;line-height:1.5">Harita<br><span style="font-size:12px;color:#94a3b8">Kullanıcı Lokasyon.il / ilçe → etkilenen abone yoğunluğu</span></div></div>
+<div style="min-height:200px;border-radius:10px;border:1px dashed #cbd5e1;background:#f8fafc;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px"><div style="font-size:13px;color:#64748b;line-height:1.5">Harita<br><span style="font-size:12px;color:#64748b">Kullanıcı Lokasyon.il / ilçe → etkilenen abone yoğunluğu</span></div></div>
 <div style="display:grid;gap:8px;align-content:start;font-size:13px">
 <div style="display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:8px;background:#fbe9ea"><span><span style="font-weight:600">Kadıköy</span> · 3 hücre</span><span style="font-weight:600;color:#b3282d">1.240 abone</span></div>
 <div style="display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:8px;background:#fdf6e8"><span><span style="font-weight:600">Ümraniye</span> · 2 hücre</span><span style="font-weight:600;color:#b16a08">860 abone</span></div>
@@ -56,11 +56,11 @@
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px"><div style="font-size:14px;font-weight:600">Öne çıkan · Numune süreç SLA'sı</div><span style="font-size:12px;color:#64748b">bugün · 120 numune</span></div>
 <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px">
-<div style="padding:12px;border-radius:10px;background:#f8fafc"><div style="font-size:12px;color:#64748b">Kabul</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">120</div><div style="font-size:12px;color:#1f8a6f;margin-top:4px">0 ihlal</div></div>
-<div style="padding:12px;border-radius:10px;background:#f8fafc"><div style="font-size:12px;color:#64748b">Hazırlık</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">96</div><div style="font-size:12px;color:#1f8a6f;margin-top:4px">1 ihlal</div></div>
+<div style="padding:12px;border-radius:10px;background:#f8fafc"><div style="font-size:12px;color:#64748b">Kabul</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">120</div><div style="font-size:12px;color:#007a55;margin-top:4px">0 ihlal</div></div>
+<div style="padding:12px;border-radius:10px;background:#f8fafc"><div style="font-size:12px;color:#64748b">Hazırlık</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">96</div><div style="font-size:12px;color:#007a55;margin-top:4px">1 ihlal</div></div>
 <div style="padding:12px;border-radius:10px;background:#fbe9ea"><div style="font-size:12px;color:#64748b">Analiz</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">74</div><div style="font-size:12px;color:#b3282d;margin-top:4px;font-weight:600">6 ihlal</div></div>
 <div style="padding:12px;border-radius:10px;background:#fdf6e8"><div style="font-size:12px;color:#64748b">Doğrulama</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">41</div><div style="font-size:12px;color:#b16a08;margin-top:4px">2 ihlal</div></div>
-<div style="padding:12px;border-radius:10px;background:#f8fafc"><div style="font-size:12px;color:#64748b">Rapor</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">38</div><div style="font-size:12px;color:#1f8a6f;margin-top:4px">0 ihlal</div></div>
+<div style="padding:12px;border-radius:10px;background:#f8fafc"><div style="font-size:12px;color:#64748b">Rapor</div><div style="font-size:24px;font-weight:600;line-height:1.1;margin-top:4px">38</div><div style="font-size:12px;color:#007a55;margin-top:4px">0 ihlal</div></div>
 </div>
 <div style="font-size:12px;color:#64748b;line-height:1.5;margin-top:12px">Analiz aşamasındaki ihlallerin 5'i aynı cihazda (Spektrometre-02); kalibrasyon kaydı 3 gün gecikmiş. <a href="#">Cihaz arızası aç</a></div>
 </div>
@@ -72,7 +72,7 @@
 <div style="background:#fff;border:1px solid {{ w.border }};border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px;display:grid;gap:6px;align-content:start">
 <div style="display:flex;align-items:flex-start;gap:8px"><div style="font-size:14px;font-weight:600;flex:1">{{ w.name }}</div><sc-if value="{{ w.missing }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;background:#fdf6e8;color:#b16a08;white-space:nowrap">Eksik alan</span></sc-if></div>
 <div style="font-size:12px;color:#64748b;line-height:1.5;text-align:justify">{{ w.desc }}</div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;gap:8px"><span style="font-size:11px;color:#94a3b8;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ w.source }}</span><button type="button" onClick="{{ w.toggle }}" style="height:26px;padding:0 10px;border-radius:6px;border:1px solid {{ w.btnBorder }};background:{{ w.btnBg }};color:{{ w.btnFg }};font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">{{ w.btnLabel }}</button></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;gap:8px"><span style="font-size:11px;color:#64748b;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ w.source }}</span><button type="button" onClick="{{ w.toggle }}" style="height:26px;padding:0 10px;border-radius:6px;border:1px solid {{ w.btnBorder }};background:{{ w.btnBg }};color:{{ w.btnFg }};font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">{{ w.btnLabel }}</button></div>
 </div>
 </sc-for>
 </div>
@@ -98,7 +98,7 @@
 <sc-for list="{{ mapping }}" as="m" hint-placeholder-count="6">
 <div style="padding:8px 0;border-top:1px solid #f1f5f9"><div style="font-weight:500">{{ m.field }}</div><div style="font-size:12px;color:#64748b">{{ m.hint }}</div></div>
 <div style="padding:8px 0;border-top:1px solid #f1f5f9"><select value="{{ m.value }}" onChange="{{ m.change }}" style="height:32px;width:100%;padding:0 8px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;font-size:13px;color:#020618"><sc-for list="{{ m.options }}" as="o" hint-placeholder-count="3"><option value="{{ o.v }}">{{ o.v }}</option></sc-for><option value="none">— eşleme yok —</option></select></div>
-<div style="padding:8px 0;border-top:1px solid #f1f5f9;min-width:90px;text-align:right"><sc-if value="{{ m.ok }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#1f8a6f;font-weight:600">Hazır</span></sc-if><sc-if value="{{ m.bad }}" hint-placeholder-val="{{ false }}"><a href="#" style="font-size:12px;font-weight:600;color:#b16a08">Alan oluştur</a></sc-if></div>
+<div style="padding:8px 0;border-top:1px solid #f1f5f9;min-width:90px;text-align:right"><sc-if value="{{ m.ok }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;color:#007a55;font-weight:600">Hazır</span></sc-if><sc-if value="{{ m.bad }}" hint-placeholder-val="{{ false }}"><a href="#" style="font-size:12px;font-weight:600;color:#b16a08">Alan oluştur</a></sc-if></div>
 </sc-for>
 </div>
 <div style="margin-top:14px;padding:10px 12px;border-radius:8px;background:#f8fafc;font-size:12px;color:#64748b;line-height:1.5">Kurulumla birlikte {{ pack.flows }} BPMN akışı ve {{ pack.count }} widget tanımı uygulamaya eklenir; eşlenmeyen alanı kullanan widget'lar "Eksik alan" etiketiyle gelir.</div>
@@ -106,7 +106,7 @@
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 20px;border-top:1px solid #e2e8f0;justify-content:flex-end">
 <span style="font-size:12px;color:#64748b;margin-right:auto">{{ pack.readyText }}</span>
 <button type="button" onClick="{{ closeInstall }}" style="height:34px;padding:0 14px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Vazgeç</button>
-<button type="button" onClick="{{ install }}" style="height:34px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">{{ installLabel }}</button>
+<button type="button" onClick="{{ install }}" style="height:34px;padding:0 14px;border-radius:6px;background:#007a55;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">{{ installLabel }}</button>
 </div>
 </div>
 </sc-if>
@@ -156,9 +156,9 @@ class Component extends DCLogic {
       sectors: SECTORS.map(x => ({ label: x.label, installed: !!s.installed[x.id], select: () => this.setState({ sector: x.id }), bg: x.id === s.sector ? '#fff' : 'transparent', border: x.id === s.sector ? '#e2e8f0' : 'transparent', w: x.id === s.sector ? 600 : 400 })),
       installedCount: Object.keys(s.installed).length, addedCount: Object.keys(s.added).length,
       isTelco: sec.id === 'telco', isLab: sec.id === 'lab',
-      pack: { name: sec.name, desc: sec.desc, flows: sec.flows, count: sec.widgets.length, installed, notInstalled: !installed, readyText: 'Alan eşlemesi: ' + ready + '/' + sec.mapping.length + (missingFields.length ? ' · eksik: ' + missingFields.join(', ') : ' · hazır'), readyColor: missingFields.length ? '#b16a08' : '#1f8a6f' },
+      pack: { name: sec.name, desc: sec.desc, flows: sec.flows, count: sec.widgets.length, installed, notInstalled: !installed, readyText: 'Alan eşlemesi: ' + ready + '/' + sec.mapping.length + (missingFields.length ? ' · eksik: ' + missingFields.join(', ') : ' · hazır'), readyColor: missingFields.length ? '#b16a08' : '#007a55' },
       hasResults: list.length > 0, noResults: list.length === 0,
-      widgets: list.map(w => { const added = !!s.added[w.id]; const missing = installed && w.needs && missingFields.includes(w.needs); return { ...w, missing, border: added ? '#b9e2d8' : '#e2e8f0', btnLabel: added ? 'Eklendi' : 'Ekle', btnBg: added ? '#e6f4f1' : '#fff', btnFg: added ? '#0f5c4d' : '#08748e', btnBorder: added ? '#b9e2d8' : '#e2e8f0',
+      widgets: list.map(w => { const added = !!s.added[w.id]; const missing = installed && w.needs && missingFields.includes(w.needs); return { ...w, missing, border: added ? '#a4f4cf' : '#e2e8f0', btnLabel: added ? 'Eklendi' : 'Ekle', btnBg: added ? '#ecfdf5' : '#fff', btnFg: added ? '#006045' : '#007a55', btnBorder: added ? '#a4f4cf' : '#e2e8f0',
         toggle: () => { if (!installed) { this.toast('Önce paketi kurun; alan eşlemesi açıldı'); this.setState({ modal: true }); return; } const next = { ...this.state.added }; if (next[w.id]) delete next[w.id]; else next[w.id] = true; this.setState({ added: next }); this.toast(next[w.id] ? w.name + " dashboard'a eklendi" : w.name + ' kaldırıldı'); } }; }),
       modal: s.modal, openInstall: () => this.setState({ modal: true }), closeInstall: () => this.setState({ modal: false }),
       mapping: sec.mapping.map((m, i) => ({ field: m.field, hint: m.hint, value: vals[i], ok: vals[i] !== 'none', bad: vals[i] === 'none', options: m.options.map(v => ({ v })), change: (ev) => { const maps = { ...this.state.maps, [sec.id]: this.state.maps[sec.id].map((v, j) => j === i ? ev.target.value : v) }; this.setState({ maps }); } })),

@@ -10,10 +10,10 @@
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} input,button,select{font-family:inherit;}</style>
+<style>body{margin:0;background:#fff;} a{color:#007a55;text-decoration:none;} a:hover{color:#006045;text-decoration:underline;} input,button,select{font-family:inherit;}</style>
 </helmet>
-<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
-<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 4 · Operasyon duvarı</span><span style="color:#64748b">Deneyin: "Duvar modunu başlat" → sayfalar 20 sn'de döner · nokta ile geç · Boşluk duraklat · Esc çık</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Kademe 3 Konseptler.dc.html#k4" style="color:#fff">Analiz</a></div>
+<div lang="tr" style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#00bc7d;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 4 · Operasyon duvarı</span><span style="color:#64748b">Deneyin: "Duvar modunu başlat" → sayfalar 20 sn'de döner · nokta ile geç · Boşluk duraklat · Esc çık</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a></div>
 <div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" hint-size="100%,49px"></dc-import></div>
 <div style="display:flex;align-items:flex-start">
 <div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" style="height:100%" hint-size="256px,100%"></dc-import></div>
@@ -26,7 +26,7 @@
 
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px">
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
-<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><div style="font-size:14px;font-weight:600">Operasyon duvarı · düzen</div><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#e6f4f1;color:#0f5c4d;margin-left:auto">Yayında</span></div>
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><div style="font-size:14px;font-weight:600">Operasyon duvarı · düzen</div><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#ecfdf5;color:#006045;margin-left:auto">Yayında</span></div>
 <div style="display:grid;gap:6px;font-size:13px">
 <sc-for list="{{ pages }}" as="p" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:#f8fafc"><span style="width:20px;height:20px;border-radius:6px;background:#020618;color:#fff;font-size:11px;font-weight:600;display:inline-flex;align-items:center;justify-content:center">{{ p.n }}</span><span style="flex:1">{{ p.title }}</span><span style="color:#64748b;font-size:12px">{{ p.sec }} sn</span><span style="color:#94a3b8">⋮⋮</span></div></sc-for>
 </div>
@@ -40,7 +40,7 @@
 <a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">12</div><div style="font-size:12px;color:#64748b;margin-top:4px">Bana atanan</div></a>
 <a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#fdf6e8;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1;color:#b16a08">7</div><div style="font-size:12px;color:#64748b;margin-top:4px">Ekipte atanmamış</div></a>
 <a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">3</div><div style="font-size:12px;color:#64748b;margin-top:4px">Onayımı bekleyen</div></a>
-<a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">5</div><div style="font-size:12px;color:#64748b;margin-top:4px">Müşteri yanıtı geldi</div></a>
+<a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">5</div><div style="font-size:12px;color:#64748b;margin-top:4px">Bildiren yanıtı geldi</div></a>
 </div>
 </div>
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
@@ -57,7 +57,7 @@
 <div style="position:fixed;inset:0;z-index:100;background:#0f1417;color:#f3f5f7;display:flex;flex-direction:column;padding:20px 28px 16px;font-family:Inter,system-ui,sans-serif;box-sizing:border-box;overflow:hidden">
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin-bottom:14px">
 <div style="font-size:clamp(16px,1.6vw,24px);font-weight:600;margin-right:auto">Hizmet Masası · Operasyon duvarı <span style="color:#9aa3ae;font-weight:500">· {{ pageTitle }}</span></div>
-<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#9aa3ae"><span>Sayfa {{ pageNo }}/3</span><span style="display:inline-flex;gap:4px"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="3"><button type="button" onClick="{{ d.go }}" aria-label="Sayfa {{ d.n }}" style="width:34px;height:6px;border-radius:3px;border:0;padding:0;background:#2a3238;cursor:pointer;position:relative;overflow:hidden"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ d.fill }}%;background:#7fd6c2"></span></button></sc-for></span><span>{{ pausedLabel }}</span></div>
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#9aa3ae"><span>Sayfa {{ pageNo }}/3</span><span style="display:inline-flex;gap:4px"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="3"><button type="button" onClick="{{ d.go }}" aria-label="Sayfa {{ d.n }}" style="width:34px;height:6px;border-radius:3px;border:0;padding:0;background:#2a3238;cursor:pointer;position:relative;overflow:hidden"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ d.fill }}%;background:#00bc7d"></span></button></sc-for></span><span>{{ pausedLabel }}</span></div>
 <div style="font-size:clamp(20px,2vw,30px);font-weight:600;font-variant-numeric:tabular-nums">{{ clock }}</div>
 </div>
 
@@ -84,7 +84,7 @@
 <div style="padding:16px 20px;border-radius:12px;background:#171d21;min-height:0;overflow:hidden">
 <div style="font-size:clamp(12px,1vw,15px);color:#9aa3ae;margin-bottom:12px">Ekip kuyruğu · açık kayıt</div>
 <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px 12px;align-items:center;font-size:clamp(14px,1.3vw,19px)">
-<sc-for list="{{ teamRows }}" as="r" hint-placeholder-count="5"><span style="color:#c9d1d9">{{ r.team }}</span><div style="height:14px;border-radius:4px;background:#2a3238"><div style="width:{{ r.pct }}%;height:100%;border-radius:4px;background:#7fd6c2"></div></div><span style="font-weight:600;font-variant-numeric:tabular-nums">{{ r.n }}</span></sc-for>
+<sc-for list="{{ teamRows }}" as="r" hint-placeholder-count="5"><span style="color:#c9d1d9">{{ r.team }}</span><div style="height:14px;border-radius:4px;background:#2a3238"><div style="width:{{ r.pct }}%;height:100%;border-radius:4px;background:#00bc7d"></div></div><span style="font-weight:600;font-variant-numeric:tabular-nums">{{ r.n }}</span></sc-for>
 </div>
 </div>
 </div>
@@ -112,14 +112,14 @@
 <sc-if value="{{ p2 }}" hint-placeholder-val="{{ false }}">
 <div style="flex:1;min-height:0;display:flex;flex-direction:column;gap:14px">
 <div style="padding:16px 20px;border-radius:12px;background:#171d21;flex:1;min-height:0;display:flex;flex-direction:column">
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div style="font-size:clamp(12px,1vw,15px);color:#9aa3ae">Açılan vs çözülen · 14 gün</div><div style="display:flex;gap:16px;font-size:clamp(12px,1vw,15px);color:#9aa3ae"><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#66cbe2"></span>Açılan</span><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#7fd6c2"></span>Çözülen</span></div></div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div style="font-size:clamp(12px,1vw,15px);color:#9aa3ae">Açılan vs çözülen · 14 gün</div><div style="display:flex;gap:16px;font-size:clamp(12px,1vw,15px);color:#9aa3ae"><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#66cbe2"></span>Açılan</span><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#00bc7d"></span>Çözülen</span></div></div>
 <div style="flex:1;min-height:120px;display:flex;align-items:flex-end;gap:8px;border-bottom:1px solid #2a3238">
-<sc-for list="{{ trend }}" as="t" hint-placeholder-count="14"><div style="flex:1;display:flex;gap:3px;align-items:flex-end;height:100%"><div style="flex:1;height:{{ t.o }}%;background:#66cbe2;border-radius:3px 3px 0 0"></div><div style="flex:1;height:{{ t.c }}%;background:#7fd6c2;border-radius:3px 3px 0 0"></div></div></sc-for>
+<sc-for list="{{ trend }}" as="t" hint-placeholder-count="14"><div style="flex:1;display:flex;gap:3px;align-items:flex-end;height:100%"><div style="flex:1;height:{{ t.o }}%;background:#66cbe2;border-radius:3px 3px 0 0"></div><div style="flex:1;height:{{ t.c }}%;background:#00bc7d;border-radius:3px 3px 0 0"></div></div></sc-for>
 </div>
 <div style="display:flex;justify-content:space-between;font-size:clamp(11px,.9vw,14px);color:#9aa3ae;margin-top:8px"><span>1 Eyl</span><span>Backlog +21 · son 14 günde</span><span>14 Eyl</span></div>
 </div>
 <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
-<div style="padding:16px 20px;border-radius:12px;background:#171d21"><div style="font-size:clamp(12px,1vw,15px);color:#9aa3ae">Ort. çözüm süresi · 7 gün</div><div style="font-size:clamp(28px,3.4vw,48px);font-weight:600;line-height:1;margin-top:8px">3s 20dk</div><div style="font-size:clamp(12px,1vw,15px);color:#7fd6c2;margin-top:6px">−18 dk</div></div>
+<div style="padding:16px 20px;border-radius:12px;background:#171d21"><div style="font-size:clamp(12px,1vw,15px);color:#9aa3ae">Ort. çözüm süresi · 7 gün</div><div style="font-size:clamp(28px,3.4vw,48px);font-weight:600;line-height:1;margin-top:8px">3s 20dk</div><div style="font-size:clamp(12px,1vw,15px);color:#00bc7d;margin-top:6px">−18 dk</div></div>
 <div style="padding:16px 20px;border-radius:12px;background:#171d21"><div style="font-size:clamp(12px,1vw,15px);color:#9aa3ae">Çözülen · bugün</div><div style="font-size:clamp(28px,3.4vw,48px);font-weight:600;line-height:1;margin-top:8px">41</div><div style="font-size:clamp(12px,1vw,15px);color:#9aa3ae;margin-top:6px">48 açılan</div></div>
 <div style="padding:16px 20px;border-radius:12px;background:#171d21"><div style="font-size:clamp(12px,1vw,15px);color:#9aa3ae">Aktif analist</div><div style="font-size:clamp(28px,3.4vw,48px);font-weight:600;line-height:1;margin-top:8px">6</div><div style="font-size:clamp(12px,1vw,15px);color:#9aa3ae;margin-top:6px">2 molada · 1 sahada</div></div>
 </div>
@@ -179,8 +179,8 @@ class Component extends DCLogic {
       clock: pad(hh) + ':' + pad(mm) + ':' + pad(ss), miDuration: pad(Math.floor(miSec / 3600)) + ':' + pad(Math.floor(miSec / 60) % 60) + ':' + pad(miSec % 60),
       slaRows: SLA.map(([id, title, left, pct, color]) => ({ id, title, left, pct, color })),
       teamRows: TEAMS.map(([team, n]) => ({ team, n, pct: Math.round(n / 24 * 100) })),
-      services: SERVICES.map(([name, state]) => ({ name, state, bg: state === 'Kesinti' ? '#3a1416' : state === 'Bozulma' ? '#2a2113' : '#1b262a', dot: state === 'Kesinti' ? '#ff5a5f' : state === 'Bozulma' ? '#f5cf7a' : '#4fd1b0', fg: state === 'Kesinti' ? '#f0b3b5' : state === 'Bozulma' ? '#e6c27a' : '#9aa3ae' })),
-      compliance: COMPLIANCE.map(([name, pct]) => ({ name, pct, color: pct < 95 ? '#ff8a8e' : pct < 97 ? '#f5cf7a' : '#7fd6c2' })),
+      services: SERVICES.map(([name, state]) => ({ name, state, bg: state === 'Kesinti' ? '#3a1416' : state === 'Bozulma' ? '#2a2113' : '#1b262a', dot: state === 'Kesinti' ? '#ff5a5f' : state === 'Bozulma' ? '#f5cf7a' : '#00d492', fg: state === 'Kesinti' ? '#f0b3b5' : state === 'Bozulma' ? '#e6c27a' : '#9aa3ae' })),
+      compliance: COMPLIANCE.map(([name, pct]) => ({ name, pct, color: pct < 95 ? '#ff8a8e' : pct < 97 ? '#f5cf7a' : '#00bc7d' })),
       trend: TREND.map(([o, c]) => ({ o, c })),
       hasToast: !!s.toast, toastText: s.toast
     };

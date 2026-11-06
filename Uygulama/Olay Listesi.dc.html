@@ -10,10 +10,10 @@
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
+<style>body{margin:0;background:#fff;} a{color:#007a55;text-decoration:none;} a:hover{color:#006045;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
 </helmet>
-<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
-<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap;overflow:hidden"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Ekran analizi 04 · Olay Listesi konsepti</span><span style="color:#64748b;overflow:hidden;text-overflow:ellipsis">Deneyin: sekmeleri değiştir · başlığa tıkla → sırala · satır seç → toplu eylem (probleme / büyük olaya bağla) · Durum / Öncelik / Atanan hücresine tıkla → anında kayıt, "Geri al" · büyük olay şeridi · filtre çipleri</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Olay Listesi Analizi.dc.html" style="color:#fff">Analiz</a><a href="Uzerimdeki Talepler.dc.html" style="color:#fff">← Talep kuyruğu</a><a href="Olay Detayi.dc.html" style="color:#fff">Olay detayı →</a></div>
+<div lang="tr" style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap;overflow:hidden"><span style="color:#00bc7d;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Ekran analizi 04 · Olay Listesi konsepti</span><span style="color:#64748b;overflow:hidden;text-overflow:ellipsis">Deneyin: sekmeleri değiştir · başlığa tıkla → sırala · satır seç → toplu eylem (probleme / büyük olaya bağla) · Durum / Öncelik / Atanan hücresine tıkla → anında kayıt, "Geri al" · büyük olay şeridi · filtre çipleri</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="Uzerimdeki Talepler.dc.html" style="color:#fff">← Talep kuyruğu</a><a href="Olay Detayi.dc.html" style="color:#fff">Olay detayı →</a></div>
 <div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" tema="{{ ustBar }}" hint-size="100%,49px"></dc-import></div>
 <div style="display:flex;align-items:flex-start">
 <div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" aktif="olaylar" style="height:100%" hint-size="256px,100%"></dc-import></div>
@@ -22,7 +22,7 @@
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:10px">
 <div style="margin-right:auto"><h1 style="font-size:20px;font-weight:700;margin:0">{{ pageTitle }}</h1><div style="font-size:12px;color:#64748b;margin-top:2px">{{ headerCount }}</div></div>
 <button type="button" onClick="{{ saveView }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Görünümü kaydet</button>
-<button type="button" onClick="{{ newIncident }}" style="height:32px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>Yeni olay</button>
+<button type="button" onClick="{{ newIncident }}" style="height:32px;padding:0 12px;border-radius:6px;background:#007a55;color:#fff;border:0;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>Yeni olay</button>
 </div>
 
 <div style="display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid #e2e8f0;margin-bottom:12px">
@@ -60,7 +60,7 @@
 <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="4">
 <div onClick="{{ o.toggle }}" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border-radius:6px;font-size:13px;cursor:pointer" style-hover="background:#f8fafc"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ o.boxBorder }};background:{{ o.boxBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;flex-shrink:0">{{ o.mark }}</span><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dotBg }};border:2px solid {{ o.dot }};box-sizing:border-box;flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.label }}</span><span style="color:#64748b;white-space:nowrap">{{ o.desc }}</span></div>
 </sc-for>
-<sc-if value="{{ f.has }}" hint-placeholder-val="{{ false }}"><div onClick="{{ f.clear }}" style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px;text-align:center;font-size:12px;color:#08748e;cursor:pointer">Filtreyi temizle</div></sc-if>
+<sc-if value="{{ f.has }}" hint-placeholder-val="{{ false }}"><div onClick="{{ f.clear }}" style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px;text-align:center;font-size:12px;color:#007a55;cursor:pointer">Filtreyi temizle</div></sc-if>
 </div>
 </sc-if>
 </span>
@@ -119,7 +119,7 @@
 <sc-for list="{{ rows }}" as="r" hint-placeholder-count="8">
 <tr onMouseEnter="{{ r.enter }}" onMouseLeave="{{ r.leave }}" onClick="{{ r.open }}" style="background:{{ r.bg }};cursor:pointer">
 <td style="padding:10px 0 10px 14px;border-top:1px solid #f1f5f9;vertical-align:middle"><span onClick="{{ r.toggle }}" style="display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid {{ r.cbBorder }};background:{{ r.cbBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;cursor:pointer;vertical-align:middle">{{ r.cbMark }}</span></td>
-<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;white-space:nowrap"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#08748e">{{ r.id }}</span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;white-space:nowrap"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#007a55">{{ r.id }}</span></td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;overflow:hidden"><div style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:6px"><sc-if value="{{ r.major }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:4px;background:#d23f43;color:#fff;flex-shrink:0">BÜYÜK OLAY</span></sc-if><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.s }}</span></div><div style="font-size:12px;color:#64748b;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.sub }}<sc-if value="{{ r.hasLink }}" hint-placeholder-val="{{ false }}"><span style="margin-left:6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:{{ r.linkColor }}">{{ r.linkText }}</span></sc-if></div></td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colPrio }}"><span onClick="{{ r.editP }}" title="Önceliği değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;background:{{ r.pCellBg }}" style-hover="background:#e2e8f0"><span style="font-weight:600;color:{{ r.prioColor }}">{{ r.prioLabel }}</span><span style="font-size:12px;color:#64748b">{{ r.prioName }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span></td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><span onClick="{{ r.editSt }}" title="Durumu değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;background:{{ r.stCellBg }}" style-hover="background:#e2e8f0"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.stDotBg }};border:2px solid {{ r.stColor }};box-sizing:border-box;flex-shrink:0"></span>{{ r.stLabel }}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span><sc-if value="{{ r.hasStSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:#64748b;margin-top:1px;white-space:nowrap">{{ r.stSub }}</div></sc-if></td>
@@ -140,7 +140,7 @@
 </sc-for>
 </tbody>
 </table>
-<sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:32px;text-align:center;font-size:13px;color:#64748b;display:flex;justify-content:center;align-items:center;gap:8px">Bu filtrelerle olay yok.<button type="button" onClick="{{ clearAll }}" style="border:0;background:transparent;color:#08748e;font-size:13px;font-weight:500;cursor:pointer;padding:0">Filtreleri temizle</button></div></sc-if>
+<sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:32px;text-align:center;font-size:13px;color:#64748b;display:flex;justify-content:center;align-items:center;gap:8px">Bu filtrelerle olay yok.<button type="button" onClick="{{ clearAll }}" style="border:0;background:transparent;color:#007a55;font-size:13px;font-weight:500;cursor:pointer;padding:0">Filtreleri temizle</button></div></sc-if>
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:10px 14px;border-top:1px solid #e2e8f0;background:#f8fafc;font-size:12px;color:#64748b">
 <span style="margin-right:auto">{{ footerText }}</span>
 <span>Sayfa başına <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;color:#020618">25 <span style="font-size:10px;color:#94a3b8">▾</span></span></span>
@@ -154,7 +154,7 @@
 
 <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
 <div style="position:fixed;top:{{ menuTop }}px;right:{{ menuRight }}px;z-index:60;width:244px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
-<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#08748e">{{ menuId }}</span> · {{ menuSummary }}</div>
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#007a55">{{ menuId }}</span> · {{ menuSummary }}</div>
 <div onClick="{{ mOpen }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>Detayı aç</div>
 <div onClick="{{ mEdit }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>Düzenle</div>
 <div onClick="{{ mMajor }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d23f43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>{{ menuMajorLabel }}</div>
@@ -164,27 +164,27 @@
 
 <sc-if value="{{ cellOpen }}" hint-placeholder-val="{{ false }}">
 <div style="position:fixed;top:{{ cellTop }}px;left:{{ cellLeft }}px;z-index:60;width:{{ cellW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
-<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#08748e">{{ cellId }}</span> · {{ cellField }}</div>
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#007a55">{{ cellId }}</span> · {{ cellField }}</div>
 <sc-for list="{{ cellOptions }}" as="o" hint-placeholder-count="4">
-<div onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;background:{{ o.bg }}" style-hover="background:#f1f5f9"><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dotBg }};border:2px solid {{ o.dot }};box-sizing:border-box;flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }}">{{ o.label }}</span><span style="color:#64748b;font-size:12px">{{ o.desc }}</span><span style="margin-left:auto;color:#08748e;font-size:12px;font-weight:600">{{ o.check }}</span></div>
+<div onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;background:{{ o.bg }}" style-hover="background:#f1f5f9"><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dotBg }};border:2px solid {{ o.dot }};box-sizing:border-box;flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }}">{{ o.label }}</span><span style="color:#64748b;font-size:12px">{{ o.desc }}</span><span style="margin-left:auto;color:#007a55;font-size:12px;font-weight:600">{{ o.check }}</span></div>
 </sc-for>
-<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px 8px 4px;font-size:11px;color:#94a3b8;line-height:1.4">Seçim anında kaydedilir · Esc kapatır</div>
+<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px 8px 4px;font-size:11px;color:#64748b;line-height:1.4">Seçim anında kaydedilir · Esc kapatır</div>
 </div>
 </sc-if>
 
 <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
-<div style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);font-family:Inter,system-ui,sans-serif;max-width:480px;display:flex;align-items:center;gap:14px"><span>{{ toastText }}</span><sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ undo }}" style="height:26px;padding:0 10px;border-radius:6px;background:rgba(255,255,255,.12);color:#7fd6c2;border:0;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Geri al</button></sc-if></div>
+<div style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);font-family:Inter,system-ui,sans-serif;max-width:480px;display:flex;align-items:center;gap:14px"><span>{{ toastText }}</span><sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ undo }}" style="height:26px;padding:0 10px;border-radius:6px;background:rgba(255,255,255,.12);color:#00bc7d;border:0;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Geri al</button></sc-if></div>
 </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;satirEylemi&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;menu&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;menu&quot;,&quot;birincil&quot;],&quot;section&quot;:&quot;Satır eylemleri&quot;},&quot;buyukOlaySeridi&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Büyük olay&quot;},&quot;ustBar&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;acik&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;acik&quot;,&quot;koyu&quot;],&quot;section&quot;:&quot;Kabuk&quot;},&quot;zemin&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;slate-50&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;slate-50&quot;,&quot;slate-100&quot;,&quot;slate-200&quot;,&quot;sogukgri&quot;],&quot;section&quot;:&quot;Kabuk&quot;}}">
 class Component extends DCLogic {
   static ME = 'admin admin';
-  static ST = { acik: ['Açık', '#4c7bd9', true], atandi: ['Atandı', '#4c7bd9', false], calisiliyor: ['Çalışılıyor', '#e39b2c', true], beklemede: ['Beklemede', '#94a3b8', true], cozuldu: ['Çözüldü', '#2fa886', true], kapali: ['Kapalı', '#64748b', false] };
+  static ST = { acik: ['Açık', '#4c7bd9', true], atandi: ['Atandı', '#4c7bd9', false], calisiliyor: ['Çalışılıyor', '#e39b2c', true], beklemede: ['Beklemede', '#94a3b8', true], cozuldu: ['Çözüldü', '#00bc7d', true], kapali: ['Kapalı', '#64748b', false] };
   static ORDER = ['acik', 'atandi', 'calisiliyor', 'beklemede', 'cozuldu', 'kapali'];
-  static WAIT = { musteri: 'Müşteri yanıtı', tedarikci: 'Tedarikçi', kargo: 'Kargo / kurye' };
-  static PC = { 1: '#d23f43', 2: '#b16a08', 3: '#334155', 4: '#64748b', 5: '#94a3b8' };
-  static PD = { 1: 'Kritik', 2: 'Yüksek', 3: 'Orta', 4: 'Düşük', 5: 'Çok Düşük' };
+  static WAIT = { musteri: 'Bildiren yanıtı', tedarikci: 'Tedarikçi', kargo: 'Kargo / kurye' };
+  static PC = { 1: '#d23f43', 2: '#b16a08', 3: '#334155', 4: '#64748b' };
+  static PD = { 1: 'Kritik', 2: 'Yüksek', 3: 'Orta', 4: 'Düşük' };
   static TYPE = { kesinti: 'Kesinti', yavaslik: 'Yavaşlık', kalite: 'Kalite' };
   static GROUPS = { 'admin admin': 'Level 1 Analist', 'Barış Can Ataklı': 'Level 1 Analist', 'Deniz Acar': 'Level 1 Analist', 'Gökhan Tuna': 'Level 2 Analist', 'Zeynep Ural': 'Level 2 Analist' };
   static TABS = [['all', 'Tümü', 'Olay Listesi'], ['mine', 'Üzerimdeki', 'Üzerimdeki Olaylar'], ['team', 'Ekibimin', 'Ekibimin Olayları'], ['unassigned', 'Atanmamış', 'Atanmamış Olaylar'], ['major', 'Büyük olaylar', 'Büyük Olaylar'], ['problem', 'Sorundan etkilenen', 'Sorundan Etkilenen Olaylar']];
@@ -234,7 +234,7 @@ class Component extends DCLogic {
     const o = { text: '', color: '#334155', hasBar: false, bar: '0%', barColor: '#94a3b8', hasSub: false, sub: '', subColor: '#64748b' };
     if (this.closed(r)) {
       if (r.closeBreach) { o.text = 'İhlal · ' + this.fmtSla(r.closeBreach); o.color = '#d23f43'; o.sub = 'kapanışta donduruldu'; }
-      else { o.text = 'Tutuldu ✓'; o.color = '#1f8a6f'; o.sub = r.sub || 'zamanında'; }
+      else { o.text = 'Tutuldu ✓'; o.color = '#007a55'; o.sub = r.sub || 'zamanında'; }
       o.hasSub = true; return o;
     }
     if (r.st === 'beklemede' || r.sla === null) { o.text = 'Duraklatıldı'; o.color = '#64748b'; o.sub = Component.WAIT[r.w] || 'beklemede'; o.hasSub = true; return o; }
@@ -329,18 +329,18 @@ class Component extends DCLogic {
       const isMenu = s.pop === 'row' && !!s.menu && s.menu.id === r.id;
       const cellIs = f => s.pop === 'cell' && !!s.cell && s.cell.id === r.id && s.cell.field === f;
       const isCell = s.pop === 'cell' && !!s.cell && s.cell.id === r.id;
-      const bg = sel ? '#e6f4f1' : (hov || isMenu || isCell) ? '#f8fafc' : '#fff';
+      const bg = sel ? '#ecfdf5' : (hov || isMenu || isCell) ? '#f8fafc' : '#fff';
       const stop = fn => ev => { if (ev && ev.stopPropagation) ev.stopPropagation(); fn(); };
       const stopEv = fn => ev => { if (ev && ev.stopPropagation) ev.stopPropagation(); fn(ev); };
       const links = []; if (r.parent) links.push('↳ ' + r.parent); if (r.prb) links.push(r.prb);
       return {
-        id: r.id, s: r.s, sub: r.rep + ' · ' + Component.TYPE[r.type], major: !!r.major, hasLink: links.length > 0, linkText: links.join(' · '), linkColor: r.parent ? '#b3282d' : '#08748e',
+        id: r.id, s: r.s, sub: r.rep + ' · ' + Component.TYPE[r.type], major: !!r.major, hasLink: links.length > 0, linkText: links.join(' · '), linkColor: r.parent ? '#b3282d' : '#007a55',
         svc: r.svc, scope: r.scope, stLabel: st[0], stColor: st[1], stDotBg: st[2] ? st[1] : '#fff', hasStSub: r.st === 'beklemede' && !!r.w, stSub: Component.WAIT[r.w] || '',
         prioLabel: 'P' + r.p, prioName: Component.PD[r.p], prioColor: Component.PC[r.p],
         slaText: sla.text, slaColor: sla.color, slaHasBar: sla.hasBar, slaBar: sla.bar, slaBarColor: sla.barColor, slaHasSub: sla.hasSub, slaSub: sla.sub, slaSubColor: sla.subColor,
-        assigneeText: r.a || 'Atanmamış', assigneeColor: r.a ? '#020618' : '#9a5b0a', group: r.g || '—', groupColor: r.g ? '#020618' : '#94a3b8', typeText: Component.TYPE[r.type], reporter: r.rep, category: r.cat,
+        assigneeText: r.a || 'Atanmamış', assigneeColor: r.a ? '#020618' : '#9a5b0a', group: r.g || '—', groupColor: r.g ? '#020618' : '#64748b', typeText: Component.TYPE[r.type], reporter: r.rep, category: r.cat,
         createdText: this.fmtDate(r.cr), updatedText: this.fmtAgo(r.u),
-        bg, cbBg: sel ? '#08748e' : '#fff', cbBorder: sel ? '#08748e' : '#cbd5e1', cbMark: sel ? '✓' : '',
+        bg, cbBg: sel ? '#007a55' : '#fff', cbBorder: sel ? '#007a55' : '#cbd5e1', cbMark: sel ? '✓' : '',
         kebabBorder: (hov || isMenu) ? '#e2e8f0' : 'transparent', kebabBg: isMenu ? '#f1f5f9' : (hov ? '#fff' : 'transparent'), kebabFg: (hov || isMenu) ? '#334155' : '#94a3b8',
         showPrimary: variant === 'birincil' && (hov || isMenu), primary: stop(() => { window.location.href = 'Olay Detayi.dc.html?id=' + r.id + '&mode=edit'; }),
         menu: stopEv(ev => this.openMenu(r, ev)),
@@ -353,16 +353,16 @@ class Component extends DCLogic {
     const tabs = Component.TABS.map(([k, label]) => {
       const active = s.queue === k, count = s.rows.filter(r => this.inQ(r, k)).length;
       const warm = k === 'unassigned' && count > 0, hot = k === 'major' && count > 0;
-      return { key: k, label, count, border: active ? '#08748e' : 'transparent', color: active ? '#020618' : '#64748b', weight: active ? 600 : 500,
-        pillBg: active ? '#08748e' : hot ? '#fbe9ea' : warm ? '#fdf1e0' : '#f1f5f9', pillFg: active ? '#fff' : hot ? '#b3282d' : warm ? '#9a5b0a' : '#334155',
+      return { key: k, label, count, border: active ? '#007a55' : 'transparent', color: active ? '#020618' : '#64748b', weight: active ? 600 : 500,
+        pillBg: active ? '#007a55' : hot ? '#fbe9ea' : warm ? '#fdf1e0' : '#f1f5f9', pillFg: active ? '#fff' : hot ? '#b3282d' : warm ? '#9a5b0a' : '#334155',
         click: () => this.setState({ queue: k, selected: [], hover: null, pop: null, menu: null, cell: null }) };
     });
-    const box = on => ({ mark: on ? '✓' : '', boxBg: on ? '#08748e' : '#fff', boxBorder: on ? '#08748e' : '#cbd5e1' });
+    const box = on => ({ mark: on ? '✓' : '', boxBg: on ? '#007a55' : '#fff', boxBorder: on ? '#007a55' : '#cbd5e1' });
     const mkFilter = (key, label, w, opts) => {
       const sel = s[key], on = sel.length > 0;
       return {
         key, w, chip: on ? label + ' · ' + opts.filter(o => sel.includes(o.v)).map(o => o.label).join(', ') : label,
-        border: on ? '1px solid #08748e' : '1px dashed #cbd5e1', bg: on ? '#e6f4f1' : '#fff', fg: on ? '#0f5c4d' : '#334155',
+        border: on ? '1px solid #007a55' : '1px dashed #cbd5e1', bg: on ? '#ecfdf5' : '#fff', fg: on ? '#006045' : '#334155',
         open: s.pop === key, toggle: () => this.setState({ pop: s.pop === key ? null : key }), has: on, clear: () => this.setState({ [key]: [], pop: null }),
         options: opts.map(o => { const isOn = sel.includes(o.v); return { label: o.label, desc: o.desc || '', hasDot: !!o.dot, dot: o.dot || '', dotBg: o.dotBg || o.dot || '', weight: o.weight || 500, color: o.color || '#020618', ...box(isOn), toggle: () => this.setState(st => ({ [key]: isOn ? st[key].filter(x => x !== o.v) : [...st[key], o.v] })) }; })
       };
@@ -370,19 +370,19 @@ class Component extends DCLogic {
     const services = [...new Set(Component.DATA.map(r => r.svc))].sort((a, b) => a.localeCompare(b, 'tr'));
     const filters = [
       mkFilter('status', 'Durum', 200, ORDER.map(k => ({ v: k, label: ST[k][0], dot: ST[k][1], dotBg: ST[k][2] ? ST[k][1] : '#fff' }))),
-      mkFilter('prio', 'Öncelik', 190, [1, 2, 3, 4, 5].map(p => ({ v: p, label: 'P' + p, desc: Component.PD[p], weight: 600, color: Component.PC[p] }))),
+      mkFilter('prio', 'Öncelik', 190, [1, 2, 3, 4].map(p => ({ v: p, label: 'P' + p, desc: Component.PD[p], weight: 600, color: Component.PC[p] }))),
       mkFilter('svc', 'Hizmet', 220, services.map(n => ({ v: n, label: n }))),
       mkFilter('type', 'Olay türü', 170, Object.keys(Component.TYPE).map(k => ({ v: k, label: Component.TYPE[k] })))
     ];
     const sortMark = k => s.sort.key === k ? (s.sort.dir === 'asc' ? '↑' : '↓') : '';
-    const headColor = k => s.sort.key === k ? '#08748e' : '#64748b';
+    const headColor = k => s.sort.key === k ? '#007a55' : '#64748b';
     const n = list.length;
     const mr = s.pop === 'row' && s.menu ? s.rows.find(x => x.id === s.menu.id) : null;
     const cr = s.pop === 'cell' && s.cell ? s.rows.find(x => x.id === s.cell.id) : null;
     const opt = (label, on, extra) => ({ label, hasDot: false, dot: '', dotBg: '', desc: '', weight: 500, color: '#020618', check: on ? '✓' : '', bg: on ? '#f8fafc' : 'transparent', ...extra });
     const stOpts = [['acik'], ['atandi'], ['calisiliyor'], ['beklemede', 'musteri'], ['beklemede', 'tedarikci'], ['beklemede', 'kargo'], ['cozuldu'], ['kapali']];
     const cellOptions = !cr ? [] : s.cell.field === 'st' ? stOpts.map(([k, w]) => opt(ST[k][0], cr.st === k && (w || null) === (cr.st === 'beklemede' ? cr.w : null), { hasDot: true, dot: ST[k][1], dotBg: ST[k][2] ? ST[k][1] : '#fff', desc: w ? Component.WAIT[w] : '', pick: () => this.applyField(cr.id, 'st', w ? k + ':' + w : k) }))
-      : s.cell.field === 'p' ? [1, 2, 3, 4, 5].map(p => opt('P' + p, cr.p === p, { desc: Component.PD[p], weight: 600, color: Component.PC[p], pick: () => this.applyField(cr.id, 'p', String(p)) }))
+      : s.cell.field === 'p' ? [1, 2, 3, 4].map(p => opt('P' + p, cr.p === p, { desc: Component.PD[p], weight: 600, color: Component.PC[p], pick: () => this.applyField(cr.id, 'p', String(p)) }))
       : [['', '— Atanmamış'], [ME, 'admin admin (ben)'], ['Barış Can Ataklı', 'Barış Can Ataklı'], ['Deniz Acar', 'Deniz Acar'], ['Gökhan Tuna', 'Gökhan Tuna'], ['Zeynep Ural', 'Zeynep Ural']].map(([v, label]) => opt(label, (cr.a || '') === v, { desc: Component.GROUPS[v] || '', pick: () => this.applyField(cr.id, 'a', v) }));
     const act = fn => () => { this.setState({ pop: null, menu: null }); if (mr) fn(); };
     const cell = k => s.cols[k] ? 'table-cell' : 'none';
@@ -405,7 +405,7 @@ class Component extends DCLogic {
       colOptions: [['prio', 'Öncelik'], ['svc', 'Etkilenen hizmet'], ['assignee', 'Atanan'], ['group', 'Grup'], ['type', 'Olay türü'], ['reporter', 'Bildiren'], ['category', 'Kategori'], ['created', 'Oluşturulma'], ['updated', 'Güncelleme']].map(([k, label]) => ({ label, ...box(s.cols[k]), toggle: () => this.setState(st => ({ cols: { ...st.cols, [k]: !st.cols[k] } })) })),
       hasSelection: s.selected.length > 0, selCount: s.selected.length,
       bulkAssign: () => this.bulk('assign'), bulkStatus: () => this.bulk('status'), bulkProblem: () => this.bulk('problem'), bulkMajor: () => this.bulk('major'), bulkClose: () => this.bulk('close'), clearSel: () => this.setState({ selected: [] }),
-      allMark: allSel ? '✓' : someSel ? '–' : '', allBoxBg: allSel || someSel ? '#08748e' : '#fff', allBoxBorder: allSel || someSel ? '#08748e' : '#cbd5e1',
+      allMark: allSel ? '✓' : someSel ? '–' : '', allBoxBg: allSel || someSel ? '#007a55' : '#fff', allBoxBorder: allSel || someSel ? '#007a55' : '#cbd5e1',
       toggleAll: () => this.setState({ selected: allSel ? [] : visibleIds }),
       sortSla: () => this.sortBy('sla'), sortPrio: () => this.sortBy('prio'), sortUpd: () => this.sortBy('updated'), sortSt: () => this.sortBy('status'), sortCreated: () => this.sortBy('created'), sortSvc: () => this.sortBy('svc'),
       slaSortMark: sortMark('sla'), prioSortMark: sortMark('prio'), updSortMark: sortMark('updated'), stSortMark: sortMark('status'), createdSortMark: sortMark('created'), svcSortMark: sortMark('svc'),

@@ -11,14 +11,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>body{margin:0;} a{color:inherit;text-decoration:none;}</style>
 </helmet>
-<div style="position:relative;width:{{ w }}px;height:100%;font-family:Inter,system-ui,sans-serif;color:#020618;font-size:14px;transition:width .2s">
+<div lang="tr" style="position:relative;width:{{ w }}px;height:100%;font-family:Inter,system-ui,sans-serif;color:#020618;font-size:14px;transition:width .2s">
 
 <sc-if value="{{ ray }}" hint-placeholder-val="{{ false }}">
 <div style="width:56px;height:100%;box-sizing:border-box;background:#fff;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;align-items:center;padding:12px 0 8px">
-<span style="width:32px;height:32px;border-radius:8px;background:#08748e;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M6.376 18.91a6 6 0 0 1 11.249.003"></path><circle cx="12" cy="11" r="4"></circle></svg></span>
+<span style="width:32px;height:32px;border-radius:8px;background:#007a55;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M6.376 18.91a6 6 0 0 1 11.249.003"></path><circle cx="12" cy="11" r="4"></circle></svg></span>
 <button type="button" onClick="{{ genislet }}" title="Menüyü genişlet" aria-label="Menüyü genişlet" style="margin-top:8px;width:40px;height:32px;border:0;background:transparent;border-radius:6px;color:#64748b;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0" style-hover="background:#f1f5f9;color:#020618"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path></svg></button>
 <span style="width:24px;height:1px;background:#e2e8f0;margin:8px 0;flex-shrink:0"></span>
-<div style="flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;align-items:center;gap:4px;width:100%">
+<div style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:4px;width:100%">
 <a href="#" onClick="{{ rayTalep }}" title="Talep Yönetimi" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ rayTalepBg }}" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a524" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a>
 <a href="#" onClick="{{ rayOlay }}" title="Olay Yönetimi" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ rayOlayBg }}" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5484d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg></a>
 <a href="#" onClick="{{ rayProblem }}" title="Problem Yönetimi" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ rayProblemBg }}" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5484d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"></path><path d="M14.12 3.88 16 2"></path><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"></path><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"></path><path d="M12 20v-9"></path><path d="M6.53 9C4.6 8.8 3 7.1 3 5"></path><path d="M6 13H2"></path><path d="M3 21c0-2.1 1.7-3.9 3.8-4"></path><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"></path><path d="M22 13h-4"></path><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"></path></svg></a>
@@ -28,6 +28,7 @@
 <a href="#" onClick="{{ rayAc }}" title="Hizmet Kataloğu" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1fa5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg></a>
 <a href="#" onClick="{{ rayAc }}" title="Kullanıcı Lokasyon" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3fb3d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg></a>
 <a href="#" onClick="{{ rayAc }}" title="Kullanıcı Detay" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3fb3d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></a>
+<a href="Bilesen Laboratuvari.dc.html" onClick="{{ rayLab }}" title="Bileşen Laboratuvarı" aria-label="Bileşen Laboratuvarı" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ rayLabBg }}" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007a55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"></path><path d="M6.453 15h11.094"></path><path d="M8.5 2h7"></path></svg></a>
 <span style="width:24px;height:1px;background:#e2e8f0;margin:4px 0;flex-shrink:0"></span>
 <a href="#" onClick="{{ rayAc }}" title="Diğer menüler" style="width:40px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#64748b" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></a>
 </div>
@@ -40,11 +41,11 @@
 <sc-if value="{{ panel }}" hint-placeholder-val="{{ true }}">
 <div style="position:{{ pPos }};top:0;left:0;z-index:2;width:256px;height:100%;box-sizing:border-box;background:#fff;border-right:1px solid #e2e8f0;box-shadow:{{ pShadow }};display:flex;flex-direction:column">
 <div style="padding:12px 12px 4px;display:flex;align-items:center;gap:8px;height:56px;box-sizing:border-box">
-<span style="width:32px;height:32px;border-radius:8px;background:#08748e;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M6.376 18.91a6 6 0 0 1 11.249.003"></path><circle cx="12" cy="11" r="4"></circle></svg></span>
+<span style="width:32px;height:32px;border-radius:8px;background:#007a55;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M6.376 18.91a6 6 0 0 1 11.249.003"></path><circle cx="12" cy="11" r="4"></circle></svg></span>
 <span style="font-weight:600;font-size:14px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Administrator</span>
 <button type="button" onClick="{{ toggleDar }}" title="{{ darTitle }}" aria-label="{{ darTitle }}" style="width:28px;height:28px;border:0;background:transparent;border-radius:6px;color:#64748b;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0" style-hover="background:#f1f5f9;color:#020618"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path></svg></button>
 </div>
-<div style="flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:8px;padding-top:8px">
+<div style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-top:8px">
 
 <div style="padding:0 8px">
 <div onClick="{{ toggleBenim }}" style="height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:12px;font-weight:700;border-radius:6px;cursor:pointer;user-select:none"><span>Benim Kayıtlarım</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ benimRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></div>
@@ -144,6 +145,25 @@
 </sc-if>
 </div>
 
+<div style="padding:0 8px">
+<div style="height:32px;display:flex;align-items:center;border-radius:6px;background:{{ labBg }}">
+<a href="Bilesen Laboratuvari.dc.html" onClick="{{ labGit }}" style="flex:1;min-width:0;height:32px;display:flex;align-items:center;gap:8px;padding:0 0 0 8px;border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007a55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"></path><path d="M6.453 15h11.094"></path><path d="M8.5 2h7"></path></svg><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Bileşen Laboratuvarı</span></a>
+<button type="button" onClick="{{ toggleLab }}" aria-label="Bileşen listesini aç / kapat" aria-expanded="{{ labOpenStr }}" style="width:28px;height:28px;margin-right:2px;border:0;background:transparent;border-radius:6px;color:inherit;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0" style-hover="background:#e2e8f0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s;transform:rotate({{ labRot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></button>
+</div>
+<sc-if value="{{ labOpen }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:2px;margin-top:4px">
+<sc-for list="{{ labGruplar }}" as="g">
+<button type="button" onClick="{{ g.toggle }}" aria-expanded="{{ g.acikStr }}" style="height:28px;display:flex;align-items:center;gap:6px;width:100%;padding:0 8px 0 32px;border:0;border-radius:6px;background:transparent;font-family:inherit;font-size:12px;font-weight:600;color:#334155;cursor:pointer;text-align:left;flex-shrink:0;box-sizing:border-box" style-hover="background:#f1f5f9"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ g.ad }}</span><span style="font-size:11px;font-weight:500;color:#64748b">{{ g.sayi }}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;transition:transform .2s;transform:rotate({{ g.rot }}deg)"><path d="m9 18 6-6-6-6"></path></svg></button>
+<sc-if value="{{ g.acik }}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{ g.ogeler }}" as="b">
+<a href="{{ b.href }}" onClick="{{ b.sec }}" title="{{ b.title }}" aria-current="{{ b.mevcut }}" style="height:32px;display:flex;align-items:center;padding:0 8px 0 44px;border-radius:6px;font-size:13px;flex-shrink:0;background:{{ b.bg }};color:{{ b.fg }};font-weight:{{ b.fw }}" style-hover="background:{{ b.hbg }}"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ b.ad }}</span></a>
+</sc-for>
+</sc-if>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
 </div>
 <div style="padding:8px;border-top:1px solid transparent">
 <div style="height:48px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px">
@@ -156,11 +176,18 @@
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;aktif&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;&quot;,&quot;uzerimdeki&quot;,&quot;olaylar&quot;,&quot;problemler&quot;,&quot;degisiklikler&quot;],&quot;section&quot;:&quot;Menü&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;aktif&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;&quot;,&quot;uzerimdeki&quot;,&quot;olaylar&quot;,&quot;problemler&quot;,&quot;degisiklikler&quot;,&quot;lab&quot;],&quot;section&quot;:&quot;Menü&quot;},&quot;labSecili&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;labSec&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(id: string) =&gt; void&quot;}}">
 class Component extends DCLogic {
   // Kırılımlar: ≥1200 tam menü (256px), 800–1199 ikon rayı (56px), <800 gizli (0). Ray/gizli modda menü içeriğin üzerine açılır.
   static TAM = 1200; static GIZLI = 800;
-  state = { benim: false, hizmet: true, varlik: false, son: false, sla: false, gecici: false, talep: null, olay: null, problem: null, degisiklik: null, vw: window.innerWidth, daralt: false, acik: false };
+  static LAB = [
+    ['3.1 Göstergeler', [['durum','3.1.1','Durum rozeti'],['oncelik','3.1.2','Öncelik'],['etiket','3.1.3','Etiketler ve rozetler'],['sla','3.1.4','SLA hücresi'],['kimlik','3.1.5','Kayıt kimliği ve bağlantılar']]],
+    ['3.2 Eylemler', [['dugme','3.2.1','Düğmeler'],['zincir','3.2.2','Eylem zinciri'],['menu','3.2.3','Açılır menü']]],
+    ['3.3 Liste bileşenleri', [['sekme','3.3.1','Kuyruk sekmeleri'],['filtre','3.3.2','Filtre çubuğu'],['tablo','3.3.3','Tablo ve hücre içi düzenleme'],['cubuk','3.3.4','Koyu eylem çubuğu'],['bildirim','3.3.5','Bildirim ve geri al']]],
+    ['3.4 Detay bileşenleri', [['baslik','3.4.1','Kimlik başlığı'],['ozet','3.4.2','Özet şeridi'],['serit','3.4.3','Bağlam şeridi'],['kart','3.4.4','Kart'],['yasam','3.4.5','Yaşam döngüsü'],['akis','3.4.6','Aktivite akışı'],['matris','3.4.7','Etki × aciliyet matrisi'],['onay','3.4.8','Onay yolu'],['cekmece','3.4.9','Çekmece ve açılır form'],['ai','3.4.10','AI öneri kartı']]],
+    ['2.4 Kabuk', [['ustbar','2.4 · 1','Üst bar'],['solmenu','2.4 · 2','Sol menü']]]
+  ];
+  state = { benim: false, hizmet: null, lab: null, labGrup: {}, varlik: false, son: false, sla: false, gecici: false, talep: null, olay: null, problem: null, degisiklik: null, vw: window.innerWidth, daralt: false, acik: false };
   mode() { const vw = this.state.vw; return vw < Component.GIZLI ? 'gizli' : (vw < Component.TAM || this.state.daralt) ? 'dar' : 'tam'; }
   onMenu() {
     const m = this.mode();
@@ -187,13 +214,15 @@ class Component extends DCLogic {
     out.talepBg = talepOpen ? '#f1f5f9' : 'transparent';
     out.toggleTalep = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ talep: !talepOpen }); };
     const on = aktif === 'uzerimdeki';
-    out.uzerimdekiBg = on ? '#e6f4f1' : 'transparent';
-    out.uzerimdekiFg = on ? '#08748e' : 'inherit';
+    out.uzerimdekiBg = on ? '#ecfdf5' : 'transparent';
+    out.uzerimdekiFg = on ? '#007a55' : 'inherit';
     out.uzerimdekiWeight = on ? 600 : 400;
+    const grupAcik = k => k === 'hizmet' ? (s.hizmet ?? aktif !== 'lab') : !!s[k];
     for (const k of ['benim', 'hizmet', 'varlik', 'son', 'sla', 'gecici']) {
-      out[k + 'Open'] = s[k];
-      out[k + 'Rot'] = s[k] ? 90 : 0;
-      out['toggle' + k[0].toUpperCase() + k.slice(1)] = () => this.setState({ [k]: !this.state[k] });
+      const o = grupAcik(k);
+      out[k + 'Open'] = o;
+      out[k + 'Rot'] = o ? 90 : 0;
+      out['toggle' + k[0].toUpperCase() + k.slice(1)] = () => this.setState({ [k]: !o });
     }
     const m = this.mode(), tam = m === 'tam', acik = !tam && s.acik;
     out.w = tam ? 256 : m === 'dar' ? 56 : 0;
@@ -206,37 +235,49 @@ class Component extends DCLogic {
     out.genislet = () => this.onMenu();
     out.rayAc = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true }); };
     out.rayTalep = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true, talep: true }); };
-    out.rayTalepBg = on ? '#e6f4f1' : 'transparent';
+    out.rayTalepBg = on ? '#ecfdf5' : 'transparent';
     const olayOpen = s.olay ?? aktif === 'olaylar', onOlay = aktif === 'olaylar';
     out.olayOpen = olayOpen;
     out.olayRot = olayOpen ? 90 : 0;
     out.olayBg = olayOpen ? '#f1f5f9' : 'transparent';
     out.toggleOlay = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ olay: !olayOpen }); };
-    out.olayListeBg = onOlay ? '#e6f4f1' : 'transparent';
-    out.olayListeFg = onOlay ? '#08748e' : 'inherit';
+    out.olayListeBg = onOlay ? '#ecfdf5' : 'transparent';
+    out.olayListeFg = onOlay ? '#007a55' : 'inherit';
     out.olayListeWeight = onOlay ? 600 : 400;
     out.rayOlay = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true, olay: true }); };
-    out.rayOlayBg = onOlay ? '#e6f4f1' : 'transparent';
+    out.rayOlayBg = onOlay ? '#ecfdf5' : 'transparent';
     const problemOpen = s.problem ?? aktif === 'problemler', onProblem = aktif === 'problemler';
     out.problemOpen = problemOpen;
     out.problemRot = problemOpen ? 90 : 0;
     out.problemBg = problemOpen ? '#f1f5f9' : 'transparent';
     out.toggleProblem = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ problem: !problemOpen }); };
-    out.problemListeBg = onProblem ? '#e6f4f1' : 'transparent';
-    out.problemListeFg = onProblem ? '#08748e' : 'inherit';
+    out.problemListeBg = onProblem ? '#ecfdf5' : 'transparent';
+    out.problemListeFg = onProblem ? '#007a55' : 'inherit';
     out.problemListeWeight = onProblem ? 600 : 400;
     out.rayProblem = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true, problem: true }); };
-    out.rayProblemBg = onProblem ? '#e6f4f1' : 'transparent';
+    out.rayProblemBg = onProblem ? '#ecfdf5' : 'transparent';
     const degisiklikOpen = s.degisiklik ?? aktif === 'degisiklikler', onDegisiklik = aktif === 'degisiklikler';
     out.degisiklikOpen = degisiklikOpen;
     out.degisiklikRot = degisiklikOpen ? 90 : 0;
     out.degisiklikBg = degisiklikOpen ? '#f1f5f9' : 'transparent';
     out.toggleDegisiklik = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ degisiklik: !degisiklikOpen }); };
-    out.degisiklikListeBg = onDegisiklik ? '#e6f4f1' : 'transparent';
-    out.degisiklikListeFg = onDegisiklik ? '#08748e' : 'inherit';
+    out.degisiklikListeBg = onDegisiklik ? '#ecfdf5' : 'transparent';
+    out.degisiklikListeFg = onDegisiklik ? '#007a55' : 'inherit';
     out.degisiklikListeWeight = onDegisiklik ? 600 : 400;
     out.rayDegisiklik = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true, degisiklik: true }); };
-    out.rayDegisiklikBg = onDegisiklik ? '#e6f4f1' : 'transparent';
+    out.rayDegisiklikBg = onDegisiklik ? '#ecfdf5' : 'transparent';
+    const onLab = aktif === 'lab', labSec = this.props.labSec, labSecili = this.props.labSecili || 'durum';
+    const labOpen = s.lab ?? onLab;
+    out.labOpen = labOpen; out.labOpenStr = String(labOpen); out.labRot = labOpen ? 90 : 0; out.labBg = labOpen ? '#f1f5f9' : 'transparent';
+    out.toggleLab = ev => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ lab: !labOpen }); };
+    out.labGit = ev => { if (onLab) { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ lab: true }); } };
+    out.rayLab = ev => { if (onLab) { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ acik: true, lab: true }); } };
+    out.rayLabBg = onLab ? '#ecfdf5' : 'transparent';
+    const lg = s.labGrup || {};
+    out.labGruplar = Component.LAB.map(([ad, ogeler], gi) => { const ic = onLab && ogeler.some(x => x[0] === labSecili), acik = lg[gi] ?? ic;
+      return { ad, sayi: String(ogeler.length), acik, acikStr: String(acik), rot: acik ? 90 : 0, toggle: () => this.setState(st => ({ labGrup: { ...(st.labGrup || {}), [gi]: !acik } })), ogeler: ogeler.map(([id, no, e]) => { const on = onLab && id === labSecili;
+      return { ad: e, title: no + ' · ' + e, href: 'Bilesen Laboratuvari.dc.html?b=' + id, mevcut: on ? 'page' : 'false', bg: on ? '#ecfdf5' : 'transparent', fg: on ? '#007a55' : 'inherit', fw: on ? 600 : 400, hbg: on ? '#ecfdf5' : '#f1f5f9',
+        sec: ev => { if (typeof labSec === 'function') { if (ev && ev.preventDefault) ev.preventDefault(); labSec(id); if (this.mode() !== 'tam') this.setState({ acik: false }); } } }; }) }; });
     return out;
   }
 }

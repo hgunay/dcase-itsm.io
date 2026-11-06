@@ -10,10 +10,10 @@
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} input,button,select{font-family:inherit;}</style>
+<style>body{margin:0;background:#fff;} a{color:#007a55;text-decoration:none;} a:hover{color:#006045;text-decoration:underline;} input,button,select{font-family:inherit;}</style>
 </helmet>
-<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
-<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 6 · Widget'tan otomasyona</span><span style="color:#64748b">Deneyin: bir widget'ın ⋮ menüsü → "Otomasyon ekle" → kuralı düzenle → "Test et" → "Kaydet ve etkinleştir"</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Kademe 3 Konseptler.dc.html#k6" style="color:#fff">Analiz</a></div>
+<div lang="tr" style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#00bc7d;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 6 · Widget'tan otomasyona</span><span style="color:#64748b">Deneyin: bir widget'ın ⋮ menüsü → "Otomasyon ekle" → kuralı düzenle → "Test et" → "Kaydet ve etkinleştir"</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a></div>
 <div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" hint-size="100%,49px"></dc-import></div>
 <div style="display:flex;align-items:flex-start">
 <div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" style="height:100%" hint-size="256px,100%"></dc-import></div>
@@ -32,7 +32,7 @@
 <button type="button" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:transparent;font-size:13px;cursor:pointer;color:#020618">Listeye git</button>
 <button type="button" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:transparent;font-size:13px;cursor:pointer;color:#020618">Sayfa filtresi yap</button>
 <button type="button" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:transparent;font-size:13px;cursor:pointer;color:#020618">Metrik tanımı</button>
-<button type="button" onClick="{{ newRuleQueue }}" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:#e6f4f1;color:#0f5c4d;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>Otomasyon ekle</button>
+<button type="button" onClick="{{ newRuleQueue }}" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:#ecfdf5;color:#006045;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>Otomasyon ekle</button>
 <button type="button" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:transparent;font-size:13px;cursor:pointer;color:#64748b">Widget'ı düzenle</button>
 </div>
 </sc-if>
@@ -40,9 +40,9 @@
 <a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">12</div><div style="font-size:12px;color:#64748b;margin-top:4px">Bana atanan</div></a>
 <a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#fdf6e8;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1;color:#b16a08">7</div><div style="font-size:12px;color:#64748b;margin-top:4px">Ekipte atanmamış</div></a>
 <a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">3</div><div style="font-size:12px;color:#64748b;margin-top:4px">Onayımı bekleyen</div></a>
-<a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">5</div><div style="font-size:12px;color:#64748b;margin-top:4px">Müşteri yanıtı geldi</div></a>
+<a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">5</div><div style="font-size:12px;color:#64748b;margin-top:4px">Bildiren yanıtı geldi</div></a>
 </div>
-<sc-if value="{{ queueHasRules }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;font-size:12px;color:#0f5c4d;display:flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>{{ queueRuleCount }} otomasyon bağlı</div></sc-if>
+<sc-if value="{{ queueHasRules }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;font-size:12px;color:#006045;display:flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>{{ queueRuleCount }} otomasyon bağlı</div></sc-if>
 </div>
 
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px;position:relative">
@@ -51,14 +51,14 @@
 <div onClick="{{ stop }}" style="position:absolute;right:12px;top:44px;width:210px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-size:13px;display:grid;gap:2px;z-index:20">
 <button type="button" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:transparent;font-size:13px;cursor:pointer;color:#020618">Listeye git</button>
 <button type="button" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:transparent;font-size:13px;cursor:pointer;color:#020618">Metrik tanımı</button>
-<button type="button" onClick="{{ newRuleSla }}" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:#e6f4f1;color:#0f5c4d;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>Otomasyon ekle</button>
+<button type="button" onClick="{{ newRuleSla }}" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:#ecfdf5;color:#006045;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>Otomasyon ekle</button>
 <button type="button" style="text-align:left;padding:8px 10px;border-radius:6px;border:0;background:transparent;font-size:13px;cursor:pointer;color:#64748b">Widget'ı düzenle</button>
 </div>
 </sc-if>
 <div style="display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;padding:8px 0;border-top:1px solid #f1f5f9"><div style="font-size:13px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><span style="color:#64748b;font-size:12px">INC-20493 · P2</span> · VPN bağlantı kopması</div><div style="font-size:13px;font-weight:600;color:#d23f43">00:14</div><div style="grid-column:1 / -1;height:4px;border-radius:2px;background:#f1f5f9"><div style="width:88%;height:100%;border-radius:2px;background:#d23f43"></div></div></div>
 <div style="display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;padding:8px 0;border-top:1px solid #f1f5f9"><div style="font-size:13px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><span style="color:#64748b;font-size:12px">SR-8821</span> · Yeni hesap açılışı</div><div style="font-size:13px;font-weight:600;color:#b16a08">00:38</div><div style="grid-column:1 / -1;height:4px;border-radius:2px;background:#f1f5f9"><div style="width:64%;height:100%;border-radius:2px;background:#e39b2c"></div></div></div>
 <div style="display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;padding:8px 0;border-top:1px solid #f1f5f9"><div style="font-size:13px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><span style="color:#64748b;font-size:12px">INC-20488 · P3</span> · Yazıcı kuyruğu takılıyor</div><div style="font-size:13px;font-weight:600;color:#b16a08">00:52</div><div style="grid-column:1 / -1;height:4px;border-radius:2px;background:#f1f5f9"><div style="width:45%;height:100%;border-radius:2px;background:#e39b2c"></div></div></div>
-<sc-if value="{{ slaHasRules }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;font-size:12px;color:#0f5c4d;display:flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>{{ slaRuleCount }} otomasyon bağlı</div></sc-if>
+<sc-if value="{{ slaHasRules }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;font-size:12px;color:#006045;display:flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>{{ slaRuleCount }} otomasyon bağlı</div></sc-if>
 </div>
 </div>
 
@@ -126,7 +126,7 @@
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 20px;border-top:1px solid #e2e8f0;justify-content:flex-end">
 <span style="font-size:12px;color:#64748b;margin-right:auto">{{ summary }}</span>
 <button type="button" onClick="{{ test }}" style="height:34px;padding:0 14px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Test et</button>
-<button type="button" onClick="{{ save }}" disabled="{{ cannotSave }}" style="height:34px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer;opacity:{{ saveOpacity }}">Kaydet ve etkinleştir</button>
+<button type="button" onClick="{{ save }}" style="height:34px;padding:0 14px;border-radius:6px;background:#007a55;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Kaydet ve etkinleştir</button>
 </div>
 </div>
 </sc-if>
@@ -138,7 +138,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 const SOURCES = {
-  queue: { label: 'Benim kuyruğum', metrics: ['Ekipte atanmamış', 'Bana atanan', 'Onayımı bekleyen', 'Müşteri yanıtı geldi'], def: { metric: 'Ekipte atanmamış', threshold: 10, duration: '15' } },
+  queue: { label: 'Benim kuyruğum', metrics: ['Ekipte atanmamış', 'Bana atanan', 'Onayımı bekleyen', 'Bildiren yanıtı geldi'], def: { metric: 'Ekipte atanmamış', threshold: 10, duration: '15' } },
   sla: { label: 'SLA riski · 60 dk', metrics: ['SLA riski (60 dk)', 'SLA ihlali (bugün)', 'En düşük kalan süre (dk)'], def: { metric: 'SLA riski (60 dk)', threshold: 5, duration: '0' } }
 };
 const TARGETS = {
@@ -180,7 +180,7 @@ class Component extends DCLogic {
       newRuleQueue: (ev) => { ev.stopPropagation(); this.openRule('queue'); }, newRuleSla: (ev) => { ev.stopPropagation(); this.openRule('sla'); },
       queueHasRules: countFor('queue') > 0, queueRuleCount: countFor('queue'), slaHasRules: countFor('sla') > 0, slaRuleCount: countFor('sla'),
       activeCount: s.rules.filter(r => r.active).length, ruleCount: s.rules.length,
-      rules: s.rules.map((r, i) => ({ ...r, badge: r.active ? 'Aktif' : 'Duraklatıldı', badgeBg: r.active ? '#e6f4f1' : '#f1f5f9', badgeFg: r.active ? '#0f5c4d' : '#475569',
+      rules: s.rules.map((r, i) => ({ ...r, badge: r.active ? 'Aktif' : 'Duraklatıldı', badgeBg: r.active ? '#ecfdf5' : '#f1f5f9', badgeFg: r.active ? '#006045' : '#475569',
         toggle: () => { const rules = this.state.rules.map((x, j) => j === i ? { ...x, active: !x.active } : x); this.setState({ rules }); this.toast(rules[i].active ? 'Kural etkinleştirildi' : 'Kural duraklatıldı'); },
         remove: () => { this.setState({ rules: this.state.rules.filter((_, j) => j !== i) }); this.toast('Kural silindi'); } })),
       panel: s.panel, closePanel: () => this.setState({ panel: false }),
@@ -195,7 +195,7 @@ class Component extends DCLogic {
         sourceLabel: S.label, d,
         metricOptions: S.metrics.map(v => ({ v })),
         setMetric: setD('metric'), setOp: setD('op'), setThreshold: setD('threshold', true), setDuration: setD('duration'), setQuiet: setD('quiet'),
-        conds: CONDS.map(label => { const on = !!d.conds[label]; return { label, bg: on ? '#e6f4f1' : '#fff', fg: on ? '#0f5c4d' : '#64748b', border: on ? '#b9e2d8' : '#e2e8f0', toggle: () => this.setState({ d: { ...this.state.d, conds: { ...this.state.d.conds, [label]: !on } }, test: null }) }; }),
+        conds: CONDS.map(label => { const on = !!d.conds[label]; return { label, bg: on ? '#ecfdf5' : '#fff', fg: on ? '#006045' : '#64748b', border: on ? '#a4f4cf' : '#e2e8f0', toggle: () => this.setState({ d: { ...this.state.d, conds: { ...this.state.d.conds, [label]: !on } }, test: null }) }; }),
         actions: d.actions.map((a, i) => ({ ...a, isBpmn: a.type === 'bpmn', targets: TARGETS[a.type].map(v => ({ v })),
           setType: (ev) => { const type = ev.target.value; this.setState({ d: { ...this.state.d, actions: this.state.d.actions.map((x, j) => j === i ? { type, target: TARGETS[type][0] } : x) }, test: null }); },
           setTarget: (ev) => this.setState({ d: { ...this.state.d, actions: this.state.d.actions.map((x, j) => j === i ? { ...x, target: ev.target.value } : x) } }),
@@ -205,7 +205,7 @@ class Component extends DCLogic {
         test: () => { const n = base; const text = n === 0 ? 'Geriye dönük test: son 30 günde bu kural hiç tetiklenmezdi. Eşiği düşürmeyi düşünün.' : 'Geriye dönük test: son 30 günde bu kural ' + n + ' kez tetiklenirdi (en son 11 Eyl 10:05, sessizlik penceresi ' + d.quiet + ' dk dahil).' + (n > 8 ? ' Sık tetiklenme: eşiği ya da süre şartını yükseltmeyi düşünün.' : ''); this.setState({ test: { n, text } }); },
         summary: d.actions.length + ' eylem · ' + Object.values(d.conds).filter(Boolean).length + ' ek koşul · sessizlik ' + d.quiet + ' dk',
         cannotSave: !canSave, saveOpacity: canSave ? 1 : 0.5,
-        save: () => { if (!canSave) return; const rule = { name, source: s.source, active: true, meta: S.label + ' · ' + d.actions.map(a => TYPE_LABEL[a.type]).join(' + ') + ' · henüz tetiklenmedi' }; this.setState({ rules: [rule, ...this.state.rules], panel: false }); this.toast('Kural kaydedildi ve etkinleştirildi'); }
+        save: () => { if (!canSave) { this.toast('Kaydetmek için en az bir eylem ekleyin'); return; } const rule = { name, source: s.source, active: true, meta: S.label + ' · ' + d.actions.map(a => TYPE_LABEL[a.type]).join(' + ') + ' · henüz tetiklenmedi' }; this.setState({ rules: [rule, ...this.state.rules], panel: false }); this.toast('Kural kaydedildi ve etkinleştirildi'); }
       });
     }
     return out;

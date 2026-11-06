@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#fff;} a{color:#007a55;text-decoration:none;} a:hover{color:#006045;text-decoration:underline;} input,button,select,textarea{font-family:inherit;}</style>
+</helmet>
+<div lang="tr" style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap;overflow:hidden"><span style="color:#00bc7d;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Bileşen laboratuvarı · Tasarım dokümanı 1.1</span><span style="color:#94a3b8">Deneyin: soldan bileşen seç → sağdaki kontrollerle durumu değiştir → örnekte tıkla, seç, geri al</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Tasarim Dokumani.dc.html#bilesenler" style="color:#fff">Tasarım dokümanı</a></div>
+<div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" hint-size="100%,49px"></dc-import></div>
+<div style="display:flex;align-items:flex-start">
+<div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" aktif="lab" lab-secili="{{ secId }}" lab-sec="{{ labSec }}" style="height:100%" hint-size="256px,100%"></dc-import></div>
+<main style="flex:1;min-width:0;padding:16px clamp(16px,2.5vw,24px) 48px;background:#f8fafc;min-height:calc(100vh - 77px);box-sizing:border-box">
+<div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 16px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;margin-bottom:16px">
+<div style="flex:1 1 320px;min-width:0">
+<div style="font-size:12px;color:#64748b"><a href="../Tasarim Dokumani.dc.html">Tasarım dokümanı</a> › Bileşen laboratuvarı</div>
+<h1 style="font-size:20px;font-weight:700;line-height:1.3;margin:4px 0 0">Bileşen laboratuvarı</h1>
+<div style="font-size:12px;color:#64748b;margin-top:2px">23 bileşen ve kabuk · canlı örnek, kontroller, varyantlar, ölçüler, kontrast ve kod</div>
+</div>
+<a href="../Tasarim Dokumani.dc.html#bilesenler" style="height:32px;padding:0 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#020618;font-size:13px;font-weight:500;display:inline-flex;align-items:center;text-decoration:none;box-sizing:border-box">Tasarım dokümanı ↗</a>
+</div>
+<sc-if value="{{ yukleniyor }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#64748b;padding:24px 0">Bileşen tanımları yükleniyor…</div></sc-if>
+<sc-if value="{{ hazir }}" hint-placeholder-val="{{ false }}">
+<div ref="{{ disRef }}" style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+
+<div style="flex:1000 1 560px;min-width:0">
+<div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+
+<section aria-label="Bileşen" style="flex:1000 1 420px;min-width:0;display:grid;gap:14px">
+<div style="display:grid;gap:4px">
+<div style="font-size:12px;color:#64748b">{{ secGrup }} · <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">{{ secNo }}</span></div>
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px"><h2 style="font-size:18px;font-weight:700;line-height:1.3;margin:0">{{ secAd }}</h2><a href="{{ dokHref }}" style="font-size:12px;font-weight:500">{{ dokEtiket }} ↗</a></div>
+<p style="font-size:13px;line-height:1.55;color:#334155;margin:2px 0 0;max-width:760px">{{ aciklama }}</p>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px">
+<div role="group" aria-label="Görünüm" style="display:inline-flex;padding:2px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;gap:2px">
+<sc-for list="{{ modlar }}" as="m"><button type="button" onClick="{{ m.sec }}" aria-pressed="{{ m.basili }}" style="height:28px;padding:0 10px;border-radius:6px;border:0;background:{{ m.bg }};color:{{ m.fg }};font-size:12px;font-weight:{{ m.fw }};cursor:pointer;white-space:nowrap">{{ m.e }}</button></sc-for>
+</div>
+<sc-if value="{{ canliMod }}"><div role="group" aria-label="Çerçeve genişliği" style="display:inline-flex;padding:2px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;gap:2px">
+<sc-for list="{{ genler }}" as="m"><button type="button" onClick="{{ m.sec }}" aria-pressed="{{ m.basili }}" style="height:28px;padding:0 10px;border-radius:6px;border:0;background:{{ m.bg }};color:{{ m.fg }};font-size:12px;font-weight:{{ m.fw }};cursor:pointer;white-space:nowrap;font-variant-numeric:tabular-nums">{{ m.e }}</button></sc-for>
+</div></sc-if>
+<span style="font-size:12px;color:#64748b;font-variant-numeric:tabular-nums">{{ cerceveMetin }}</span>
+</div>
+
+<div style="display:grid;grid-template-columns:{{ izgara }};gap:16px">
+<sc-for list="{{ gosterim }}" as="v" hint-placeholder-count="1">
+<div style="display:grid;gap:6px;align-content:start;min-width:0">
+<sc-if value="{{ v.etiketli }}"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:12px;font-weight:600;color:#334155">{{ v.etiket }}</span><button type="button" onClick="{{ v.dene }}" style="border:0;background:transparent;padding:0;font-size:12px;font-weight:500;color:#007a55;cursor:pointer" style-hover="color:#006045">Dene →</button></div></sc-if>
+<div style="border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;overflow-x:auto">
+<div ref="{{ v.pvRef }}" style="width:{{ v.gen }};max-width:none;box-sizing:border-box;padding:{{ v.pad }};min-height:{{ v.minH }};position:relative;overflow:hidden;color:#020618;font-size:13px">
+<sc-if value="{{ v.t_durum }}">
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start">
+<sc-if value="{{ v.liste }}"><div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:10px 12px;display:grid;gap:4px;min-width:180px">
+<span style="font-size:12px;font-weight:600;color:#64748b">Durum</span>
+<button type="button" onClick="{{ v.ac }}" aria-haspopup="menu" style="justify-self:start;display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;border:0;background:transparent;font-size:13px;color:#020618;cursor:{{ v.imlec }};white-space:nowrap" style-hover="background:{{ v.hov }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ v.dolgu }};border:2px solid {{ v.renk }};box-sizing:border-box;flex-shrink:0"></span>{{ v.e }}<sc-if value="{{ v.chev }}"><span style="color:#94a3b8;font-size:10px">▾</span></sc-if></button>
+<sc-if value="{{ v.nedenVar }}"><span style="font-size:11px;color:#64748b;padding-left:14px">{{ v.neden }}</span></sc-if>
+</div></sc-if>
+<sc-if value="{{ v.ozet }}"><div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:12px 14px;display:grid;gap:3px;min-width:200px">
+<span style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b">Durum <span style="font-size:10px">▾</span></span>
+<span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600"><span style="width:8px;height:8px;border-radius:50%;background:{{ v.dolgu }};border:2px solid {{ v.renk }};box-sizing:border-box"></span>{{ v.e }}</span>
+<span style="font-size:12px;color:#64748b">{{ v.aciklama }}</span>
+</div></sc-if>
+<sc-if value="{{ v.kutulu }}"><div style="width:220px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.12);padding:6px;box-sizing:border-box">
+<div style="font-size:11px;color:#64748b;padding:4px 8px 8px;margin-bottom:4px;border-bottom:1px solid #f1f5f9">{{ v.kutuBaslik }}</div>
+<sc-for list="{{ v.ogeler }}" as="o"><div style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px;font-size:13px"><sc-if value="{{ v.filtre }}"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ o.kBd }};background:{{ o.kBg }};color:#fff;font-size:10px;line-height:12px;text-align:center;box-sizing:border-box">{{ o.kIs }}</span></sc-if><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dolgu }};border:2px solid {{ o.renk }};box-sizing:border-box"></span><span style="flex:1">{{ o.e }}</span><sc-if value="{{ o.tik }}"><span style="color:#007a55;font-weight:600">✓</span></sc-if></div></sc-for>
+</div></sc-if>
+<sc-if value="{{ v.tum }}"><div style="display:flex;flex-wrap:wrap;gap:10px 18px;align-items:flex-start"><sc-for list="{{ v.hepsi }}" as="o"><span style="display:inline-grid;gap:1px"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dolgu }};border:2px solid {{ o.renk }};box-sizing:border-box"></span>{{ o.e }}</span><sc-if value="{{ o.subVar }}"><span style="font-size:11px;color:#64748b;padding-left:14px;white-space:nowrap">{{ o.sub }}</span></sc-if></span></sc-for></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_oncelik }}">
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start">
+<sc-if value="{{ v.hucre }}"><div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:10px 12px;display:grid;gap:4px;min-width:150px">
+<span style="font-size:12px;font-weight:600;color:#64748b">Öncelik</span>
+<button type="button" onClick="{{ v.ac }}" aria-haspopup="menu" style="justify-self:start;display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;border:0;background:transparent;font-size:13px;cursor:{{ v.imlec }};white-space:nowrap" style-hover="background:{{ v.hov }}"><span style="font-weight:600;color:{{ v.renk }}">{{ v.kod }}</span><span style="font-size:12px;color:#64748b">{{ v.ad }}</span><sc-if value="{{ v.chev }}"><span style="color:#94a3b8;font-size:10px">▾</span></sc-if></button>
+</div></sc-if>
+<sc-if value="{{ v.ozet }}"><button type="button" onClick="{{ v.ac }}" style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:12px 14px;display:grid;gap:3px;min-width:200px;text-align:left;cursor:{{ v.imlec }};color:#020618" style-hover="background:#f8fafc">
+<span style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b">Öncelik <span style="font-size:10px">▾</span></span>
+<span style="display:inline-flex;align-items:baseline;gap:6px"><span style="font-size:14px;font-weight:600;color:{{ v.renk }}">{{ v.kod }}</span><span style="font-size:12px;color:#64748b">{{ v.ad }}</span></span>
+<span style="font-size:12px;color:#64748b">{{ v.kaynak }}</span>
+</button></sc-if>
+<sc-if value="{{ v.kodTek }}"><span style="font-size:13px;font-weight:600;color:{{ v.renk }}">{{ v.kod }}</span></sc-if>
+<sc-if value="{{ v.tum }}"><div style="display:flex;flex-wrap:wrap;gap:10px 20px"><sc-for list="{{ v.hepsi }}" as="o"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap"><span style="font-weight:600;color:{{ o.renk }}">{{ o.kod }}</span><span style="font-size:12px;color:#64748b">{{ o.ad }}</span></span></sc-for></div></sc-if>
+<sc-if value="{{ v.tumKod }}"><div style="display:flex;flex-wrap:wrap;gap:14px"><sc-for list="{{ v.hepsi }}" as="o"><span style="font-size:13px;font-weight:600;color:{{ o.renk }}">{{ o.kod }}</span></sc-for></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_etiket }}">
+<div style="display:grid;gap:10px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px"><sc-for list="{{ v.ogeler }}" as="o"><span title="{{ o.title }}" style="display:inline-flex;align-items:center;font-size:{{ o.fs }};font-weight:{{ o.fw }};padding:{{ o.pad }};border-radius:{{ o.r }};background:{{ o.bg }};color:{{ o.fg }};border:{{ o.bd }};letter-spacing:{{ o.ls }};line-height:1.4;white-space:nowrap;box-sizing:border-box">{{ o.metin }}</span></sc-for></div>
+<sc-if value="{{ v.notVar }}"><div style="font-size:12px;color:#64748b">{{ v.not }}</div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_sla }}">
+<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:10px 12px;width:150px;box-sizing:border-box">
+<div style="font-size:12px;font-weight:600;color:#64748b;margin-bottom:6px">Kalan SLA</div>
+<div style="font-size:13px;font-weight:600;color:{{ v.renk }};font-variant-numeric:tabular-nums;white-space:nowrap">{{ v.ana }}</div>
+<sc-if value="{{ v.cubukVar }}"><div style="height:3px;border-radius:2px;background:#f1f5f9;margin-top:4px"><div style="width:{{ v.dol }};height:100%;border-radius:2px;background:{{ v.cubuk }}"></div></div></sc-if>
+<div style="font-size:11px;color:{{ v.altRenk }};margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ v.alt }}</div>
+</div>
+<div style="flex:1 1 150px;min-width:0;display:grid;gap:4px;font-size:12px;color:#64748b;padding-top:2px"><span>{{ v.onc }} · hedef {{ v.hedefMetin }}</span><span>Geçen süre: {{ v.gecenMetin }}</span><sc-if value="{{ v.risk }}"><span style="color:#b3282d;font-weight:600">SLA riski tanımına giriyor</span></sc-if></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_kimlik }}">
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start">
+<sc-if value="{{ v.hucre }}"><div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:10px 12px;display:grid;gap:6px;min-width:120px"><span style="font-size:12px;font-weight:600;color:#64748b">No</span><a href="#" onClick="{{ v.git }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#007a55;text-decoration:none" style-hover="color:#006045;text-decoration:underline">{{ v.id }}</a></div></sc-if>
+<sc-if value="{{ v.baslik }}"><div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px"><a href="#" onClick="{{ v.git }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;font-weight:600;color:#007a55;text-decoration:none" style-hover="color:#006045;text-decoration:underline">{{ v.id }}</a><span style="font-size:12px;color:#64748b">{{ v.kTur }} · kaynak <a href="#" onClick="{{ v.gitPrb }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#007a55">PRB-031</a></span></div></sc-if>
+<sc-if value="{{ v.bag }}"><div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:10px 12px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;min-width:0;max-width:460px">
+<a href="#" onClick="{{ v.gitSatir }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#007a55;text-decoration:none">INC548</a>
+<div style="min-width:0"><div style="font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SAP oturum açma 30 saniyenin üzerinde</div><div style="font-size:12px;color:#64748b;margin-top:2px;display:flex;flex-wrap:wrap;gap:0 6px">Ayşe Kaya · Yavaşlık<sc-if value="{{ v.buyuk }}"><a href="#" onClick="{{ v.gitBuyuk }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;color:#b3282d">↳ INC546</a></sc-if><sc-if value="{{ v.ayrac }}"><span>·</span></sc-if><sc-if value="{{ v.prob }}"><a href="#" onClick="{{ v.gitPrb }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;color:#007a55">PRB-031</a></sc-if></div></div>
+</div></sc-if>
+<sc-if value="{{ v.iliskili }}"><a href="#" onClick="{{ v.git }}" style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;color:#020618;text-decoration:none;min-width:0;max-width:460px;width:100%;box-sizing:border-box" style-hover="background:#f8fafc;text-decoration:none"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#007a55">{{ v.id }}</span><span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ v.kBaslik }}</span><span></span><span style="font-size:12px;color:#64748b">{{ v.kMeta }}</span></a></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_dugme }}">
+<div style="display:inline-flex;padding:{{ v.zpad }};border-radius:8px;background:{{ v.zemin }}">
+<button type="button" onClick="{{ v.tikla }}" aria-label="{{ v.etiket }}" style="height:{{ v.h }};padding:{{ v.pad }};border-radius:6px;border:{{ v.bd }};background:{{ v.bg }};color:{{ v.fg }};font-size:{{ v.fs }};font-weight:{{ v.fw }};display:inline-flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;box-sizing:border-box" style-hover="background:{{ v.hbg }};color:{{ v.hfg }}" style-focus="outline:2px solid {{ v.odak }};outline-offset:2px"><sc-if value="{{ v.ikon }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ v.ikonD }}"></path></svg></sc-if>{{ v.etiket }}</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_zincir }}">
+<div style="display:grid;gap:12px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px">
+<div style="flex:1 1 220px;min-width:0;display:grid;gap:4px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;font-weight:600;color:#007a55">{{ v.kimlik }}</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px"><span style="width:8px;height:8px;border-radius:50%;background:{{ v.dolgu }};border:2px solid {{ v.renk }};box-sizing:border-box"></span>{{ v.e }}</span></div>
+<div style="font-size:16px;font-weight:700;line-height:1.3">{{ v.baslik }}</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+<sc-if value="{{ v.ikVar }}"><button type="button" onClick="{{ v.ikF }}" style="height:34px;padding:0 12px;border-radius:6px;border:1px solid {{ v.ikBd }};background:#fff;color:{{ v.ikFg }};font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;box-sizing:border-box" style-hover="background:{{ v.ikHbg }}">{{ v.ikE }}</button></sc-if>
+<sc-if value="{{ v.biVar }}"><button type="button" onClick="{{ v.biF }}" style="height:34px;padding:0 14px;border-radius:6px;border:0;background:{{ v.biBg }};color:#fff;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:{{ v.biHbg }}">{{ v.biE }}</button></sc-if>
+<button type="button" onClick="{{ v.diger }}" aria-label="Diğer eylemler" aria-haspopup="menu" style="width:34px;height:34px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#64748b;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-sizing:border-box" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+</div>
+<sc-if value="{{ v.notVar }}"><div style="flex-basis:100%;font-size:12px;color:#64748b">{{ v.not }}</div></sc-if>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:6px 0;overflow:hidden">
+<div style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b;padding:6px 14px 8px">Durum → birincil eylem</div>
+<sc-for list="{{ v.zincir }}" as="z"><div style="display:grid;grid-template-columns:minmax(120px,170px) minmax(0,1fr);gap:4px 14px;align-items:center;padding:8px 14px;background:{{ z.bg }};font-size:13px;border-top:1px solid #f1f5f9"><span style="display:inline-flex;align-items:center;gap:6px;font-weight:{{ z.fw }};white-space:nowrap"><span style="width:8px;height:8px;border-radius:50%;background:{{ z.dolgu }};border:2px solid {{ z.renk }};box-sizing:border-box;flex-shrink:0"></span>{{ z.e }}</span><span style="color:{{ z.fg }};min-width:0">{{ z.eylem }}</span></div></sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_menu }}">
+<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start">
+<div style="display:grid;gap:8px;justify-items:start">
+<span style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#64748b">Tetikleyici</span>
+<sc-if value="{{ v.satir }}"><button type="button" onClick="{{ v.ac }}" aria-label="Satır eylemleri" aria-haspopup="menu" style="width:28px;height:28px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#64748b;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-sizing:border-box" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button></sc-if>
+<sc-if value="{{ v.detay }}"><button type="button" onClick="{{ v.ac }}" aria-haspopup="menu" style="height:34px;padding:0 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#020618;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-sizing:border-box" style-hover="background:#f8fafc">Diğer eylemler <span style="color:#64748b">⋯</span></button></sc-if>
+<sc-if value="{{ v.secenek }}"><button type="button" onClick="{{ v.ac }}" aria-haspopup="menu" style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;border-radius:6px;border:0;background:#e2e8f0;font-size:13px;color:#020618;cursor:pointer;white-space:nowrap"><span style="width:8px;height:8px;border-radius:50%;background:{{ v.dolgu }};border:2px solid {{ v.renk }};box-sizing:border-box"></span>{{ v.e }}<span style="color:#64748b;font-size:10px">▾</span></button></sc-if>
+</div>
+<sc-if value="{{ v.statikVar }}"><div style="display:grid;gap:8px">
+<span style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#64748b">Açık hâli</span>
+<div style="width:{{ v.gen }};max-width:100%;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.12);padding:6px;box-sizing:border-box">
+<div style="font-size:11px;color:#64748b;padding:4px 8px 8px;margin-bottom:4px;border-bottom:1px solid #f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ v.baslik }}</div>
+<sc-for list="{{ v.statik }}" as="o"><sc-if value="{{ o.ayirici }}"><div style="height:1px;background:#f1f5f9;margin:4px 0"></div></sc-if><div style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px;font-size:13px;color:{{ o.renk }}" style-hover="background:#f8fafc"><sc-if value="{{ o.noktaVar }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.noktaBg }};border:2px solid {{ o.nokta }};box-sizing:border-box"></span></sc-if><sc-if value="{{ o.ikonVar }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ o.ikonRenk }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="{{ o.ikon }}"></path></svg></sc-if><span style="flex:1;white-space:nowrap">{{ o.e }}</span><sc-if value="{{ o.tik }}"><span style="color:#007a55;font-weight:600">✓</span></sc-if></div></sc-for>
+</div>
+</div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_sekme }}">
+<div style="display:grid;gap:10px">
+<div style="font-size:16px;font-weight:700">{{ v.baslik }}</div>
+<div role="tablist" aria-label="Kuyruk" onKeyDown="{{ v.tus }}" style="display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid #e2e8f0">
+<sc-for list="{{ v.sekmeler }}" as="s"><button type="button" role="tab" aria-selected="{{ s.secili }}" tabIndex="{{ s.ti }}" onClick="{{ s.sec }}" style="display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 12px;border:0;border-bottom:2px solid {{ s.cizgi }};margin-bottom:-1px;background:transparent;font-size:13px;font-weight:{{ s.fw }};color:{{ s.fg }};cursor:pointer;white-space:nowrap;box-sizing:border-box" style-hover="color:#020618" style-focus="outline:2px solid #007a55;outline-offset:-2px">{{ s.e }}<span style="font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:{{ s.sBg }};color:{{ s.sFg }}">{{ s.n }}</span></button></sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_filtre }}">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+<div style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;flex:0 1 280px;min-width:180px;box-sizing:border-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><input value="{{ v.ara }}" onChange="{{ v.araDegis }}" placeholder="Numara, özet, bildiren ve hizmette ara" aria-label="Ara" style="border:0;outline:0;font-size:13px;flex:1;min-width:0;background:transparent;color:#020618"></div>
+<sc-for list="{{ v.cipler }}" as="f"><button type="button" onClick="{{ f.ac }}" aria-haspopup="listbox" style="display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:6px;border:{{ f.bd }};background:{{ f.bg }};color:{{ f.fg }};font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box"><span style="color:{{ f.ik }}">⊕</span>{{ f.e }}</button></sc-for>
+<button type="button" onClick="{{ v.slaTikla }}" aria-pressed="{{ v.slaBasili }}" style="height:32px;padding:0 12px;border-radius:6px;border:{{ v.slaBd }};background:{{ v.slaBg }};color:{{ v.slaFg }};font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;box-sizing:border-box">{{ v.slaE }}</button>
+<sc-if value="{{ v.temizleVar }}"><button type="button" onClick="{{ v.temizle }}" style="border:0;background:transparent;font-size:13px;font-weight:500;color:#007a55;cursor:pointer;padding:0 4px" style-hover="color:#006045">Filtreleri temizle</button></sc-if>
+<span style="margin-left:auto;font-size:12px;color:#64748b;white-space:nowrap">Son güncelleme 09:12 · <button type="button" onClick="{{ v.yenile }}" style="border:0;background:transparent;padding:0;font-size:12px;color:#007a55;cursor:pointer">Yenile</button></span>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_tablo }}">
+<div style="display:grid;gap:10px">
+<sc-if value="{{ v.cubukVar }}"><div role="toolbar" aria-label="Toplu eylem" style="background:#020618;color:#fff;border-radius:8px;padding:8px 12px;font-size:13px;display:flex;flex-wrap:wrap;align-items:center;gap:8px"><span><span style="font-weight:600">{{ v.cubukMetin }}</span> olay seçildi</span><span style="width:1px;height:18px;background:rgba(255,255,255,.2);margin:0 4px"></span><button type="button" onClick="{{ v.ata }}" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:12px;font-weight:500;cursor:pointer" style-hover="background:rgba(255,255,255,.08)">Ata</button><button type="button" onClick="{{ v.calis }}" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:12px;font-weight:500;cursor:pointer" style-hover="background:rgba(255,255,255,.08)">Çalışılıyor yap</button><button type="button" onClick="{{ v.prb }}" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:12px;font-weight:500;cursor:pointer" style-hover="background:rgba(255,255,255,.08)">Probleme bağla</button><button type="button" onClick="{{ v.buyukBag }}" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:12px;font-weight:500;cursor:pointer" style-hover="background:rgba(255,255,255,.08)">Büyük olaya bağla</button><button type="button" onClick="{{ v.kapat }}" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:12px;font-weight:500;cursor:pointer" style-hover="background:rgba(255,255,255,.08)">Kapat</button><button type="button" onClick="{{ v.kaldir }}" style="margin-left:auto;border:0;background:transparent;color:#cbd5e1;font-size:12px;font-weight:500;cursor:pointer">Seçimi kaldır</button></div></sc-if>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);overflow-x:auto;overflow-y:hidden">
+<table style="width:100%;min-width:960px;table-layout:fixed;border-collapse:collapse;font-size:13px">
+<thead><tr style="background:#f8fafc">
+<sc-if value="{{ v.secimVar }}"><th style="width:40px;padding:10px 0 10px 14px;border-bottom:1px solid #e2e8f0;text-align:left;box-sizing:border-box"><button type="button" role="checkbox" aria-label="Tümünü seç" onClick="{{ v.tumunu }}" style="width:14px;height:14px;padding:0;border-radius:4px;border:1px solid {{ v.hBd }};background:{{ v.hBg }};color:#fff;font-size:10px;line-height:12px;text-align:center;cursor:pointer;vertical-align:middle;box-sizing:border-box">{{ v.hIs }}</button></th></sc-if>
+<th style="width:96px;text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;box-sizing:border-box">Olay No</th>
+<th style="text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0">Özet</th>
+<th style="width:110px;text-align:left;padding:10px 12px;border-bottom:1px solid #e2e8f0;box-sizing:border-box"><button type="button" onClick="{{ v.pSirala }}" style="border:0;background:transparent;padding:0;font-size:12px;font-weight:600;color:{{ v.pRenkB }};cursor:pointer">Öncelik{{ v.pOk }}</button></th>
+<th style="width:136px;text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;box-sizing:border-box">Durum</th>
+<th style="width:132px;text-align:left;padding:10px 12px;border-bottom:1px solid #e2e8f0;box-sizing:border-box"><button type="button" onClick="{{ v.slaSirala }}" style="border:0;background:transparent;padding:0;font-size:12px;font-weight:600;color:{{ v.slaRenk }};cursor:pointer">Kalan SLA{{ v.slaOk }}</button></th>
+<sc-if value="{{ v.atanVar }}"><th style="width:140px;text-align:left;font-size:12px;font-weight:600;color:#64748b;padding:10px 12px;border-bottom:1px solid #e2e8f0;box-sizing:border-box">Atanan</th></sc-if>
+<th style="width:52px;border-bottom:1px solid #e2e8f0"></th>
+</tr></thead>
+<tbody>
+<sc-for list="{{ v.satirlar }}" as="r">
+<tr onClick="{{ r.tikla }}" onMouseEnter="{{ r.gir }}" onMouseLeave="{{ r.cik }}" style="background:{{ r.trBg }};cursor:pointer" style-hover="background:{{ r.trHbg }}">
+<sc-if value="{{ v.secimVar }}"><td style="padding:10px 0 10px 14px;border-top:1px solid #f1f5f9;vertical-align:middle"><button type="button" role="checkbox" aria-checked="{{ r.kSecili }}" aria-label="{{ r.kEtiket }}" onClick="{{ r.kutu }}" style="width:14px;height:14px;padding:0;border-radius:4px;border:1px solid {{ r.kBd }};background:{{ r.kBg }};color:#fff;font-size:10px;line-height:12px;text-align:center;cursor:pointer;vertical-align:middle;box-sizing:border-box">{{ r.kIs }}</button></td></sc-if>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#007a55">{{ r.id }}</span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;overflow:hidden"><div style="font-weight:500;display:flex;align-items:center;gap:6px;overflow:hidden;white-space:nowrap"><sc-if value="{{ r.buyuk }}"><span style="font-size:10px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:4px;background:#d23f43;color:#fff;flex-shrink:0">BÜYÜK OLAY</span></sc-if><span style="overflow:hidden;text-overflow:ellipsis" title="{{ r.ozet }}">{{ r.ozet }}</span></div><div style="font-size:12px;color:#64748b;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.alt }}<sc-if value="{{ r.bagVar }}"> <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;color:{{ r.bagRenk }}">{{ r.bag }}</span></sc-if></div></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><button type="button" onClick="{{ r.pAc }}" aria-haspopup="menu" style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;border:0;background:transparent;font-size:13px;cursor:pointer;white-space:nowrap" style-hover="background:#e2e8f0"><span style="font-weight:600;color:{{ r.pRenk }}">{{ r.pKod }}</span><span style="font-size:12px;color:#64748b">{{ r.pAd }}</span><span style="color:#94a3b8;font-size:10px;opacity:{{ r.chev }}">▾</span></button></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><button type="button" onClick="{{ r.sAc }}" aria-haspopup="menu" style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;border:0;background:transparent;font-size:13px;color:#020618;cursor:pointer;white-space:nowrap" style-hover="background:#e2e8f0"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.sDolgu }};border:2px solid {{ r.sRenk }};box-sizing:border-box;flex-shrink:0"></span>{{ r.sAd }}<span style="color:#94a3b8;font-size:10px;opacity:{{ r.chev }}">▾</span></button><sc-if value="{{ r.sNedenVar }}"><div style="font-size:11px;color:#64748b;padding-left:14px">{{ r.sNeden }}</div></sc-if></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><div style="font-weight:600;color:{{ r.slaRenk }};font-variant-numeric:tabular-nums;white-space:nowrap">{{ r.slaAna }}</div><sc-if value="{{ r.slaCubukVar }}"><div style="height:3px;border-radius:2px;background:#f1f5f9;margin-top:4px"><div style="width:{{ r.slaDol }};height:100%;border-radius:2px;background:{{ r.slaCubuk }}"></div></div></sc-if><div style="font-size:11px;color:{{ r.slaAltRenk }};margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.slaAlt }}</div></td>
+<sc-if value="{{ v.atanVar }}"><td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><button type="button" onClick="{{ r.aAc }}" aria-haspopup="menu" style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;border:0;background:transparent;font-size:13px;color:{{ r.atRenk }};cursor:pointer;white-space:nowrap;max-width:calc(100% + 8px);overflow:hidden" style-hover="background:#e2e8f0"><span style="overflow:hidden;text-overflow:ellipsis">{{ r.at }}</span><span style="color:#94a3b8;font-size:10px;opacity:{{ r.chev }}">▾</span></button></td></sc-if>
+<td style="padding:6px 10px 6px 0;border-top:1px solid #f1f5f9;vertical-align:middle;text-align:right"><button type="button" onClick="{{ r.menuAc }}" aria-label="Satır eylemleri" aria-haspopup="menu" style="width:28px;height:28px;border-radius:6px;border:1px solid transparent;background:transparent;color:#94a3b8;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-sizing:border-box" style-hover="background:#f1f5f9;color:#334155"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button></td>
+</tr>
+</sc-for>
+<sc-if value="{{ v.bos }}"><tr><td colSpan="8" style="padding:32px 12px;text-align:center;font-size:13px;color:#64748b;border-top:1px solid #f1f5f9">Bu filtrelerle olay yok. <button type="button" onClick="{{ v.temizle }}" style="border:0;background:transparent;padding:0;font-size:13px;font-weight:500;color:#007a55;cursor:pointer">Filtreleri temizle</button></td></tr></sc-if>
+</tbody>
+</table>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:12px;color:#64748b;min-width:960px;box-sizing:border-box"><span>{{ v.altBilgi }}</span><span style="display:inline-flex;gap:4px"><span style="width:26px;height:26px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box">‹</span><span style="width:26px;height:26px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box">›</span></span></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_cubuk }}">
+<sc-if value="{{ v.toplu }}"><div style="display:grid;gap:10px">
+<sc-if value="{{ v.cubukVar }}"><div role="toolbar" aria-label="Toplu eylem" style="background:#020618;color:#fff;border-radius:8px;padding:8px 12px;font-size:13px;display:flex;flex-wrap:wrap;align-items:center;gap:8px"><span><span style="font-weight:600">{{ v.metin }}</span> {{ v.noun }}</span><span style="width:1px;height:18px;background:rgba(255,255,255,.2);margin:0 4px"></span><sc-for list="{{ v.eylemler }}" as="e"><button type="button" onClick="{{ e.tikla }}" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap" style-hover="background:rgba(255,255,255,.08)">{{ e.e }}</button></sc-for><button type="button" onClick="{{ v.kaldir }}" style="margin-left:auto;border:0;background:transparent;color:#cbd5e1;font-size:12px;font-weight:500;cursor:pointer">Seçimi kaldır</button></div></sc-if>
+<sc-if value="{{ v.ipucuVar }}"><div style="font-size:12px;color:#64748b">Bir satır seçince çubuk tablonun üstünde belirir.</div></sc-if>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);overflow:hidden">
+<sc-for list="{{ v.satirlar }}" as="r"><div onClick="{{ r.tikla }}" style="display:flex;align-items:center;gap:14px;height:40px;padding:0 14px;border-top:1px solid #f1f5f9;background:{{ r.bg }};cursor:pointer"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ r.kBd }};background:{{ r.kBg }};color:#fff;font-size:10px;line-height:12px;text-align:center;box-sizing:border-box;flex-shrink:0">{{ r.kIs }}</span><span style="width:{{ r.w }};height:8px;border-radius:4px;background:#e2e8f0"></span></div></sc-for>
+</div>
+</div></sc-if>
+<sc-if value="{{ v.duzen }}"><div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px 72px;position:relative;display:grid;gap:10px">
+<span style="height:8px;width:40%;border-radius:4px;background:#e2e8f0"></span><span style="height:8px;width:70%;border-radius:4px;background:#f1f5f9"></span><span style="height:8px;width:55%;border-radius:4px;background:#f1f5f9"></span>
+<div role="toolbar" aria-label="Düzenleme" style="position:absolute;left:12px;right:12px;bottom:12px;background:#020618;color:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(2,6,24,.25);padding:8px 8px 8px 14px;font-size:13px;display:flex;flex-wrap:wrap;align-items:center;gap:8px"><span style="font-weight:600">Düzenleniyor</span><span style="color:#cbd5e1;flex:1 1 160px;min-width:0">{{ v.alanMetin }}</span><button type="button" onClick="{{ v.vazgec }}" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:12px;font-weight:500;cursor:pointer" style-hover="background:rgba(255,255,255,.08)">Vazgeç</button><button type="button" onClick="{{ v.kaydet }}" style="height:28px;padding:0 12px;border-radius:6px;border:0;background:#007a55;color:#fff;font-size:12px;font-weight:600;cursor:pointer" style-hover="background:#006045">Kaydet</button></div>
+</div></sc-if>
+</sc-if>
+
+<sc-if value="{{ v.t_bildirim }}">
+<div style="display:grid;gap:10px;align-content:start">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px"><button type="button" onClick="{{ v.goster }}" style="height:32px;padding:0 12px;border-radius:6px;border:0;background:#007a55;color:#fff;font-size:13px;font-weight:600;cursor:pointer" style-hover="background:#006045">Bildirimi göster</button><span style="font-size:12px;color:#64748b">{{ v.sureMetin }}</span></div>
+<span style="height:8px;width:52%;border-radius:4px;background:#e2e8f0"></span><span style="height:8px;width:36%;border-radius:4px;background:#e2e8f0"></span>
+<sc-if value="{{ v.gorunur }}"><div role="status" style="position:absolute;right:20px;bottom:20px;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);max-width:min(520px,calc(100% - 40px));box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;line-height:1.4"><span>{{ v.metin }}</span><sc-if value="{{ v.geriVar }}"><button type="button" onClick="{{ v.geriAl }}" style="height:26px;padding:0 10px;border-radius:6px;background:rgba(255,255,255,.12);color:#00bc7d;font-size:12px;font-weight:600;border:0;cursor:pointer;flex-shrink:0">Geri al</button></sc-if></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_baslik }}">
+<div style="display:grid;gap:12px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;font-size:12px;color:#64748b"><span><a href="#" onClick="{{ v.listeGit }}">{{ v.liste }}</a> › <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">{{ v.id }}</span></span><span style="display:inline-flex;align-items:center;gap:6px"><button type="button" onClick="{{ v.onceGit }}" aria-label="Önceki kayıt" style="height:26px;padding:0 8px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:12px;color:#334155;cursor:pointer;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;box-sizing:border-box" style-hover="background:#f8fafc">‹ {{ v.once }}</button><button type="button" onClick="{{ v.sonraGit }}" aria-label="Sonraki kayıt" style="height:26px;padding:0 8px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:12px;color:#334155;cursor:pointer;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;box-sizing:border-box" style-hover="background:#f8fafc">{{ v.sonra }} ›</button></span></div>
+<div style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px 16px">
+<div style="flex:1 1 420px;min-width:0;display:grid;gap:4px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;font-weight:600;color:#007a55">{{ v.id }}</span><sc-if value="{{ v.buyukVar }}"><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 7px;border-radius:4px;background:#d23f43;color:#fff">BÜYÜK OLAY</span></sc-if><sc-if value="{{ v.turVar }}"><span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:{{ v.turBg }};color:{{ v.turFg }}">{{ v.turE }}</span></sc-if><sc-if value="{{ v.sablonVar }}"><span style="font-size:12px;color:#334155">{{ v.sablon }}</span></sc-if><sc-if value="{{ v.kaynakVar }}"><span style="font-size:12px;color:#64748b">kaynak <a href="#" onClick="{{ v.kaynakGit }}" style="font-family:{{ v.kaynakMono }};font-weight:600">{{ v.kaynak }}</a></span></sc-if></div>
+<div style="font-size:20px;font-weight:700;line-height:1.3">{{ v.baslik }}</div>
+<div style="font-size:13px;color:#64748b">{{ v.hizmet }} · <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">{{ v.ci }}</span> · {{ v.tarih }} · sahibi {{ v.sahip }}</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+<sc-if value="{{ v.ikVar }}"><button type="button" onClick="{{ v.ikF }}" style="height:34px;padding:0 12px;border-radius:6px;border:1px solid {{ v.ikBd }};background:#fff;color:{{ v.ikFg }};font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;box-sizing:border-box" style-hover="background:{{ v.ikHbg }}">{{ v.ikE }}</button></sc-if>
+<button type="button" onClick="{{ v.biF }}" style="height:34px;padding:0 14px;border-radius:6px;border:0;background:#007a55;color:#fff;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:#006045">{{ v.biE }}</button>
+<button type="button" onClick="{{ v.diger }}" aria-label="Diğer eylemler" aria-haspopup="menu" style="width:34px;height:34px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#64748b;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-sizing:border-box" style-hover="background:#f8fafc"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_ozet }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);overflow:hidden">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(max(150px,33.33% - 1px),1fr))">
+<sc-for list="{{ v.hucreler }}" as="h"><div role="{{ h.rol }}" tabIndex="{{ h.ti }}" onClick="{{ h.ac }}" style="padding:12px 14px;box-shadow:inset -1px -1px 0 #e2e8f0;display:grid;gap:3px;align-content:start;min-width:0;cursor:{{ h.imlec }};outline:0" style-hover="background:{{ h.hbg }}" style-focus="box-shadow:inset 0 0 0 2px #007a55">
+<span style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b;display:flex;align-items:center;gap:4px">{{ h.etiket }}<sc-if value="{{ h.duz }}"><span style="font-size:10px">▾</span></sc-if></span>
+<span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:{{ h.renk }};min-width:0"><sc-if value="{{ h.noktaVar }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ h.noktaBg }};border:2px solid {{ h.nokta }};box-sizing:border-box;flex-shrink:0"></span></sc-if><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ h.deger }}</span><sc-if value="{{ h.adVar }}"><span style="font-size:12px;font-weight:400;color:#64748b">{{ h.ad }}</span></sc-if></span>
+<sc-if value="{{ h.cubukVar }}"><span style="display:block;height:4px;border-radius:2px;background:#e2e8f0;margin-top:2px"><span style="display:block;width:{{ h.dol }};height:100%;border-radius:2px;background:#007a55"></span></span></sc-if>
+<span title="{{ h.alt }}" style="font-size:12px;color:{{ h.altRenk }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ h.alt }}</span>
+</div></sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_serit }}">
+<div role="status" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 14px;border-radius:8px;background:{{ v.bg }};border:1px solid {{ v.bd }};font-size:13px;line-height:1.45">
+<span style="display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;font-weight:600;color:{{ v.fg }}"><sc-if value="{{ v.rozetVar }}"><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 7px;border-radius:4px;background:#d23f43;color:#fff">BÜYÜK OLAY</span></sc-if><sc-if value="{{ v.kimlikVar }}"><a href="#" onClick="{{ v.git }}" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:{{ v.fg }}">{{ v.kimlik }}</a></sc-if>{{ v.baslik }}</span>
+<span style="flex:1 1 240px;min-width:0;color:{{ v.fg2 }}">{{ v.metin }}</span>
+<sc-if value="{{ v.eylemVar }}"><span style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ v.eylemler }}" as="e"><button type="button" onClick="{{ e.tikla }}" style="height:28px;padding:0 10px;border-radius:6px;border:{{ e.bd }};background:{{ e.bg }};color:{{ e.fg }};font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;box-sizing:border-box" style-hover="background:{{ e.hbg }}">{{ e.e }}</button></sc-for></span></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_kart }}">
+<sc-if value="{{ v.gizli }}"><div style="border:1px dashed #cbd5e1;border-radius:12px;padding:16px 18px;font-size:12px;color:#64748b;max-width:520px">Opsiyonel ve boş: kart görünüm modunda gösterilmez.</div></sc-if>
+<sc-if value="{{ v.gorunur }}"><div style="background:#fff;border:1px solid {{ v.kenar }};border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px;max-width:520px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px"><span style="font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b">{{ v.baslik }}</span><sc-if value="{{ v.otoVar }}"><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 7px;border-radius:4px;background:#f1f5f9;color:#64748b">OTOMATİK</span></sc-if><span style="margin-left:auto;display:inline-flex;align-items:center;gap:8px"><sc-if value="{{ v.ipucuVar }}"><span style="font-size:12px;color:#64748b">{{ v.ipucu }}</span></sc-if><sc-if value="{{ v.chipVar }}"><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:{{ v.chipBg }};color:{{ v.chipFg }}">{{ v.chip }}</span></sc-if></span></div>
+<sc-if value="{{ v.adimVar }}"><ol style="margin:0;padding-left:18px;font-size:13px;line-height:1.7;color:#334155"><sc-for list="{{ v.adimlar }}" as="x"><li>{{ x.e }}</li></sc-for></ol></sc-if>
+<sc-if value="{{ v.eksikVar }}"><div style="display:grid;gap:10px;justify-items:start"><div style="font-size:13px;line-height:1.6;color:#9a5b0a">{{ v.eksikMetin }}</div><button type="button" onClick="{{ v.tamamla }}" style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:13px;font-weight:500;color:#020618;cursor:pointer;box-sizing:border-box" style-hover="background:#f8fafc">{{ v.tamamlaE }}</button></div></sc-if>
+<sc-if value="{{ v.kutuVar }}"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px"><sc-for list="{{ v.kutular }}" as="x"><div style="border:1px solid #e2e8f0;border-radius:8px;padding:8px 10px;display:grid;gap:2px"><span style="font-size:14px;font-weight:600">{{ x.d }}</span><span style="font-size:12px;color:#64748b">{{ x.e }}</span></div></sc-for></div></sc-if>
+</div></sc-if>
+</sc-if>
+
+<sc-if value="{{ v.t_yasam }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px;max-width:360px">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><span style="font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b">Yaşam döngüsü</span><span style="font-size:12px;color:#64748b">{{ v.ozet }}</span></div>
+<ol style="list-style:none;margin:0;padding:0">
+<sc-for list="{{ v.adimlar }}" as="s"><li onClick="{{ s.sec }}" style="display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;cursor:{{ s.imlec }}">
+<div style="display:flex;flex-direction:column;align-items:center"><span style="width:12px;height:12px;border-radius:50%;background:{{ s.dolgu }};border:2px solid {{ s.kenar }};box-shadow:{{ s.halka }};box-sizing:border-box;margin-top:3px;flex-shrink:0"></span><sc-if value="{{ s.cizgiVar }}"><span style="width:2px;flex:1;min-height:18px;background:{{ s.cizgi }};margin:2px 0"></span></sc-if></div>
+<div style="padding-bottom:10px;min-width:0"><div style="font-size:13px;font-weight:{{ s.fw }};color:{{ s.fg }}">{{ s.e }}</div><div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.alt }}</div></div>
+</li></sc-for>
+</ol>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_akis }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px;max-width:520px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b">{{ v.baslik }}</span><span style="font-size:12px;color:#64748b">{{ v.sayi }}</span></div>
+<sc-if value="{{ v.notSatiri }}"><div style="display:flex;gap:8px;margin-bottom:14px"><input value="{{ v.metin }}" onChange="{{ v.yaz }}" onKeyDown="{{ v.tus }}" placeholder="Not ekle…" aria-label="Not" style="flex:1;min-width:0;height:32px;padding:0 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;color:#020618;background:#fff;outline:0;box-sizing:border-box" style-focus="border-color:#007a55;box-shadow:0 0 0 2px rgba(0,122,85,.15)"><button type="button" onClick="{{ v.ekle }}" style="height:32px;padding:0 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:13px;font-weight:500;color:#020618;cursor:pointer;opacity:{{ v.opak }};box-sizing:border-box">Ekle</button></div></sc-if>
+<sc-if value="{{ v.yanitKutusu }}"><div style="border:1px solid #e2e8f0;border-radius:8px;padding:8px;margin-bottom:14px;display:grid;gap:8px"><textarea value="{{ v.metin }}" onChange="{{ v.yaz }}" onKeyDown="{{ v.tus }}" rows="2" placeholder="Yanıt yazın…" aria-label="Yanıt" style="border:0;outline:0;resize:vertical;font-size:13px;line-height:1.45;color:#020618;background:transparent"></textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px"><sc-for list="{{ v.gorunurlukler }}" as="g"><button type="button" onClick="{{ g.sec }}" aria-pressed="{{ g.basili }}" style="height:26px;padding:0 10px;border-radius:6px;border:1px solid {{ g.bd }};background:{{ g.bg }};color:{{ g.fg }};font-size:12px;font-weight:{{ g.fw }};cursor:pointer;box-sizing:border-box">{{ g.e }}</button></sc-for><button type="button" onClick="{{ v.ekle }}" style="margin-left:auto;height:26px;padding:0 10px;border-radius:6px;border:0;background:#007a55;color:#fff;font-size:12px;font-weight:600;cursor:pointer;opacity:{{ v.opak }}" style-hover="background:#006045">{{ v.gonderE }}</button></div></div></sc-if>
+<sc-if value="{{ v.bos }}"><div style="font-size:13px;color:#64748b;padding:4px 0 8px">Henüz kayıt yok. İlk not ya da yanıt burada görünür.</div></sc-if>
+<div role="log" style="display:grid;gap:10px">
+<sc-for list="{{ v.girdiler }}" as="g"><div style="display:grid;gap:2px;padding:{{ g.pad }};border-radius:8px;background:{{ g.bg }}"><span style="font-size:11px;color:#64748b;font-variant-numeric:tabular-nums">{{ g.t }}</span><span style="font-size:13px;line-height:1.45;color:#020618">{{ g.m }}</span><span style="font-size:11px;color:#64748b">{{ g.k }}</span></div></sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_matris }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px;display:grid;gap:12px;max-width:420px">
+<div role="grid" aria-label="Etki × aciliyet" tabIndex="0" onKeyDown="{{ v.tus }}" style="display:grid;grid-template-columns:64px repeat(3,minmax(0,1fr));gap:6px;outline:0;border-radius:8px" style-focus="box-shadow:0 0 0 2px #007a55">
+<span style="font-size:10px;color:#64748b;align-self:end">Etki ↓</span>
+<sc-for list="{{ v.sutunlar }}" as="s"><span style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b;text-align:center">{{ s.e }}</span></sc-for>
+<sc-for list="{{ v.satirlar }}" as="r"><span style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b;display:flex;align-items:center">{{ r.e }}</span><sc-for list="{{ r.hucreler }}" as="h"><button type="button" role="gridcell" tabIndex="-1" aria-selected="{{ h.secili }}" aria-label="{{ h.etiket }}" onClick="{{ h.sec }}" style="height:40px;border-radius:8px;border:{{ h.bd }};background:{{ h.bg }};font-size:13px;font-weight:600;color:{{ h.renk }};cursor:pointer;box-sizing:border-box" style-hover="background:{{ h.hbg }}">{{ h.kod }}</button></sc-for></sc-for>
+</div>
+<div style="font-size:11px;color:#64748b;text-align:right">Aciliyet →</div>
+<div style="display:grid;gap:2px;padding-top:12px;border-top:1px solid #f1f5f9"><span style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b">Sonuç</span><span style="display:inline-flex;align-items:baseline;gap:6px"><span style="font-size:14px;font-weight:600;color:{{ v.renk }}">{{ v.kod }}</span><span style="font-size:12px;color:#64748b">{{ v.ad }}</span></span><span style="font-size:12px;color:#64748b">{{ v.aciklama }}</span><span style="font-size:12px;color:#334155">{{ v.hedef }}</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_onay }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px 18px;display:grid;gap:10px;max-width:520px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px"><span style="font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b">Onay yolu</span><span style="font-size:12px;color:#64748b">{{ v.yol }}</span><span style="margin-left:auto;font-size:12px;font-weight:600;color:#334155;font-variant-numeric:tabular-nums">{{ v.ilerleme }}</span></div>
+<sc-if value="{{ v.notVar }}"><div style="font-size:12px;line-height:1.5;color:#64748b;background:#f8fafc;border-radius:8px;padding:8px 10px">{{ v.not }}</div></sc-if>
+<sc-for list="{{ v.satirlar }}" as="r"><div style="display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;padding:10px 12px;border-radius:8px;border:1px solid {{ r.bd }};background:{{ r.bg }}">
+<span style="width:26px;height:26px;border-radius:50%;background:{{ r.rBg }};color:{{ r.rFg }};font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">{{ r.rozet }}</span>
+<div style="min-width:0;display:grid;gap:3px"><div style="font-size:13px"><span style="font-weight:600">{{ r.rol }}</span> <span style="color:#64748b">· {{ r.kisi }}</span></div><div style="font-size:12px;color:{{ r.altRenk }}">{{ r.alt }}</div><sc-if value="{{ r.notVar }}"><div style="font-size:12px;line-height:1.5;color:#334155;border-left:2px solid #e2e8f0;padding-left:10px">{{ r.not }}</div></sc-if><sc-if value="{{ r.eylem }}"><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px"><button type="button" onClick="{{ r.onayla }}" style="height:28px;padding:0 10px;border-radius:6px;border:0;background:#007a55;color:#fff;font-size:12px;font-weight:600;cursor:pointer" style-hover="background:#006045">Onayla</button><button type="button" onClick="{{ r.reddet }}" aria-haspopup="menu" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid #f3b4b6;background:#fff;color:#b3282d;font-size:12px;font-weight:500;cursor:pointer;box-sizing:border-box" style-hover="background:#fef4f4">Reddet</button></div></sc-if></div>
+</div></sc-for>
+<sc-if value="{{ v.sonucVar }}"><div style="font-size:12px;font-weight:600;color:{{ v.sonucRenk }}">{{ v.sonuc }}</div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_cekmece }}">
+<div style="display:grid;gap:12px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;position:relative">
+<div style="flex:1 1 220px;min-width:0"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;font-weight:600;color:#007a55">INC546</span><div style="font-size:16px;font-weight:700;margin-top:2px">E-posta hizmeti erişilemiyor</div></div>
+<div style="position:relative"><button type="button" onClick="{{ v.formAc }}" aria-haspopup="dialog" style="height:34px;padding:0 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#020618;font-size:13px;font-weight:500;cursor:pointer;box-sizing:border-box" style-hover="background:#f8fafc">Transfer et</button>
+<sc-if value="{{ v.formAcik }}"><div onClick="{{ v.kapat }}" style="position:fixed;inset:0;z-index:5"></div><div role="dialog" aria-label="Transfer et" ref="{{ v.odak }}" tabIndex="-1" onKeyDown="{{ v.tus }}" style="position:absolute;right:0;top:40px;z-index:6;width:300px;max-width:calc(100vw - 48px);background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.12);padding:12px;display:grid;gap:10px;box-sizing:border-box;outline:0">
+<div style="font-size:13px;font-weight:600">Transfer et</div>
+<label style="display:grid;gap:4px;font-size:12px;color:#64748b">Grup<button type="button" onClick="{{ v.grupAc }}" style="height:32px;padding:0 10px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:13px;color:#020618;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box">{{ v.grup }}<span style="color:#64748b;font-size:10px">▾</span></button></label>
+<label style="display:grid;gap:4px;font-size:12px;color:#64748b">Kişi<button type="button" onClick="{{ v.kisiAc }}" style="height:32px;padding:0 10px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:13px;color:{{ v.kisiRenk }};display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box">{{ v.kisi }}<span style="color:#64748b;font-size:10px">▾</span></button></label>
+<div style="display:flex;justify-content:flex-end;gap:8px"><button type="button" onClick="{{ v.kapat }}" style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:13px;font-weight:500;color:#020618;cursor:pointer;box-sizing:border-box">Vazgeç</button><button type="button" onClick="{{ v.transfer }}" style="height:30px;padding:0 12px;border-radius:6px;border:0;background:#007a55;color:#fff;font-size:13px;font-weight:600;cursor:pointer" style-hover="background:#006045">Transfer et</button></div>
+</div></sc-if>
+</div>
+<button type="button" onClick="{{ v.ac }}" aria-haspopup="dialog" style="height:34px;padding:0 14px;border-radius:6px;border:0;background:#007a55;color:#fff;font-size:13px;font-weight:600;cursor:pointer" style-hover="background:#006045">Çöz…</button>
+</div>
+<span style="height:8px;width:60%;border-radius:4px;background:#e2e8f0"></span><span style="height:8px;width:42%;border-radius:4px;background:#e2e8f0"></span>
+<sc-if value="{{ v.cekAcik }}"><div onClick="{{ v.kapat }}" style="position:absolute;inset:0;background:rgba(2,6,24,.35);z-index:7"></div>
+<div role="dialog" aria-modal="true" aria-label="Çöz" ref="{{ v.odak }}" tabIndex="-1" onKeyDown="{{ v.tus }}" style="position:absolute;top:0;right:0;bottom:0;width:min(460px,100%);z-index:8;background:#fff;box-shadow:-12px 0 32px rgba(2,6,24,.18);display:flex;flex-direction:column;outline:0">
+<div style="display:flex;align-items:flex-start;gap:10px;padding:16px 20px;border-bottom:1px solid #e2e8f0"><div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:700">Çöz</div><div style="font-size:12px;color:#64748b;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">INC546</span> · E-posta hizmeti erişilemiyor</div></div><button type="button" onClick="{{ v.kapat }}" aria-label="Kapat" style="width:28px;height:28px;border-radius:6px;border:0;background:transparent;color:#64748b;font-size:14px;cursor:pointer" style-hover="background:#f1f5f9">✕</button></div>
+<div style="flex:1;min-height:0;overflow:auto;padding:20px;display:grid;gap:16px;align-content:start">
+<div style="display:grid;gap:4px"><span style="font-size:12px;color:#64748b">Çözüm kodu <span style="color:#d23f43">*</span></span><button type="button" onClick="{{ v.kodAc }}" style="height:34px;padding:0 10px;border-radius:6px;border:1px solid {{ v.kodBd }};background:#fff;font-size:13px;color:{{ v.kodRenk }};display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box">{{ v.kod }}<span style="color:#64748b;font-size:10px">▾</span></button><sc-if value="{{ v.hataKod }}"><span style="font-size:12px;color:#b3282d">Çözüm kodu seçin.</span></sc-if></div>
+<div style="display:grid;gap:4px"><span style="font-size:12px;color:#64748b">Kök neden</span><button type="button" onClick="{{ v.kokAc }}" style="height:34px;padding:0 10px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:13px;color:{{ v.kokRenk }};display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-sizing:border-box">{{ v.kok }}<span style="color:#64748b;font-size:10px">▾</span></button></div>
+<div style="display:grid;gap:4px"><span style="font-size:12px;color:#64748b">Çözüm açıklaması <span style="color:#d23f43">*</span> · bildirene gönderilir</span><textarea value="{{ v.aciklama }}" onChange="{{ v.yaz }}" rows="3" aria-label="Çözüm açıklaması" style="padding:8px 10px;border:1px solid {{ v.acBd }};border-radius:6px;font-size:13px;line-height:1.5;color:#020618;resize:vertical;outline:0" style-focus="border-color:#007a55;box-shadow:0 0 0 2px rgba(0,122,85,.15)"></textarea><sc-if value="{{ v.hataAc }}"><span style="font-size:12px;color:#b3282d">Bildirene gidecek açıklamayı yazın.</span></sc-if></div>
+<button type="button" role="checkbox" aria-checked="{{ v.kbStr }}" onClick="{{ v.kbDegis }}" style="display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:0;font-size:13px;color:#020618;cursor:pointer;text-align:left"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ v.kbBd }};background:{{ v.kbBg }};color:#fff;font-size:10px;line-height:12px;text-align:center;box-sizing:border-box">{{ v.kbIs }}</span>Bilgi Bankası makalesi öner</button>
+<div style="font-size:12px;line-height:1.5;color:#64748b;background:#f8fafc;border-radius:8px;padding:10px 12px">Çözünce çözüm SLA sayacı durur ve sonucu (tutuldu / ihlal) kayda yazılır; çözüm açıklaması bildirene gider.</div>
+</div>
+<div style="display:flex;justify-content:flex-end;gap:8px;padding:12px 20px;border-top:1px solid #e2e8f0"><button type="button" onClick="{{ v.kapat }}" style="height:34px;padding:0 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:13px;font-weight:500;color:#020618;cursor:pointer;box-sizing:border-box" style-hover="background:#f8fafc">İptal</button><button type="button" onClick="{{ v.coz }}" style="height:34px;padding:0 14px;border-radius:6px;border:0;background:#007a55;color:#fff;font-size:13px;font-weight:600;cursor:pointer" style-hover="background:#006045">Çöz</button></div>
+</div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_ai }}">
+<sc-if value="{{ v.yok }}"><div style="font-size:12px;color:#64748b;display:flex;flex-wrap:wrap;gap:6px;align-items:center">Öneri yoksayıldı.<button type="button" onClick="{{ v.geri }}" style="border:0;background:transparent;padding:0;font-size:12px;font-weight:500;color:#007a55;cursor:pointer">Geri getir</button></div></sc-if>
+<sc-if value="{{ v.goster }}"><div style="background:#fff;border:1px solid #a4f4cf;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;max-width:560px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px"><div style="font-size:13px;font-weight:600">{{ v.baslik }}</div><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #007a55;color:#007a55">AI</span></div>
+<sc-if value="{{ v.kutuVar }}"><div style="font-size:13px;line-height:1.55;color:#334155;padding:8px 10px;border-radius:8px;background:#f8fafc">{{ v.oneri }}</div></sc-if>
+<div style="font-size:13px;line-height:1.55;color:#334155;margin-top:8px">{{ v.gerekce }}</div>
+<sc-if value="{{ v.hazir }}"><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><button type="button" onClick="{{ v.kabul }}" style="height:30px;padding:0 12px;border-radius:6px;border:0;background:#007a55;color:#fff;font-size:12px;font-weight:600;cursor:pointer" style-hover="background:#006045">{{ v.kabulE }}</button><button type="button" onClick="{{ v.red }}" style="height:30px;padding:0 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#020618;font-size:12px;font-weight:500;cursor:pointer;box-sizing:border-box" style-hover="background:#f8fafc">{{ v.redE }}</button></div></sc-if>
+<sc-if value="{{ v.kabulEdildi }}"><div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;font-size:12px;font-weight:600;color:#006045">✓ {{ v.sonuc }}<button type="button" onClick="{{ v.geri }}" style="border:0;background:transparent;padding:0;font-size:12px;font-weight:500;color:#007a55;cursor:pointer">Geri al</button></div></sc-if>
+</div></sc-if>
+</sc-if>
+
+<sc-if value="{{ v.t_ustbar }}">
+<div style="display:grid;gap:8px">
+<div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">
+<div style="height:49px;box-sizing:border-box;border-bottom:1px solid {{ v.cizgi }};background:{{ v.zemin }};display:flex;align-items:center;gap:8px;padding:0 8px;color:{{ v.fg }}">
+<div style="display:flex;align-items:center;gap:10px;padding-left:8px;width:{{ v.solW }};flex-shrink:0">
+<button type="button" onClick="{{ v.panel }}" aria-label="Menü" style="width:32px;height:32px;margin-left:-8px;border:0;background:transparent;color:inherit;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0" style-hover="background:{{ v.aktifZ }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg></button>
+<span style="width:1px;height:16px;background:{{ v.cizgi }}"></span>
+<span style="display:inline-flex;align-items:center;gap:8px;padding-left:4px"><sc-if value="{{ v.acikTema }}" hint-placeholder-val="{{ true }}"><img src="../assets/dcase-logo.svg" alt="DCase" style="height:22px;width:auto;display:block"></sc-if><sc-if value="{{ v.koyuTema }}" hint-placeholder-val="{{ false }}"><img src="../assets/dcase-logo-dark.svg" alt="DCase" style="height:22px;width:auto;display:block"></sc-if><span style="font-weight:600;font-size:11px;color:{{ v.soluk }}">ITSM</span></span>
+</div>
+<nav style="display:flex;align-items:center;flex:1;min-width:0;overflow:hidden;gap:4px"><sc-for list="{{ v.sekmeler }}" as="s"><sc-if value="{{ s.ayirici }}"><span style="width:1px;height:16px;background:{{ v.cizgi }};margin:0 8px;flex-shrink:0"></span></sc-if><button type="button" onClick="{{ s.sec }}" style="height:32px;padding:0 8px;display:inline-flex;align-items:center;font-size:14px;border:0;border-radius:6px;white-space:nowrap;background:{{ s.bg }};color:{{ s.fg }};font-weight:{{ s.fw }};cursor:pointer">{{ s.e }}</button></sc-for></nav>
+<button type="button" onClick="{{ v.ozel }}" style="margin-left:auto;height:32px;padding:0 12px;border-radius:6px;background:{{ v.btnZ }};border:1px solid {{ v.btnC }};box-shadow:0 1px 2px rgba(2,6,24,.05);font-size:12px;font-weight:600;color:{{ v.fg }};display:inline-flex;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;box-sizing:border-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg><sc-if value="{{ v.genis }}"><span>Özelleştir</span></sc-if></button>
+<span style="width:1px;height:16px;background:{{ v.cizgi }};margin-left:8px;flex-shrink:0"></span>
+<span style="width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></span>
+</div>
+<div style="height:96px;background:#f8fafc;padding:16px 24px;display:grid;gap:8px;align-content:start;box-sizing:border-box"><span style="height:10px;width:160px;border-radius:4px;background:#e2e8f0"></span><span style="height:8px;width:240px;max-width:80%;border-radius:4px;background:#f1f5f9"></span></div>
+</div>
+<span style="font-size:12px;color:#64748b">{{ v.cwMetin }}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_solmenu }}">
+<div style="display:grid;gap:8px">
+<div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff;height:380px;display:flex;flex-direction:column">
+<div style="height:49px;box-sizing:border-box;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:10px;padding:0 8px 0 16px;flex-shrink:0">
+<button type="button" onClick="{{ v.panel }}" aria-label="Menü" style="width:32px;height:32px;margin-left:-8px;border:0;background:transparent;color:#020618;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg></button>
+<span style="width:1px;height:16px;background:#e2e8f0"></span>
+<img src="../assets/dcase-logo.svg" alt="DCase" style="height:22px;width:auto;display:block"><span style="font-weight:600;font-size:11px;color:#475569">ITSM</span>
+</div>
+<div style="flex:1;min-height:0;display:flex;position:relative">
+<sc-if value="{{ v.ortu }}"><div onClick="{{ v.kapat }}" style="position:absolute;inset:0;background:rgba(2,6,24,.35);z-index:1"></div></sc-if>
+<div style="width:{{ v.menuW }};flex-shrink:0;position:relative;z-index:2;height:100%">
+<sc-if value="{{ v.ray }}"><div style="width:56px;height:100%;box-sizing:border-box;background:#fff;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;align-items:center;padding:12px 0 8px;gap:4px">
+<span style="width:32px;height:32px;border-radius:8px;background:#007a55;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ v.kalkan }}"></path></svg></span>
+<button type="button" onClick="{{ v.genislet }}" aria-label="Menüyü genişlet" style="margin-top:4px;width:40px;height:32px;border:0;background:transparent;border-radius:6px;color:#64748b;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="background:#f1f5f9;color:#020618"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5M13 17l5-5-5-5"></path></svg></button>
+<span style="width:24px;height:1px;background:#e2e8f0;margin:4px 0"></span>
+<sc-for list="{{ v.moduller }}" as="m"><button type="button" onClick="{{ m.sec }}" title="{{ m.e }}" aria-label="{{ m.e }}" style="width:40px;height:36px;border:0;border-radius:6px;background:{{ m.rayBg }};display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ m.renk }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ m.ikon }}"></path></svg></button></sc-for>
+<span style="width:40px;height:36px;display:inline-flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3fb3d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ v.kitap }}"></path></svg></span>
+<span style="margin-top:auto;width:32px;height:32px;border-radius:8px;background:#f1f5f9;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">AA</span>
+</div></sc-if>
+<sc-if value="{{ v.panelVar }}"><div style="position:{{ v.panelPos }};top:0;left:0;width:256px;height:100%;box-sizing:border-box;background:#fff;border-right:1px solid #e2e8f0;box-shadow:{{ v.panelGolge }};display:flex;flex-direction:column;font-size:14px">
+<div style="padding:12px 12px 4px;display:flex;align-items:center;gap:8px;height:56px;box-sizing:border-box"><span style="width:32px;height:32px;border-radius:8px;background:#007a55;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ v.kalkan }}"></path></svg></span><span style="font-weight:600;flex:1;min-width:0">Administrator</span><button type="button" onClick="{{ v.daralt }}" aria-label="Menüyü daralt" style="width:28px;height:28px;border:0;background:transparent;border-radius:6px;color:#64748b;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0" style-hover="background:#f1f5f9;color:#020618"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"></path></svg></button></div>
+<div style="flex:1;min-height:0;overflow:auto;padding:8px 8px 0;display:grid;gap:4px;align-content:start">
+<div style="height:32px;display:flex;align-items:center;padding:0 8px;font-size:12px;font-weight:700">Hizmet Masası</div>
+<sc-for list="{{ v.moduller }}" as="m"><div style="display:grid;gap:4px"><button type="button" onClick="{{ m.sec }}" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border:0;border-radius:6px;background:{{ m.grupBg }};font-size:14px;color:#020618;cursor:pointer;text-align:left" style-hover="background:#f1f5f9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ m.renk }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ m.ikon }}"></path></svg><span style="flex:1">{{ m.e }}</span></button><sc-if value="{{ m.acik }}"><span style="height:32px;display:flex;align-items:center;padding:0 8px 0 32px;border-radius:6px;font-size:13px;background:#ecfdf5;color:#007a55;font-weight:600">{{ m.alt }}</span></sc-if></div></sc-for>
+<div style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3fb3d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ v.kitap }}"></path></svg>Bilgi Bankası</div>
+</div>
+<div style="padding:8px"><div style="height:48px;display:flex;align-items:center;gap:8px;padding:0 8px"><span style="width:32px;height:32px;border-radius:8px;background:#f1f5f9;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0">AA</span><span style="font-weight:600;font-size:14px">admin admin</span></div></div>
+</div></sc-if>
+</div>
+<div style="flex:1;min-width:0;background:#f8fafc;padding:16px;display:grid;gap:8px;align-content:start;box-sizing:border-box"><span style="height:10px;width:140px;max-width:80%;border-radius:4px;background:#e2e8f0"></span><span style="height:8px;width:220px;max-width:90%;border-radius:4px;background:#f1f5f9"></span><span style="height:64px;border-radius:10px;background:#fff;border:1px solid #e2e8f0"></span></div>
+</div>
+</div>
+<span style="font-size:12px;color:#64748b">{{ v.kipMetin }}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ v.t_yok }}"></sc-if>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="display:grid;gap:12px">
+<div role="tablist" aria-label="Bilgi" onKeyDown="{{ sekmeTus }}" style="display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid #e2e8f0">
+<sc-for list="{{ sekmeler }}" as="s"><button type="button" role="tab" aria-selected="{{ s.secili }}" tabIndex="{{ s.ti }}" onClick="{{ s.sec }}" style="display:inline-flex;align-items:center;height:38px;padding:0 12px;border:0;border-bottom:2px solid {{ s.cizgi }};margin-bottom:-1px;background:transparent;font-size:13px;font-weight:{{ s.fw }};color:{{ s.fg }};cursor:pointer;white-space:nowrap;box-sizing:border-box" style-hover="color:#020618">{{ s.e }}</button></sc-for>
+</div>
+
+<sc-if value="{{ sOlcu }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:4px 16px">
+<sc-for list="{{ olcuSatir }}" as="r"><div style="display:grid;grid-template-columns:minmax(96px,150px) minmax(0,1fr);gap:4px 16px;padding:10px 0;border-top:1px solid #f1f5f9;font-size:13px;line-height:1.55"><span style="font-weight:600;color:#64748b">{{ r.e }}</span><span style="color:#334155;min-width:0">{{ r.m }}</span></div></sc-for>
+<sc-if value="{{ olcuYok }}"><div style="padding:12px 0;font-size:13px;color:#64748b">Bu bileşen için ölçü satırı yok.</div></sc-if>
+<div style="padding:10px 0;border-top:1px solid #f1f5f9;font-size:12px;color:#64748b">Kaynak: Tasarım dokümanı 1.1 · <a href="{{ dokHref }}">bölüme git</a></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sKullanim }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;display:grid;gap:10px;align-content:start">
+<div style="font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#006045">Kullanılır</div>
+<sc-for list="{{ kullan }}" as="x"><div style="display:grid;grid-template-columns:16px minmax(0,1fr);gap:8px;font-size:13px;line-height:1.55;color:#334155"><span style="color:#007a55;font-weight:700">✓</span><span>{{ x.e }}</span></div></sc-for>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;display:grid;gap:10px;align-content:start">
+<div style="font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#b3282d">Kullanılmaz</div>
+<sc-for list="{{ kullanma }}" as="x"><div style="display:grid;grid-template-columns:16px minmax(0,1fr);gap:8px;font-size:13px;line-height:1.55;color:#334155"><span style="color:#b3282d;font-weight:700">✕</span><span>{{ x.e }}</span></div></sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sErisim }}">
+<div style="display:grid;gap:12px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:4px 16px">
+<div style="font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b;padding:10px 0 8px">Kontrast · WCAG 2.1 AA, hesaplanan</div>
+<sc-for list="{{ kontrast }}" as="x"><div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:8px 0;border-top:1px solid #f1f5f9;font-size:13px"><span style="width:44px;height:28px;border-radius:6px;background:{{ x.bg }};color:{{ x.fg }};border:1px solid #e2e8f0;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0">Aa</span><span style="flex:1 1 180px;min-width:0;color:#334155">{{ x.e }}<span style="display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:#64748b">{{ x.fg }} / {{ x.bg }}</span></span><span style="font-weight:600;font-variant-numeric:tabular-nums;min-width:58px">{{ x.oran }}</span><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:{{ x.cBg }};color:{{ x.cFg }};white-space:nowrap">{{ x.gecer }}</span></div></sc-for>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:4px 16px">
+<div style="font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#64748b;padding:10px 0 8px">Klavye</div>
+<sc-for list="{{ klavye }}" as="x"><div style="display:grid;grid-template-columns:minmax(96px,150px) minmax(0,1fr);gap:4px 16px;padding:8px 0;border-top:1px solid #f1f5f9;font-size:13px;line-height:1.5;align-items:start"><span><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;padding:2px 6px;border:1px solid #e2e8f0;border-bottom-width:2px;border-radius:4px;background:#fff;color:#334155;white-space:nowrap">{{ x.t }}</span></span><span style="color:#334155">{{ x.e }}</span></div></sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sKod }}">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);overflow:hidden">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 16px;border-bottom:1px solid #f1f5f9"><span style="flex:1 1 220px;min-width:0;font-size:12px;color:#64748b">{{ kodNot }}</span><button type="button" onClick="{{ kopyala }}" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:12px;font-weight:500;color:#020618;cursor:pointer" style-hover="background:#f8fafc">Kopyala</button></div>
+<pre style="margin:0;padding:12px 16px;max-height:420px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.55;color:#334155;background:#f8fafc;white-space:pre">{{ kod }}</pre>
+</div>
+</sc-if>
+</div>
+</section>
+
+<aside aria-label="Kontroller" style="flex:1 1 260px;min-width:0;display:grid;gap:16px;align-content:start;position:{{ kontrolPos }};top:65px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;display:grid;gap:14px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:13px;font-weight:600">Kontroller</span><button type="button" onClick="{{ sifirla }}" style="border:0;background:transparent;padding:0;font-size:12px;font-weight:500;color:#007a55;cursor:pointer" style-hover="color:#006045">Sıfırla</button></div>
+<sc-for list="{{ kontroller }}" as="k" hint-placeholder-count="3">
+<div style="display:grid;gap:6px">
+<sc-if value="{{ k.baslikli }}"><div style="font-size:12px;font-weight:600;color:#64748b">{{ k.e }}</div></sc-if>
+<sc-if value="{{ k.sec }}"><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ k.o }}" as="o"><button type="button" onClick="{{ o.sec }}" aria-pressed="{{ o.aktifStr }}" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.fg }};font-size:12px;font-weight:{{ o.fw }};cursor:pointer;white-space:nowrap;box-sizing:border-box">{{ o.e }}</button></sc-for></div></sc-if>
+<sc-if value="{{ k.acik }}"><button type="button" role="checkbox" aria-checked="{{ k.degerStr }}" onClick="{{ k.degistir }}" style="display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:2px 0;font-size:13px;color:#020618;cursor:pointer;text-align:left"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ k.kutuBd }};background:{{ k.kutuBg }};color:#fff;font-size:10px;line-height:12px;text-align:center;box-sizing:border-box;flex-shrink:0">{{ k.isaret }}</span>{{ k.e }}</button></sc-if>
+<sc-if value="{{ k.aralik }}"><div style="display:flex;align-items:center;gap:10px"><input type="range" min="{{ k.min }}" max="{{ k.max }}" step="{{ k.adim }}" value="{{ k.deger }}" onChange="{{ k.degistir }}" aria-label="{{ k.e }}" style="flex:1;min-width:0;accent-color:#007a55"><span style="font-size:12px;font-weight:600;color:#334155;font-variant-numeric:tabular-nums;min-width:44px;text-align:right;white-space:nowrap">{{ k.goster }}</span></div></sc-if>
+<sc-if value="{{ k.metin }}"><input type="text" value="{{ k.deger }}" onChange="{{ k.degistir }}" aria-label="{{ k.e }}" style="height:32px;padding:0 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;color:#020618;background:#fff;outline:0;box-sizing:border-box;width:100%" style-focus="border-color:#007a55;box-shadow:0 0 0 2px rgba(0,122,85,.15)"></sc-if>
+<sc-if value="{{ k.ipucuVar }}"><div style="font-size:11px;line-height:1.45;color:#64748b">{{ k.ipucu }}</div></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:14px 16px;display:grid;gap:10px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-size:13px;font-weight:600">Olaylar</span><sc-if value="{{ olayVar }}"><button type="button" onClick="{{ olayTemizle }}" style="border:0;background:transparent;padding:0;font-size:12px;font-weight:500;color:#007a55;cursor:pointer">Temizle</button></sc-if></div>
+<sc-if value="{{ olayYok }}"><div style="font-size:12px;line-height:1.5;color:#64748b">Örnekle etkileşince bileşenin ürettiği olaylar burada görünür.</div></sc-if>
+<div role="log" aria-live="polite" style="display:grid;gap:8px">
+<sc-for list="{{ olaylar }}" as="o"><div style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;font-size:12px;line-height:1.45"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:#64748b">{{ o.t }}</span><span style="color:#334155;min-width:0">{{ o.m }}</span></div></sc-for>
+</div>
+</div>
+</aside>
+
+</div>
+</div>
+</div>
+</sc-if>
+</main>
+</div>
+
+<sc-if value="{{ menuAcik }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ menuDisari }}" style="position:fixed;inset:0;z-index:80"></div>
+<div ref="{{ menuRef }}" tabIndex="-1" role="menu" aria-label="{{ menuBaslik }}" onKeyDown="{{ menuTus }}" style="position:fixed;left:{{ menuX }};top:{{ menuY }};z-index:81;width:{{ menuW }};max-width:calc(100vw - 16px);background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.12);padding:6px;outline:0;box-sizing:border-box;font-family:Inter,system-ui,sans-serif;color:#020618">
+<sc-if value="{{ menuBaslikVar }}"><div style="font-size:11px;color:#64748b;padding:4px 8px 8px;margin-bottom:4px;border-bottom:1px solid #f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ menuBaslik }}</div></sc-if>
+<sc-for list="{{ menuOgeler }}" as="o">
+<sc-if value="{{ o.ayirici }}"><div style="height:1px;background:#f1f5f9;margin:4px 0"></div></sc-if>
+<div role="menuitem" aria-checked="{{ o.secili }}" onClick="{{ o.sec }}" onMouseEnter="{{ o.ust }}" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:6px;font-size:13px;color:{{ o.renk }};background:{{ o.zemin }};cursor:pointer;white-space:nowrap">
+<sc-if value="{{ o.kutu }}"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ o.kBd }};background:{{ o.kBg }};color:#fff;font-size:10px;line-height:12px;text-align:center;box-sizing:border-box;flex-shrink:0">{{ o.kIs }}</span></sc-if>
+<sc-if value="{{ o.noktaVar }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.noktaBg }};border:2px solid {{ o.nokta }};box-sizing:border-box;flex-shrink:0"></span></sc-if>
+<sc-if value="{{ o.kodVar }}"><span style="font-weight:600;color:{{ o.kodRenk }};min-width:18px">{{ o.kod }}</span></sc-if>
+<sc-if value="{{ o.ikonVar }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ o.ikonRenk }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="{{ o.ikon }}"></path></svg></sc-if>
+<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis">{{ o.e }}</span>
+<sc-if value="{{ o.tik }}"><span style="color:#007a55;font-weight:600">✓</span></sc-if>
+</div>
+</sc-for>
+<sc-if value="{{ menuAltVar }}"><button type="button" onClick="{{ menuAltSec }}" style="display:block;width:100%;border:0;border-top:1px solid #f1f5f9;margin-top:4px;padding:8px;background:transparent;text-align:center;font-size:12px;color:#007a55;cursor:pointer">{{ menuAlt }}</button></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ toastVar }}" hint-placeholder-val="{{ false }}"><div role="status" style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);max-width:min(520px,calc(100vw - 40px));box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;line-height:1.4;font-family:Inter,system-ui,sans-serif"><span>{{ toastMetin }}</span><sc-if value="{{ toastGeri }}"><button type="button" onClick="{{ toastGeriAl }}" style="height:26px;padding:0 10px;border-radius:6px;background:rgba(255,255,255,.12);color:#00bc7d;font-size:12px;font-weight:600;border:0;cursor:pointer;flex-shrink:0">Geri al</button></sc-if></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { hazir: false, sec: 'durum', mod: 'canli', gen: 'fit', sekme: 'olcu', vals: {}, olaylar: [], menu: null, toast: null, ara: '', listeAcik: false, W: 1200, cw: 800, kod: '' };
+
+  componentDidMount() {
+    const q = new URLSearchParams(location.search).get('b');
+    const bas = () => { const L = window.DCASE_LAB; L.bilesenler = L.bilesenler.filter((b, i, a) => a.findIndex(x => x.id === b.id) === i); this.setState({ hazir: true, sec: L.bilesenler.some(b => b.id === q) ? q : this.state.sec }); [150, 600, 1500].forEach(ms => setTimeout(() => this.olc(), ms)); };
+    const D = ['bilesen-lab-olcu.js', 'bilesen-lab-1.js', 'bilesen-lab-2.js', 'bilesen-lab-3.js', 'bilesen-lab-4.js', 'bilesen-lab-5.js'];
+    const yukle = i => {
+      if (i >= D.length) { if (window.DCASE_LAB) window.DCASE_LAB.tamam = true; bas(); return; }
+      const s = document.createElement('script'); s.src = './lab/' + D[i]; s.onload = s.onerror = () => yukle(i + 1); document.head.appendChild(s);
+    };
+    if (window.DCASE_LAB && window.DCASE_LAB.tamam) bas(); else { window.DCASE_LAB = undefined; yukle(0); }
+    this._kay = () => { if (this.state.menu) this.menuKapat(false); };
+    this._boy = () => { this._kay(); this.olc(); };
+    window.addEventListener('scroll', this._kay, true);
+    window.addEventListener('resize', this._boy);
+    this._tik = setInterval(() => this.tikla(), 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this._bekle); clearInterval(this._tik); clearTimeout(this._toastT); this.zamanSifirla();
+    if (this._ro) this._ro.disconnect();
+    window.removeEventListener('scroll', this._kay, true); window.removeEventListener('resize', this._boy);
+  }
+  componentDidUpdate() {
+    if (this.state.hazir && this.state.sekme === 'kod' && this.state.mod === 'canli' && this._pv) {
+      const tam = this.parca(this._pv); this._kodTam = tam;
+      const k = tam.length > 16000 ? tam.slice(0, 16000) + '\n…' : tam;
+      if (k !== this.state.kod) this.setState({ kod: k });
+    }
+  }
+
+  ro() { if (!this._ro) this._ro = new ResizeObserver(() => { cancelAnimationFrame(this._raf); this._raf = requestAnimationFrame(() => this.olc()); }); return this._ro; }
+  olc() { const W = this._dis ? Math.round(this._dis.clientWidth) : this.state.W, cw = this._pv ? Math.round(this._pv.clientWidth) : this.state.cw; if (W !== this.state.W || cw !== this.state.cw) this.setState({ W, cw }); }
+  disRef = el => { if (el === this._dis) return; if (this._dis) this.ro().unobserve(this._dis); this._dis = el; if (el) { this.ro().observe(el); this.olc(); } };
+  pvRef = el => { if (el === this._pv) return; if (this._pv) this.ro().unobserve(this._pv); this._pv = el; if (el) { this.ro().observe(el); this.olc(); } };
+
+  B() { const L = window.DCASE_LAB; return L.bilesenler.find(b => b.id === this.state.sec) || L.bilesenler[0]; }
+  degerler(B, ham) { const d = { ...B.varsayilan, ...(ham || {}) }; if (B.duzelt) B.duzelt(d); return d; }
+  setVal(id, o) { this.setState(s => ({ vals: { ...s.vals, [id]: { ...(s.vals[id] || {}), ...o } } })); }
+  sonra(ms, fn, key) { this._z = this._z || {}; clearTimeout(this._z[key]); this._z[key] = setTimeout(fn, ms); }
+  zamanSifirla() { Object.values(this._z || {}).forEach(clearTimeout); this._z = {}; }
+  logla(m) { const t = new Date(), s = [t.getHours(), t.getMinutes(), t.getSeconds()].map(n => String(n).padStart(2, '0')).join(':'); this.setState(st => ({ olaylar: [{ t: s, m }].concat(st.olaylar).slice(0, 8) })); }
+  toastGoster(m, geri) { clearTimeout(this._toastT); this.setState({ toast: { m, geri: geri || null } }); this._toastT = setTimeout(() => this.setState({ toast: null }), geri ? 6500 : 3200); }
+  toastGeriAl = () => {
+    const t = this.state.toast; if (!t || !t.geri) return; t.geri();
+    const mm = t.m.match(/^([A-Z]{3}-?\d+)/) || t.m.match(/^(\d+ \S+)/);
+    this.logla('Geri alındı · ' + t.m); this.toastGoster(mm ? mm[1] + ' · değişiklik geri alındı' : 'Değişiklik geri alındı');
+  };
+  api(canli) {
+    if (!canli) return this._noop || (this._noop = { canli: false, cw: 1200, set() {}, setMany() {}, toast() {}, log() {}, menu() {}, after() {} });
+    const id = this.state.sec;
+    return { canli: true, cw: this.state.cw, set: (k, v) => this.setVal(id, { [k]: v }), setMany: o => this.setVal(id, o), toast: (m, g) => this.toastGoster(m, g), log: m => this.logla(m), menu: (ev, cfg) => this.menuAc(ev, cfg), after: (ms, fn, key) => this.sonra(ms, fn, key || 'v') };
+  }
+
+  menuAc(ev, cfg) {
+    const el = ev.currentTarget, r = el.getBoundingClientRect(), w = cfg.genislik || 220;
+    const h = cfg.ogeler.length * 32 + (cfg.baslik ? 30 : 0) + (cfg.alt ? 38 : 0) + 14 + cfg.ogeler.filter(o => o.ayirici).length * 9;
+    let x = cfg.hiza === 'sag' ? r.right - w : r.left; x = Math.max(8, Math.min(x, window.innerWidth - w - 8));
+    let y = r.bottom + 4; if (y + h > window.innerHeight - 8) y = Math.max(8, r.top - h - 4);
+    const aktif = cfg.coklu ? 0 : Math.max(0, cfg.ogeler.findIndex(o => o.k === cfg.secili));
+    this._tetik = el; this._menuEl = null;
+    this.setState({ menu: { ...cfg, x: Math.round(x), y: Math.round(y), w, aktif } });
+  }
+  menuKapat(odak) { this.setState({ menu: null }); if (odak !== false && this._tetik && this._tetik.isConnected) { try { this._tetik.focus({ preventScroll: true }); } catch (e) {} } }
+  menuSec(i) {
+    const m = this.state.menu; if (!m) return; const o = m.ogeler[i]; if (!o) return;
+    if (m.coklu) { const cur = m.secili || [], s = cur.includes(o.k) ? cur.filter(x => x !== o.k) : cur.concat(o.k); this.setState({ menu: { ...m, secili: s, aktif: i } }); m.sec(s); }
+    else { this.menuKapat(); m.sec(o.k); }
+  }
+  menuRef = el => { if (el && el !== this._menuEl) { this._menuEl = el; try { el.focus({ preventScroll: true }); } catch (e) {} } };
+  menuTus = ev => {
+    const m = this.state.menu; if (!m) return; const n = m.ogeler.length;
+    if (ev.key === 'ArrowDown') { ev.preventDefault(); this.setState({ menu: { ...m, aktif: (m.aktif + 1) % n } }); }
+    else if (ev.key === 'ArrowUp') { ev.preventDefault(); this.setState({ menu: { ...m, aktif: (m.aktif - 1 + n) % n } }); }
+    else if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); this.menuSec(m.aktif); }
+    else if (ev.key === 'Escape') { ev.preventDefault(); this.menuKapat(); }
+    else if (ev.key === 'Tab') this.menuKapat();
+  };
+
+  secBilesen(id) {
+    if (id === this.state.sec) { this.setState({ listeAcik: false }); return; }
+    this.zamanSifirla(); this.setState({ sec: id, menu: null, mod: 'canli', kod: '', listeAcik: false });
+    try { history.replaceState(null, '', '?b=' + id); } catch (e) {}
+  }
+  tikla() { if (!this.state.hazir) return; const B = this.B(); if (!B.tick) return; const p = B.tick(this.degerler(B, this.state.vals[B.id])); if (p) this.setVal(B.id, p); }
+
+  kontrolVm(B, k, d) {
+    const deger = d[k.k], fn = (x, v) => typeof x === 'function' ? x(v) : x;
+    const o = { e: k.e, ipucuVar: !!k.ipucu, ipucu: k.ipucu || '', baslikli: k.t !== 'acik', sec: false, acik: false, aralik: false, metin: false };
+    const yaz = v => this.setVal(B.id, { [k.k]: v });
+    if (k.t === 'sec' || k.t === 'coklu') {
+      o.sec = true;
+      o.o = fn(k.o, d).map(x => { const key = x[0], on = k.t === 'coklu' ? (deger || []).includes(key) : deger === key;
+        return { e: x[1] != null ? x[1] : x[0], aktifStr: String(on), bd: on ? '#007a55' : '#e2e8f0', bg: on ? '#ecfdf5' : '#fff', fg: on ? '#006045' : '#334155', fw: on ? 600 : 500,
+          sec: () => yaz(k.t === 'coklu' ? (on ? (deger || []).filter(z => z !== key) : (deger || []).concat(key)) : key) }; });
+    } else if (k.t === 'acik') {
+      Object.assign(o, { acik: true, degerStr: String(!!deger), kutuBd: deger ? '#007a55' : '#cbd5e1', kutuBg: deger ? '#007a55' : '#fff', isaret: deger ? '✓' : '', degistir: () => yaz(!deger) });
+    } else if (k.t === 'aralik') {
+      Object.assign(o, { aralik: true, min: fn(k.min, d), max: fn(k.max, d), adim: k.adim || 1, deger: Math.round(deger || 0), goster: k.goster ? k.goster(deger, d) : Math.round(deger || 0) + (k.birim || ''), degistir: ev => yaz(+ev.target.value) });
+    } else Object.assign(o, { metin: true, deger: deger == null ? '' : deger, degistir: ev => yaz(ev.target.value) });
+    return o;
+  }
+
+  parca(el) {
+    const hex = s => String(s).replace(/rgba?\(([^)]+)\)/g, (m, x) => { const p = x.split(',').map(t => t.trim()); if (p.length === 4 && p[3] !== '1') return m; return '#' + p.slice(0, 3).map(n => (+n).toString(16).padStart(2, '0')).join(''); });
+    const AT = /^(style|href|type|role|aria-[\w-]+|src|alt|title|placeholder|rows|disabled|tabindex)$/i, BOS = ['input', 'img', 'br', 'hr'];
+    const yaz = (n, d) => {
+      const ic = '  '.repeat(d);
+      if (n.nodeType === 3) { const t = n.textContent.replace(/\s+/g, ' ').trim(); return t ? ic + t + '\n' : ''; }
+      if (n.nodeType !== 1) return '';
+      const tag = n.tagName.toLowerCase();
+      if (/^(sc-|x-|dc-)/.test(tag)) return [...n.childNodes].map(c => yaz(c, d)).join('');
+      if (tag === 'svg') return ic + hex(n.outerHTML).replace(/\s*\n\s*/g, '') + '\n';
+      const at = [...n.attributes].filter(a => AT.test(a.name)).map(a => ' ' + a.name + '="' + hex(a.value).replace(/"/g, '&quot;') + '"').join('');
+      if (BOS.includes(tag)) return ic + '<' + tag + at + '>\n';
+      const k = [...n.childNodes].filter(c => c.nodeType === 1 || (c.nodeType === 3 && c.textContent.trim()));
+      if (!k.length) return ic + '<' + tag + at + '></' + tag + '>\n';
+      if (k.length === 1 && k[0].nodeType === 3) return ic + '<' + tag + at + '>' + k[0].textContent.replace(/\s+/g, ' ').trim() + '</' + tag + '>\n';
+      return ic + '<' + tag + at + '>\n' + k.map(c => yaz(c, d + 1)).join('') + ic + '</' + tag + '>\n';
+    };
+    return [...el.childNodes].map(c => yaz(c, 0)).join('');
+  }
+  kopyala = () => {
+    const t = this._kodTam || this.state.kod;
+    const ok = () => { this.toastGoster('HTML parçası panoya kopyalandı'); this.logla('Kod kopyalandı · ' + t.length + ' karakter'); };
+    const hata = () => this.toastGoster('Kopyalanamadı · metni seçip kopyalayın');
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, hata); else hata();
+  };
+  sekmeTus = ev => {
+    const SK = ['olcu', 'kullanim', 'erisim', 'kod'], i = SK.indexOf(this.state.sekme); let j = -1;
+    if (ev.key === 'ArrowRight') j = (i + 1) % 4; else if (ev.key === 'ArrowLeft') j = (i + 3) % 4; else if (ev.key === 'Home') j = 0; else if (ev.key === 'End') j = 3;
+    if (j < 0) return; ev.preventDefault(); const tl = ev.currentTarget; this.setState({ sekme: SK[j] }); setTimeout(() => { const b = tl.querySelectorAll('[role=tab]')[j]; if (b) b.focus(); }, 30);
+  };
+
+  labSec = id => this.secBilesen(id);
+  renderVals() {
+    const S = this.state, L = window.DCASE_LAB, O = window.DCASE_LAB_OLCU;
+    if (!S.hazir || !L || !O) return { hazir: false, yukleniyor: true, menuAcik: false, toastVar: false, secId: S.sec, labSec: this.labSec };
+    const B = this.B(), d = this.degerler(B, S.vals[B.id]);
+    const bayrak = { t_yok: false }; L.bilesenler.forEach(b => { bayrak['t_' + b.id] = b.id === B.id; });
+    const taban = { pad: '20px', minH: B.minH || '120px' };
+    const varyant = S.mod === 'varyant';
+    const gosterim = varyant
+      ? B.varyantlar.map(x => ({ ...bayrak, ...B.vm(this.degerler(B, x.d), this.api(false)), ...taban, etiketli: true, etiket: x.e, gen: '100%', pvRef: null,
+          dene: () => { this.zamanSifirla(); this.setState(st => ({ vals: { ...st.vals, [B.id]: { ...x.d } }, mod: 'canli' })); this.logla('Varyant denendi · ' + x.e); } }))
+      : [{ ...bayrak, ...B.vm(d, this.api(true)), ...taban, etiketli: false, etiket: '', dene: () => {}, gen: S.gen === 'fit' ? '100%' : S.gen + 'px', pvRef: this.pvRef }];
+
+    const kontrolYan = S.W >= 700;
+    const O1 = O[B.dok] || { desc: '', specs: [], ekstra: [] };
+    const olcu = B.olcuSec ? (O1.specs || []).filter(r => B.olcuSec.includes(r[0])) : (O1.ekstra || []).concat(O1.specs || []);
+    const grup = L.gruplar.find(g => g.id === B.grup);
+    const seg = (k, e, on, f) => ({ e, basili: String(on), bg: on ? '#ecfdf5' : 'transparent', fg: on ? '#006045' : '#64748b', fw: on ? 600 : 500, sec: f });
+    const M = S.menu;
+    const menuOgeler = M ? M.ogeler.map((o, i) => { const sc = M.coklu ? (M.secili || []).includes(o.k) : M.secili === o.k, ak = i === M.aktif;
+      return { e: o.e, ayirici: !!o.ayirici, renk: o.yikici ? '#b3282d' : '#020618', zemin: ak ? '#f8fafc' : 'transparent', kutu: !!M.coklu, kBd: sc ? '#007a55' : '#cbd5e1', kBg: sc ? '#007a55' : '#fff', kIs: sc ? '✓' : '',
+        noktaVar: !!o.nokta, nokta: o.nokta || '', noktaBg: o.bos ? '#fff' : (o.nokta || ''), kodVar: !!o.kod, kod: o.kod || '', kodRenk: o.kodRenk || '#020618',
+        ikonVar: !!o.ikon, ikon: o.ikon || '', ikonRenk: o.kritik ? '#d23f43' : o.yikici ? '#b3282d' : '#64748b', tik: !M.coklu && sc, secili: String(sc),
+        sec: () => this.menuSec(i), ust: () => { const m = this.state.menu; if (m && m.aktif !== i) this.setState({ menu: { ...m, aktif: i } }); } }; }) : [];
+
+    return {
+      hazir: true, yukleniyor: false, disRef: this.disRef, secId: B.id, labSec: this.labSec,
+      kontrolPos: kontrolYan ? 'sticky' : 'static',
+      secAd: B.ad, secNo: B.no, secGrup: grup ? grup.ad : '', aciklama: B.aciklama || O1.desc || '',
+      dokHref: '../Tasarim Dokumani.dc.html#' + B.dok, dokEtiket: 'Tasarım dokümanı · ' + (B.dok === 't-kabuk' ? '2.4 Kabuk' : B.no),
+      modlar: [seg('canli', 'Canlı örnek', !varyant, () => this.setState({ mod: 'canli', menu: null })), seg('varyant', 'Tüm varyantlar · ' + B.varyantlar.length, varyant, () => this.setState({ mod: 'varyant', menu: null }))],
+      canliMod: !varyant, genler: [['fit', 'Sığdır'], ['360', '360'], ['800', '800'], ['1200', '1200']].map(([k, e]) => seg(k, e, S.gen === k, () => this.setState({ gen: k }))),
+      cerceveMetin: varyant ? '"Dene" varyantı canlı örneğe yükler' : (S.gen === 'fit' ? 'Çerçeve ' + S.cw + ' px' : 'Çerçeve ' + S.gen + ' px · yatay kaydırılabilir'),
+      izgara: varyant ? 'repeat(auto-fill,minmax(min(100%,' + (B.vmin || 280) + 'px),1fr))' : 'minmax(0,1fr)', gosterim,
+      sekmeler: [['olcu', 'Ölçüler'], ['kullanim', 'Kullanım'], ['erisim', 'Kontrast ve klavye'], ['kod', 'Kod']].map(([k, e]) => { const on = S.sekme === k; return { e, secili: String(on), ti: on ? 0 : -1, cizgi: on ? '#007a55' : 'transparent', fw: on ? 600 : 500, fg: on ? '#020618' : '#64748b', sec: () => this.setState({ sekme: k }) }; }),
+      sekmeTus: this.sekmeTus, sOlcu: S.sekme === 'olcu', sKullanim: S.sekme === 'kullanim', sErisim: S.sekme === 'erisim', sKod: S.sekme === 'kod',
+      olcuSatir: olcu.map(r => ({ e: r[0], m: r[1] })), olcuYok: !olcu.length,
+      kullan: (B.kullan || []).map(e => ({ e })), kullanma: (B.kullanma || []).map(e => ({ e })),
+      kontrast: (B.kontrast || []).map(([fg, bg, e, esik]) => { const r = L.oran(fg, bg), g = esik == null ? null : r >= esik;
+        return { fg, bg, e, oran: r.toFixed(2).replace('.', ',') + ':1', gecer: esik == null ? 'Metinle birlikte' : (g ? 'Geçer' : 'Kalmaz') + ' · ' + (esik >= 4.5 ? '4,5:1 metin' : '3:1 büyük metin / UI'), cBg: esik == null ? '#f1f5f9' : g ? '#ecfdf5' : '#fbe9ea', cFg: esik == null ? '#64748b' : g ? '#006045' : '#b3282d' }; }),
+      klavye: (B.klavye || []).map(([t, e]) => ({ t, e })),
+      kod: varyant ? 'Kod, canlı örnekteki güncel durumdan üretilir. "Canlı örnek" görünümüne geçin.' : (S.kod || '…'), kopyala: this.kopyala,
+      kodNot: 'Canlı örneğin şu anki DOM\'undan üretilir; renkler hex, stiller satır içi.',
+      kontroller: B.kontroller.filter(k => !k.kosul || k.kosul(d)).map(k => this.kontrolVm(B, k, d)),
+      sifirla: () => { this.zamanSifirla(); this.setState(st => ({ vals: { ...st.vals, [B.id]: undefined } })); this.logla('Kontroller sıfırlandı'); },
+      olaylar: S.olaylar, olayYok: !S.olaylar.length, olayVar: S.olaylar.length > 0, olayTemizle: () => this.setState({ olaylar: [] }),
+      menuAcik: !!M, menuX: M ? M.x + 'px' : '0', menuY: M ? M.y + 'px' : '0', menuW: M ? M.w + 'px' : '220px', menuBaslik: M && M.baslik ? M.baslik : 'Menü', menuBaslikVar: !!(M && M.baslik),
+      menuOgeler, menuRef: this.menuRef, menuTus: this.menuTus, menuDisari: () => this.menuKapat(),
+      menuAltVar: !!(M && M.alt), menuAlt: M && M.alt ? M.alt : '', menuAltSec: () => { const m = this.state.menu; if (m) { this.menuKapat(); m.sec([]); } },
+      toastVar: !!S.toast, toastMetin: S.toast ? S.toast.m : '', toastGeri: !!(S.toast && S.toast.geri), toastGeriAl: this.toastGeriAl
+    };
+  }
+}
+</script>
+</body>
+</html>

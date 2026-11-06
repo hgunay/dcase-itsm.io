@@ -10,10 +10,10 @@
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
+<style>body{margin:0;background:#fff;} a{color:#007a55;text-decoration:none;} a:hover{color:#006045;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
 </helmet>
-<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
-<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 1 · Vardiya devri modu</span><span style="color:#64748b">Deneyin: sağ üstte "Vardiya devri" → formu doldur → gönder → devralan görünümünde "Devraldım"</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Kademe 3 Konseptler.dc.html#k1" style="color:#fff">Analiz</a></div>
+<div lang="tr" style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px"><span style="color:#00bc7d;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Konsept 1 · Vardiya devri modu</span><span style="color:#64748b">Deneyin: sağ üstte "Vardiya devri" → formu doldur → gönder → devralan görünümünde "Devraldım"</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a></div>
 <div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" hint-size="100%,49px"></dc-import></div>
 <div style="display:flex;align-items:flex-start">
 <div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" style="height:100%" hint-size="256px,100%"></dc-import></div>
@@ -24,7 +24,7 @@
 <span style="height:32px;padding:0 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;font-size:13px;display:inline-flex;align-items:center;gap:6px">Ekip: Hizmet Masası <span style="color:#64748b;font-size:10px">▾</span></span>
 <span style="font-size:12px;color:#64748b">Son güncelleme 15:58</span>
 <sc-if value="{{ isDevreden }}" hint-placeholder-val="{{ true }}">
-<button type="button" onClick="{{ openDrawer }}" style="height:32px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg>Vardiya devri</button>
+<button type="button" onClick="{{ openDrawer }}" style="height:32px;padding:0 12px;border-radius:6px;background:#007a55;color:#fff;border:0;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg>Vardiya devri</button>
 </sc-if>
 <sc-if value="{{ isDevralan }}" hint-placeholder-val="{{ false }}">
 <span style="font-size:12px;padding:4px 10px;border-radius:999px;background:#f1f5f9;color:#334155;font-weight:600">Görünüm: Gece ekibi</span>
@@ -38,14 +38,14 @@
 <span style="font-weight:600;font-size:14px">Gündüz → Gece vardiyası · admin admin · 15:58</span>
 <span style="font-size:13px;color:#7a5a12">1 major incident · 4 SLA riski · 9 kayıt devredildi</span>
 <a href="#" style="margin-left:auto;font-size:13px;font-weight:500">Raporu aç</a>
-<button type="button" onClick="{{ ack }}" style="height:32px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Devraldım</button>
+<button type="button" onClick="{{ ack }}" style="height:32px;padding:0 14px;border-radius:6px;background:#007a55;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Devraldım</button>
 </div>
 </sc-if>
 <sc-if value="{{ showAck }}" hint-placeholder-val="{{ false }}">
-<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 16px;border-radius:12px;background:#e6f4f1;border:1px solid #b9e2d8;margin-bottom:14px">
-<span style="font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:6px;background:#1f8a6f;color:#fff">DEVRALINDI</span>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 16px;border-radius:12px;background:#ecfdf5;border:1px solid #a4f4cf;margin-bottom:14px">
+<span style="font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:6px;background:#007a55;color:#fff">DEVRALINDI</span>
 <span style="font-weight:600;font-size:14px">Gece ekibi devri 16:04'te onayladı</span>
-<span style="font-size:13px;color:#1f6b58">Devir kaydı audit log'a yazıldı · Takım liderine bildirim gitti</span>
+<span style="font-size:13px;color:#006045">Devir kaydı audit log'a yazıldı · Takım liderine bildirim gitti</span>
 </div>
 </sc-if>
 
@@ -63,9 +63,9 @@
 <a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">{{ myAssigned }}</div><div style="font-size:12px;color:#64748b;margin-top:4px">Bana atanan</div></a>
 <a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#fdf6e8;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1;color:#b16a08">7</div><div style="font-size:12px;color:#64748b;margin-top:4px">Ekipte atanmamış</div></a>
 <a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">3</div><div style="font-size:12px;color:#64748b;margin-top:4px">Onayımı bekleyen</div></a>
-<a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">5</div><div style="font-size:12px;color:#64748b;margin-top:4px">Müşteri yanıtı geldi</div></a>
+<a href="#" style="display:block;padding:10px 12px;border-radius:10px;background:#f8fafc;color:inherit"><div style="font-size:26px;font-weight:600;line-height:1.1">5</div><div style="font-size:12px;color:#64748b;margin-top:4px">Bildiren yanıtı geldi</div></a>
 </div>
-<sc-if value="{{ hasTransfer }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;font-size:12px;color:#1f6b58;background:#e6f4f1;border-radius:8px;padding:8px 10px">{{ transferredNote }}</div></sc-if>
+<sc-if value="{{ hasTransfer }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;font-size:12px;color:#006045;background:#ecfdf5;border-radius:8px;padding:8px 10px">{{ transferredNote }}</div></sc-if>
 </div>
 
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
@@ -77,7 +77,7 @@
 </div>
 
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px">
-<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><div style="font-size:14px;font-weight:600">Günün özeti</div><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #08748e;color:#08748e">AI</span></div>
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><div style="font-size:14px;font-weight:600">Günün özeti</div><span style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:4px;border:1px solid #007a55;color:#007a55">AI</span></div>
 <div style="display:grid;gap:12px;font-size:13px;line-height:1.5">
 <div><div>Hesap Operasyonları talepleri son 7 gün ortalamasının <span style="font-weight:600">2,8 katı</span>. 09:40'ta devreye alınan CHG-1123 ile zaman örtüşmesi var.</div><a href="#" style="font-size:12px;font-weight:500">Değişiklikle ilişkilendir</a></div>
 <div><div>3 olay aynı hata mesajını taşıyor (LDAP timeout). Problem kaydı PRB-0412 açıldı.</div><a href="#" style="font-size:12px;font-weight:500">Problem kaydını aç</a></div>
@@ -88,8 +88,8 @@
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:14px">
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px"><div style="font-size:12px;color:#64748b">Açılan · bugün</div><div style="font-size:28px;font-weight:600;line-height:1.1;margin-top:4px">48</div><div style="font-size:12px;margin-top:4px;color:#b16a08">+12% · geçen hafta aynı gün</div></div>
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px"><div style="font-size:12px;color:#64748b">Çözülen · bugün</div><div style="font-size:28px;font-weight:600;line-height:1.1;margin-top:4px">41</div><div style="font-size:12px;margin-top:4px;color:#64748b">−4% · geçen hafta aynı gün</div></div>
-<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px"><div style="font-size:12px;color:#64748b">Ort. çözüm süresi · 7 gün</div><div style="font-size:28px;font-weight:600;line-height:1.1;margin-top:4px">3s 20dk</div><div style="font-size:12px;margin-top:4px;color:#1f8a6f">−18 dk · önceki 7 gün</div></div>
-<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px"><div style="font-size:12px;color:#64748b">İlk yanıt · 7 gün</div><div style="font-size:28px;font-weight:600;line-height:1.1;margin-top:4px">12 dk</div><div style="font-size:12px;margin-top:4px;color:#1f8a6f">Hedef 15 dk · tutuyor</div></div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px"><div style="font-size:12px;color:#64748b">Ort. çözüm süresi · 7 gün</div><div style="font-size:28px;font-weight:600;line-height:1.1;margin-top:4px">3s 20dk</div><div style="font-size:12px;margin-top:4px;color:#007a55">−18 dk · önceki 7 gün</div></div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(2,6,24,.05);padding:16px"><div style="font-size:12px;color:#64748b">İlk yanıt · 7 gün</div><div style="font-size:28px;font-weight:600;line-height:1.1;margin-top:4px">12 dk</div><div style="font-size:12px;margin-top:4px;color:#007a55">Hedef 15 dk · tutuyor</div></div>
 </div>
 </main>
 </div>
@@ -98,7 +98,7 @@
 <div onClick="{{ closeDrawer }}" style="position:fixed;inset:0;background:rgba(2,6,24,.35);z-index:80"></div>
 <div style="position:fixed;top:0;right:0;bottom:0;width:600px;max-width:100vw;background:#fff;z-index:81;box-shadow:-8px 0 32px rgba(2,6,24,.18);display:flex;flex-direction:column;font-family:Inter,system-ui,sans-serif;color:#020618">
 <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #e2e8f0">
-<div style="flex:1"><div style="font-size:16px;font-weight:600">Vardiya devri</div><div style="font-size:13px;color:#64748b;margin-top:2px">Gündüz 08:00–16:00 <span style="color:#08748e;font-weight:600">→</span> Gece 16:00–24:00 · kesit 15:58</div></div>
+<div style="flex:1"><div style="font-size:16px;font-weight:600">Vardiya devri</div><div style="font-size:13px;color:#64748b;margin-top:2px">Gündüz 08:00–16:00 <span style="color:#007a55;font-weight:600">→</span> Gece 16:00–24:00 · kesit 15:58</div></div>
 <button type="button" onClick="{{ closeDrawer }}" style="width:32px;height:32px;border-radius:6px;border:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:#64748b"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
 </div>
 
@@ -125,12 +125,12 @@
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="font-size:13px;font-weight:600">Bana atanan açık kayıtlar</div><span style="font-size:10px;font-weight:600;letter-spacing:.04em;padding:2px 6px;border-radius:4px;background:#f1f5f9;color:#64748b">OTOMATİK</span><span style="margin-left:auto;font-size:12px;color:#64748b">12 kayıt · 3'ü müşteri yanıtı bekliyor</span></div>
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13px"><label for="queue">Devret:</label>
 <select id="queue" value="{{ queue }}" onChange="{{ setQueue }}" style="height:32px;padding:0 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;font-size:13px;color:#020618"><option value="gece">Gece ekibi kuyruğu (9 kayıt)</option><option value="lider">Takım lideri (9 kayıt)</option><option value="bende">Devretme, bende kalsın</option></select>
-<span style="color:#64748b;font-size:12px">Müşteri yanıtı bekleyen 3 kayıt devredende kalır.</span></div>
+<span style="color:#64748b;font-size:12px">Bildiren yanıtı bekleyen 3 kayıt devredende kalır.</span></div>
 </div>
 
 <div style="border:1px solid #e2e8f0;border-radius:12px;padding:14px">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><label for="note" style="font-size:13px;font-weight:600">Devreden notu</label><span style="font-size:12px;color:#64748b">{{ noteLen }} karakter</span></div>
-<textarea id="note" value="{{ note }}" onChange="{{ setNote }}" rows="4" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;line-height:1.55;color:#020618;resize:vertical;outline-color:#08748e"></textarea>
+<textarea id="note" value="{{ note }}" onChange="{{ setNote }}" rows="4" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;line-height:1.55;color:#020618;resize:vertical;outline-color:#007a55"></textarea>
 </div>
 
 <div style="border:1px solid #e2e8f0;border-radius:12px;padding:14px">
@@ -145,13 +145,13 @@
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 20px;border-top:1px solid #e2e8f0">
 <span style="font-size:12px;color:#64748b;margin-right:auto">Taslak otomatik kaydedildi</span>
 <button type="button" onClick="{{ pdf }}" style="height:34px;padding:0 14px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">PDF indir</button>
-<button type="button" onClick="{{ send }}" disabled="{{ cannotSend }}" style="height:34px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer;opacity:{{ sendOpacity }}">Devri gönder</button>
+<button type="button" onClick="{{ send }}" disabled="{{ cannotSend }}" style="height:34px;padding:0 14px;border-radius:6px;background:#007a55;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer;opacity:{{ sendOpacity }}">Devri gönder</button>
 </div>
 </sc-if>
 
 <sc-if value="{{ isSent }}" hint-placeholder-val="{{ false }}">
 <div style="flex:1;overflow:auto;padding:20px;display:grid;gap:16px;align-content:start">
-<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;background:#e6f4f1;border:1px solid #b9e2d8"><span style="width:32px;height:32px;border-radius:50%;background:#1f8a6f;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span><div><div style="font-weight:600;font-size:14px">Devir gönderildi · {{ sentAt }}</div><div style="font-size:13px;color:#1f6b58;margin-top:2px">{{ recipientsText }}</div></div></div>
+<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;background:#ecfdf5;border:1px solid #a4f4cf"><span style="width:32px;height:32px;border-radius:50%;background:#007a55;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span><div><div style="font-weight:600;font-size:14px">Devir gönderildi · {{ sentAt }}</div><div style="font-size:13px;color:#006045;margin-top:2px">{{ recipientsText }}</div></div></div>
 <div style="border:1px solid #e2e8f0;border-radius:12px;padding:18px">
 <div style="font-size:12px;font-weight:600;color:#64748b;margin-bottom:10px">RAPOR</div>
 <div style="font-size:18px;font-weight:600">Vardiya devir raporu</div>
@@ -168,7 +168,7 @@
 </div>
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 20px;border-top:1px solid #e2e8f0;justify-content:flex-end">
 <button type="button" onClick="{{ closeDrawer }}" style="height:34px;padding:0 14px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Kapat</button>
-<button type="button" onClick="{{ openDevralan }}" style="height:34px;padding:0 14px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Devralan görünümünü aç →</button>
+<button type="button" onClick="{{ openDevralan }}" style="height:34px;padding:0 14px;border-radius:6px;background:#007a55;color:#fff;border:0;font-size:13px;font-weight:600;cursor:pointer">Devralan görünümünü aç →</button>
 </div>
 </sc-if>
 </div>
@@ -191,11 +191,11 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
     const transferred = s.sent && s.queue !== 'bende';
-    const chip = (on) => on ? { bg: '#e6f4f1', fg: '#0f5c4d', border: '#b9e2d8' } : { bg: '#fff', fg: '#64748b', border: '#e2e8f0' };
+    const chip = (on) => on ? { bg: '#ecfdf5', fg: '#006045', border: '#a4f4cf' } : { bg: '#fff', fg: '#64748b', border: '#e2e8f0' };
     const t = chip(s.rec.teams), e = chip(s.rec.email), p = chip(s.rec.pdf);
     const anyRec = s.rec.teams || s.rec.email || s.rec.pdf;
     const toggle = (k) => () => this.setState({ rec: { ...this.state.rec, [k]: !this.state.rec[k] } });
-    const queueText = s.queue === 'gece' ? '9 kayıt Gece ekibi kuyruğuna devredildi; müşteri yanıtı bekleyen 3 kayıt devredende kaldı.' : s.queue === 'lider' ? '9 kayıt takım liderine devredildi; müşteri yanıtı bekleyen 3 kayıt devredende kaldı.' : 'Kayıt devredilmedi; 12 kayıt devredende kaldı.';
+    const queueText = s.queue === 'gece' ? '9 kayıt Gece ekibi kuyruğuna devredildi; bildiren yanıtı bekleyen 3 kayıt devredende kaldı.' : s.queue === 'lider' ? '9 kayıt takım liderine devredildi; bildiren yanıtı bekleyen 3 kayıt devredende kaldı.' : 'Kayıt devredilmedi; 12 kayıt devredende kaldı.';
     return {
       open: s.open, openDrawer: () => this.setState({ open: true }), closeDrawer: () => this.setState({ open: false }),
       isForm: !s.sent, isSent: s.sent,

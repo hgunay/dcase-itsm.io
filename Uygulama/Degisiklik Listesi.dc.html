@@ -10,10 +10,10 @@
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>body{margin:0;background:#fff;} a{color:#08748e;text-decoration:none;} a:hover{color:#065b70;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
+<style>body{margin:0;background:#fff;} a{color:#007a55;text-decoration:none;} a:hover{color:#006045;text-decoration:underline;} textarea,input,select,button{font-family:inherit;}</style>
 </helmet>
-<div style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
-<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap;overflow:hidden"><span style="color:#7fd6c2;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Ekran analizi 08 · Değişiklik Listesi konsepti</span><span style="color:#64748b;overflow:hidden;text-overflow:ellipsis">Deneyin: sekmeleri değiştir · Takvim görünümüne geç · başlığa tıkla → sırala · satır seç → Onayla / Reddet / Ata / Kapat · satıra tıkla → detay · Durum / Pencere / Atanan hücresine tıkla → anında kayıt, "Geri al" · ··· → Onayla, Planla, Geri al, bağlı kaydı aç</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="../Değişiklik Listesi Analizi.dc.html" style="color:#fff">Analiz</a><a href="Problem Detayi.dc.html" style="color:#fff">← Problem detayı</a><a href="Degisiklik Detayi.dc.html" style="color:#fff">Değişiklik detayı →</a></div>
+<div lang="tr" style="font-family:Inter,system-ui,sans-serif;color:#020618;background:#fff;min-height:100vh">
+<div style="height:28px;background:#020618;color:#cbd5e1;font-size:12px;display:flex;align-items:center;gap:14px;padding:0 14px;white-space:nowrap;overflow:hidden"><span style="color:#00bc7d;font-weight:600;letter-spacing:.06em">PROTOTİP</span><span>Ekran analizi 08 · Değişiklik Listesi konsepti</span><span style="color:#64748b;overflow:hidden;text-overflow:ellipsis">Deneyin: sekmeleri değiştir · Takvim görünümüne geç · başlığa tıkla → sırala · satır seç → Onayla / Reddet / Ata / Kapat · satıra tıkla → detay · Durum / Pencere / Atanan hücresine tıkla → anında kayıt, "Geri al" · ··· → Onayla, Planla, Geri al, bağlı kaydı aç</span><a href="../Konsept Ekranlari.dc.html" style="color:#fff;margin-left:auto">Konsept menüsü</a><a href="Problem Detayi.dc.html" style="color:#fff">← Problem detayı</a><a href="Degisiklik Detayi.dc.html" style="color:#fff">Değişiklik detayı →</a></div>
 <div style="position:sticky;top:0;z-index:50"><dc-import name="DcaseHeader" tema="{{ ustBar }}" hint-size="100%,49px"></dc-import></div>
 <div style="display:flex;align-items:flex-start">
 <div style="flex-shrink:0;position:sticky;top:49px;height:calc(100vh - 49px);z-index:40"><dc-import name="DcaseSidebar" aktif="degisiklikler" style="height:100%" hint-size="256px,100%"></dc-import></div>
@@ -26,7 +26,7 @@
 <button type="button" onClick="{{ viewCal }}" style="height:30px;padding:0 12px;border:0;border-left:1px solid #e2e8f0;background:{{ calBg }};color:{{ calFg }};font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path></svg>Takvim</button>
 </span>
 <button type="button" onClick="{{ saveView }}" style="height:32px;padding:0 12px;border-radius:6px;background:#fff;border:1px solid #e2e8f0;font-size:13px;font-weight:500;cursor:pointer">Görünümü kaydet</button>
-<button type="button" onClick="{{ newChange }}" style="height:32px;padding:0 12px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>Yeni değişiklik</button>
+<button type="button" onClick="{{ newChange }}" style="height:32px;padding:0 12px;border-radius:6px;background:#007a55;color:#fff;border:0;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>Yeni değişiklik</button>
 </div>
 
 <div style="display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid #e2e8f0;margin-bottom:12px">
@@ -48,7 +48,7 @@
 <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="4">
 <div onClick="{{ o.toggle }}" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border-radius:6px;font-size:13px;cursor:pointer" style-hover="background:#f8fafc"><span style="width:14px;height:14px;border-radius:4px;border:1px solid {{ o.boxBorder }};background:{{ o.boxBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;flex-shrink:0">{{ o.mark }}</span><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dotBg }};border:2px solid {{ o.dot }};box-sizing:border-box;flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.label }}</span><span style="color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px">{{ o.desc }}</span></div>
 </sc-for>
-<sc-if value="{{ f.has }}" hint-placeholder-val="{{ false }}"><div onClick="{{ f.clear }}" style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px;text-align:center;font-size:12px;color:#08748e;cursor:pointer">Filtreyi temizle</div></sc-if>
+<sc-if value="{{ f.has }}" hint-placeholder-val="{{ false }}"><div onClick="{{ f.clear }}" style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px;text-align:center;font-size:12px;color:#007a55;cursor:pointer">Filtreyi temizle</div></sc-if>
 </div>
 </sc-if>
 </span>
@@ -73,7 +73,7 @@
 <sc-if value="{{ hasSelection }}" hint-placeholder-val="{{ false }}">
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:#020618;color:#fff;margin-bottom:10px;font-size:13px">
 <span style="font-weight:600;margin-right:6px">{{ selCount }} değişiklik seçildi</span>
-<button type="button" onClick="{{ bulkApprove }}" style="height:28px;padding:0 10px;border-radius:6px;background:#08748e;color:#fff;border:1px solid #08748e;font-size:12px;font-weight:600;cursor:pointer">Onayla</button>
+<button type="button" onClick="{{ bulkApprove }}" style="height:28px;padding:0 10px;border-radius:6px;background:#007a55;color:#fff;border:1px solid #007a55;font-size:12px;font-weight:600;cursor:pointer">Onayla</button>
 <button type="button" onClick="{{ bulkReject }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Reddet</button>
 <button type="button" onClick="{{ bulkAssign }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Ata</button>
 <button type="button" onClick="{{ bulkClose }}" style="height:28px;padding:0 10px;border-radius:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);font-size:12px;font-weight:500;cursor:pointer">Kapat</button>
@@ -106,20 +106,20 @@
 <sc-for list="{{ rows }}" as="r" hint-placeholder-count="8">
 <tr onMouseEnter="{{ r.enter }}" onMouseLeave="{{ r.leave }}" onClick="{{ r.open }}" style="background:{{ r.bg }};cursor:pointer">
 <td style="padding:10px 0 10px 14px;border-top:1px solid #f1f5f9;vertical-align:middle"><span onClick="{{ r.toggle }}" style="display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid {{ r.cbBorder }};background:{{ r.cbBg }};color:#fff;font-size:10px;line-height:14px;text-align:center;cursor:pointer;vertical-align:middle">{{ r.cbMark }}</span></td>
-<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;white-space:nowrap"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#08748e">{{ r.id }}</span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;white-space:nowrap"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600;color:#007a55">{{ r.id }}</span></td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;overflow:hidden"><div style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="{{ r.s }}">{{ r.s }}</div><div style="font-size:12px;color:#64748b;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.sub }}<sc-if value="{{ r.hasRef }}" hint-placeholder-val="{{ false }}"><span style="margin-left:6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:{{ r.refColor }}">{{ r.refId }}</span></sc-if></div></td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle"><span onClick="{{ r.editSt }}" title="Durumu değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;background:{{ r.stCellBg }}" style-hover="background:#e2e8f0"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.stDotBg }};border:2px solid {{ r.stColor }};box-sizing:border-box;flex-shrink:0"></span>{{ r.stLabel }}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span><sc-if value="{{ r.hasStSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:{{ r.stSubColor }};margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.stSub }}</div></sc-if></td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colTyp }};overflow:hidden"><div style="font-weight:{{ r.typWeight }};color:{{ r.typColor }};white-space:nowrap">{{ r.typLabel }}</div><sc-if value="{{ r.hasTypSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:#64748b;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{ r.typSub }}">{{ r.typSub }}</div></sc-if></td>
-<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colRisk }}"><div style="font-weight:600;color:{{ r.riskColor }};white-space:nowrap">{{ r.riskLabel }}</div><sc-if value="{{ r.hasRiskSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:#94a3b8;margin-top:2px;white-space:nowrap">{{ r.riskSub }}</div></sc-if></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colRisk }}"><div style="font-weight:600;color:{{ r.riskColor }};white-space:nowrap">{{ r.riskLabel }}</div><sc-if value="{{ r.hasRiskSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:#64748b;margin-top:2px;white-space:nowrap">{{ r.riskSub }}</div></sc-if></td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colAppr }};overflow:hidden"><div style="font-weight:{{ r.apWeight }};color:{{ r.apColor }};white-space:nowrap">{{ r.apText }}</div><sc-if value="{{ r.hasApSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:{{ r.apSubColor }};margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{ r.apSub }}">{{ r.apSub }}</div></sc-if></td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;overflow:hidden"><span onClick="{{ r.editWin }}" title="{{ r.winTitle }}" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:26px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;background:{{ r.winCellBg }}" style-hover="background:#e2e8f0"><span style="font-weight:{{ r.winWeight }};color:{{ r.winColor }};font-variant-numeric:tabular-nums">{{ r.winText }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.winAff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span><sc-if value="{{ r.hasWinSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:{{ r.winSubColor }};margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="{{ r.winSub }}">{{ r.winSub }}</div></sc-if></td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colCi }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#334155">{{ r.ci }}</td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colSrc }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.srcLabel }}</td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colTasks }};white-space:nowrap;font-variant-numeric:tabular-nums;color:#334155">{{ r.tasksText }}</td>
-<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colOwner }};overflow:hidden"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.mgr }} <span style="font-size:11px;color:#94a3b8">sahibi</span></div><span onClick="{{ r.editA }}" title="Uygulayanı değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:22px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;font-size:12px;background:{{ r.aCellBg }}" style-hover="background:#e2e8f0"><span style="overflow:hidden;text-overflow:ellipsis;color:{{ r.assigneeColor }}">{{ r.assigneeText }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span></td>
+<td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colOwner }};overflow:hidden"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.mgr }} <span style="font-size:11px;color:#64748b">sahibi</span></div><span onClick="{{ r.editA }}" title="Uygulayanı değiştir" style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;height:22px;padding:0 8px;margin-left:-8px;border-radius:6px;cursor:pointer;max-width:100%;font-size:12px;background:{{ r.aCellBg }}" style-hover="background:#e2e8f0"><span style="overflow:hidden;text-overflow:ellipsis;color:{{ r.assigneeColor }}">{{ r.assigneeText }}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#94a3b8;opacity:{{ r.aff }};flex-shrink:0"><path d="m6 9 6 6 6-6"></path></svg></span></td>
 <td style="padding:10px 12px;border-top:1px solid #f1f5f9;vertical-align:middle;display:{{ colUpd }};color:#64748b;white-space:nowrap">{{ r.updatedText }}</td>
 <td style="padding:6px 10px 6px 0;border-top:1px solid #f1f5f9;vertical-align:middle"><div style="display:flex;align-items:center;justify-content:flex-end;gap:6px">
-<sc-if value="{{ r.showApprove }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ r.approve }}" style="height:28px;padding:0 10px;border-radius:6px;background:#08748e;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">Onayla</button></sc-if>
+<sc-if value="{{ r.showApprove }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ r.approve }}" style="height:28px;padding:0 10px;border-radius:6px;background:#007a55;color:#fff;border:0;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">Onayla</button></sc-if>
 <sc-if value="{{ r.showPrimary }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ r.primary }}" style="height:28px;padding:0 10px;border-radius:6px;background:#fff;color:#334155;border:1px solid #e2e8f0;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>Düzenle</button></sc-if>
 <button type="button" onClick="{{ r.menu }}" aria-label="Satır eylemleri" style="width:28px;height:28px;border-radius:6px;border:1px solid {{ r.kebabBorder }};background:{{ r.kebabBg }};color:{{ r.kebabFg }};display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
 </div></td>
@@ -127,7 +127,7 @@
 </sc-for>
 </tbody>
 </table>
-<sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:32px;text-align:center;font-size:13px;color:#64748b;display:flex;justify-content:center;align-items:center;gap:8px">Bu filtrelerle değişiklik yok.<button type="button" onClick="{{ clearAll }}" style="border:0;background:transparent;color:#08748e;font-size:13px;font-weight:500;cursor:pointer;padding:0">Filtreleri temizle</button></div></sc-if>
+<sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:32px;text-align:center;font-size:13px;color:#64748b;display:flex;justify-content:center;align-items:center;gap:8px">Bu filtrelerle değişiklik yok.<button type="button" onClick="{{ clearAll }}" style="border:0;background:transparent;color:#007a55;font-size:13px;font-weight:500;cursor:pointer;padding:0">Filtreleri temizle</button></div></sc-if>
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:10px 14px;border-top:1px solid #e2e8f0;background:#f8fafc;font-size:12px;color:#64748b">
 <span style="margin-right:auto">{{ footerText }}</span>
 <span>Sayfa başına <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;color:#020618">25 <span style="font-size:10px;color:#94a3b8">▾</span></span></span>
@@ -155,12 +155,12 @@
 <div style="display:flex;flex-direction:column;gap:6px;padding:8px 10px 12px">
 <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="1">
 <div onClick="{{ it.open }}" style="border:1px solid {{ it.border }};border-radius:8px;background:{{ it.bg }};padding:8px 10px;cursor:pointer;font-size:12px;line-height:1.35;opacity:{{ it.opacity }};min-width:0" style-hover="border-color:#94a3b8">
-<div style="display:flex;align-items:center;gap:6px;white-space:nowrap"><span style="width:8px;height:8px;border-radius:50%;background:{{ it.dotBg }};border:2px solid {{ it.dot }};box-sizing:border-box;flex-shrink:0"></span><span style="font-weight:600;font-variant-numeric:tabular-nums">{{ it.time }}</span><span style="margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:#08748e;font-weight:600">{{ it.id }}</span></div>
+<div style="display:flex;align-items:center;gap:6px;white-space:nowrap"><span style="width:8px;height:8px;border-radius:50%;background:{{ it.dotBg }};border:2px solid {{ it.dot }};box-sizing:border-box;flex-shrink:0"></span><span style="font-weight:600;font-variant-numeric:tabular-nums">{{ it.time }}</span><span style="margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:#007a55;font-weight:600">{{ it.id }}</span></div>
 <div style="margin-top:4px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="{{ it.title }}">{{ it.title }}</div>
 <div style="margin-top:2px;color:{{ it.metaColor }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="{{ it.meta }}">{{ it.meta }}</div>
 </div>
 </sc-for>
-<sc-if value="{{ d.empty }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#94a3b8;padding:4px 0">Planlı değişiklik yok</div></sc-if>
+<sc-if value="{{ d.empty }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#64748b;padding:4px 0">Planlı değişiklik yok</div></sc-if>
 </div>
 </div>
 </sc-for>
@@ -170,7 +170,7 @@
 <span style="margin-right:auto">{{ calFooter }}</span>
 <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#e39b2c;border:2px solid #e39b2c;box-sizing:border-box"></span>Onay bekliyor</span>
 <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#08748e;border:2px solid #08748e;box-sizing:border-box"></span>Planlandı</span>
-<span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#2fa886;border:2px solid #2fa886;box-sizing:border-box"></span>Uygulanıyor</span>
+<span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#00bc7d;border:2px solid #00bc7d;box-sizing:border-box"></span>Uygulanıyor</span>
 <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#fff;border:2px solid #64748b;box-sizing:border-box"></span>Kapalı</span>
 </div>
 </div>
@@ -181,7 +181,7 @@
 
 <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
 <div style="position:fixed;top:{{ menuTop }}px;right:{{ menuRight }}px;z-index:60;width:272px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
-<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#08748e">{{ menuId }}</span> · {{ menuSummary }}</div>
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#007a55">{{ menuId }}</span> · {{ menuSummary }}</div>
 <sc-for list="{{ menuItems }}" as="m" hint-placeholder-count="4">
 <div onClick="{{ m.click }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;color:{{ m.color }};font-weight:{{ m.weight }}" style-hover="background:#f8fafc">{{ m.label }}</div>
 </sc-for>
@@ -190,23 +190,23 @@
 
 <sc-if value="{{ cellOpen }}" hint-placeholder-val="{{ false }}">
 <div style="position:fixed;top:{{ cellTop }}px;left:{{ cellLeft }}px;z-index:60;width:{{ cellW }}px;box-sizing:border-box;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.14);padding:6px;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#020618">
-<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#08748e">{{ cellId }}</span> · {{ cellField }}</div>
+<div style="padding:6px 8px 8px;font-size:11px;color:#64748b;border-bottom:1px solid #f1f5f9;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#007a55">{{ cellId }}</span> · {{ cellField }}</div>
 <sc-for list="{{ cellOptions }}" as="o" hint-placeholder-count="4">
-<div onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;background:{{ o.bg }}" style-hover="background:#f1f5f9"><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dotBg }};border:2px solid {{ o.dot }};box-sizing:border-box;flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }};white-space:nowrap">{{ o.label }}</span><span style="color:{{ o.descColor }};font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.desc }}</span><span style="margin-left:auto;color:#08748e;font-size:12px;font-weight:600">{{ o.check }}</span></div>
+<div onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;background:{{ o.bg }}" style-hover="background:#f1f5f9"><sc-if value="{{ o.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dotBg }};border:2px solid {{ o.dot }};box-sizing:border-box;flex-shrink:0"></span></sc-if><span style="font-weight:{{ o.weight }};color:{{ o.color }};white-space:nowrap">{{ o.label }}</span><span style="color:{{ o.descColor }};font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.desc }}</span><span style="margin-left:auto;color:#007a55;font-size:12px;font-weight:600">{{ o.check }}</span></div>
 </sc-for>
-<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px 8px 4px;font-size:11px;color:#94a3b8;line-height:1.4">{{ cellHint }}</div>
+<div style="border-top:1px solid #f1f5f9;margin-top:4px;padding:8px 8px 4px;font-size:11px;color:#64748b;line-height:1.4">{{ cellHint }}</div>
 </div>
 </sc-if>
 
 <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
-<div style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);font-family:Inter,system-ui,sans-serif;max-width:560px;display:flex;align-items:center;gap:14px;line-height:1.4"><span>{{ toastText }}</span><sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ undo }}" style="height:26px;padding:0 10px;border-radius:6px;background:rgba(255,255,255,.12);color:#7fd6c2;border:0;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Geri al</button></sc-if></div>
+<div style="position:fixed;right:20px;bottom:20px;z-index:90;background:#020618;color:#fff;font-size:13px;padding:10px 14px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,24,.25);font-family:Inter,system-ui,sans-serif;max-width:560px;display:flex;align-items:center;gap:14px;line-height:1.4"><span>{{ toastText }}</span><sc-if value="{{ hasUndo }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ undo }}" style="height:26px;padding:0 10px;border-radius:6px;background:rgba(255,255,255,.12);color:#00bc7d;border:0;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Geri al</button></sc-if></div>
 </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;satirEylemi&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;menu&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;menu&quot;,&quot;birincil&quot;],&quot;section&quot;:&quot;Satır eylemleri&quot;},&quot;varsayilanGorunum&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;liste&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;liste&quot;,&quot;takvim&quot;],&quot;section&quot;:&quot;Liste&quot;},&quot;varsayilanSiralama&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;pencere&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;pencere&quot;,&quot;risk&quot;,&quot;durum&quot;],&quot;section&quot;:&quot;Liste&quot;},&quot;ustBar&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;acik&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;acik&quot;,&quot;koyu&quot;],&quot;section&quot;:&quot;Kabuk&quot;},&quot;zemin&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;slate-50&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;slate-50&quot;,&quot;slate-100&quot;,&quot;slate-200&quot;,&quot;sogukgri&quot;],&quot;section&quot;:&quot;Kabuk&quot;}}">
 class Component extends DCLogic {
   static ME = 'admin admin';
-  static ST = { taslak: ['Taslak', '#94a3b8', false], degerlendirme: ['Değerlendirme', '#4c7bd9', true], onay: ['Onay bekliyor', '#e39b2c', true], planlandi: ['Planlandı', '#08748e', true], uygulaniyor: ['Uygulanıyor', '#2fa886', true], pir: ['Gözden geçirme', '#64748b', true], kapali: ['Kapalı', '#64748b', false], reddedildi: ['Reddedildi', '#d23f43', false] };
+  static ST = { taslak: ['Taslak', '#94a3b8', false], degerlendirme: ['Değerlendirme', '#4c7bd9', true], onay: ['Onay bekliyor', '#e39b2c', true], planlandi: ['Planlandı', '#08748e', true], uygulaniyor: ['Uygulanıyor', '#00bc7d', true], pir: ['Gözden geçirme', '#64748b', true], kapali: ['Kapalı', '#64748b', false], reddedildi: ['Reddedildi', '#d23f43', false] };
   static ORDER = ['taslak', 'degerlendirme', 'onay', 'planlandi', 'uygulaniyor', 'pir', 'kapali', 'reddedildi'];
   static STDESC = { taslak: 'kayıt açıldı, değerlendirme başlamadı', degerlendirme: 'risk ve etki değerlendiriliyor', onay: 'onay yolu tamamlanmadı', planlandi: 'onaylandı, pencere bekleniyor', uygulaniyor: 'pencere açık, görevler işleniyor', pir: 'uygulama sonrası gözden geçirme yazılıyor', kapali: 'sonuç kaydedildi', reddedildi: 'onay verilmedi' };
   static TYPE = { standart: ['Standart', '#334155', 'önceden onaylı şablon, CAB gerekmez'], normal: ['Normal', '#334155', 'risk değerlendirmesi ve CAB onayı'], acil: ['Acil', '#d23f43', 'önce uygulanır, ECAB onayı sonradan'] };
@@ -276,22 +276,22 @@ class Component extends DCLogic {
     const ME = Component.ME;
     if (r.st === 'reddedildi') return { text: 'Reddedildi', color: '#d23f43', weight: 600, sub: r.rej || '', subColor: '#64748b' };
     if (r.type === 'standart') return { text: 'Gerekmez', color: '#64748b', weight: 500, sub: 'Standart · ' + (r.tmpl || 'şablon onaylı'), subColor: '#64748b' };
-    if (r.st === 'taslak' || r.st === 'degerlendirme') return { text: 'Başlamadı', color: '#94a3b8', weight: 500, sub: r.st === 'degerlendirme' ? 'risk değerlendirmesi sonrası' : 'değerlendirme bekliyor', subColor: '#94a3b8' };
+    if (r.st === 'taslak' || r.st === 'degerlendirme') return { text: 'Başlamadı', color: '#64748b', weight: 500, sub: r.st === 'degerlendirme' ? 'risk değerlendirmesi sonrası' : 'değerlendirme bekliyor', subColor: '#64748b' };
     const total = r.appr.length, ok = r.appr.filter(x => x.ok === true).length, pend = r.appr.filter(x => x.ok === null);
-    if (!total) return { text: '—', color: '#94a3b8', weight: 500, sub: '', subColor: '#64748b' };
-    if (!pend.length && ok === total) return { text: 'Onaylandı ✓', color: '#1f8a6f', weight: 600, sub: ok + '/' + total + (r.type === 'acil' ? ' · ECAB sonradan' : ' · ' + r.appr.map(x => x.role).join(', ')), subColor: '#64748b' };
+    if (!total) return { text: '—', color: '#64748b', weight: 500, sub: '', subColor: '#64748b' };
+    if (!pend.length && ok === total) return { text: 'Onaylandı ✓', color: '#007a55', weight: 600, sub: ok + '/' + total + (r.type === 'acil' ? ' · ECAB sonradan' : ' · ' + r.appr.map(x => x.role).join(', ')), subColor: '#64748b' };
     const me = pend.find(x => x.who === ME);
     if (r.type === 'acil' && r.st !== 'onay') return { text: 'ECAB · sonradan', color: '#b16a08', weight: 600, sub: me ? 'Sizi bekliyor · uygulama sürüyor' : 'Bekleyen: ' + pend.map(x => x.who).join(', '), subColor: me ? '#b16a08' : '#64748b' };
     return { text: ok + '/' + total + ' onay', color: '#b16a08', weight: 600, sub: me ? 'Sizi bekliyor · ' + me.role : 'Bekleyen: ' + pend.map(x => x.who + ' (' + x.role + ')').join(', '), subColor: me ? '#b16a08' : '#64748b' };
   }
   winInfo(r, conf) {
     const w = r.win;
-    if (!w) return { text: 'Planlanmadı', color: '#94a3b8', weight: 500, sub: r.st === 'taslak' ? 'değerlendirme sonrası' : this.closed(r) ? '' : 'onay sonrası pencere seçilir', subColor: '#94a3b8' };
+    if (!w) return { text: 'Planlanmadı', color: '#64748b', weight: 500, sub: r.st === 'taslak' ? 'değerlendirme sonrası' : this.closed(r) ? '' : 'onay sonrası pencere seçilir', subColor: '#64748b' };
     const text = this.fmtWin(w), c = conf[r.id] || [];
-    if (r.st === 'reddedildi') return { text, color: '#94a3b8', weight: 500, sub: 'Uygulanmadı', subColor: '#94a3b8' };
+    if (r.st === 'reddedildi') return { text, color: '#64748b', weight: 500, sub: 'Uygulanmadı', subColor: '#64748b' };
     if (r.st === 'kapali') return { text, color: '#64748b', weight: 500, sub: r.result || 'Tamamlandı', subColor: r.result === 'Geri alındı' ? '#d23f43' : '#64748b' };
     if (r.st === 'pir') return { text, color: '#64748b', weight: 600, sub: (r.result === 'Geri alındı' ? 'Geri alındı' : 'Tamamlandı') + ' · gözden geçirme bekliyor', subColor: r.result === 'Geri alındı' ? '#d23f43' : '#64748b' };
-    if (r.st === 'uygulaniyor') return { text, color: '#1f8a6f', weight: 600, sub: 'Sürüyor · geri alma planı hazır', subColor: '#1f8a6f' };
+    if (r.st === 'uygulaniyor') return { text, color: '#007a55', weight: 600, sub: 'Sürüyor · geri alma planı hazır', subColor: '#007a55' };
     if (this.inFreeze(w)) return { text, color: '#d23f43', weight: 600, sub: '⚠ ' + Component.FREEZE.label, subColor: '#d23f43' };
     if (c.length) return { text, color: '#334155', weight: 600, sub: '⚠ ' + c.join(', ') + ' ile çakışıyor', subColor: '#d23f43' };
     if (w.d < 0) return { text, color: '#d23f43', weight: 600, sub: 'Pencere geçti · yeniden planla', subColor: '#d23f43' };
@@ -381,7 +381,7 @@ class Component extends DCLogic {
   }
   menuFor(r) {
     const items = [['Detayı aç', () => { window.location.href = 'Degisiklik Detayi.dc.html?id=' + r.id; }, '#020618', 500]];
-    if (this.pendingMe(r)) { items.push(['Onayla', () => this.approve([r.id]), '#1f8a6f', 600]); if (r.st === 'onay') items.push(['Reddet', () => this.reject([r.id]), '#d23f43', 500]); }
+    if (this.pendingMe(r)) { items.push(['Onayla', () => this.approve([r.id]), '#007a55', 600]); if (r.st === 'onay') items.push(['Reddet', () => this.reject([r.id]), '#d23f43', 500]); }
     if (this.active(r) && r.st !== 'uygulaniyor') items.push([r.win ? 'Pencereyi değiştir…' : 'Planla…', ev => this.openCell(r, 'win', ev), '#020618', 500]);
     if (r.src) items.push([r.src.id + ' kaydını aç', () => { window.location.href = (r.src.k === 'PRB' ? 'Problem Detayi.dc.html' : r.src.k === 'INC' ? 'Olay Detayi.dc.html' : 'Talep Detayi.dc.html') + '?id=' + r.src.id; }, '#020618', 500]);
     items.push(['Görevler · ' + r.tasks[0] + '/' + r.tasks[1], () => this.toast(r.id + ' · ' + r.tasks[0] + '/' + r.tasks[1] + ' uygulama görevi tamam · Görev Yönetimi ekranı bu çalışmanın kapsamı dışında'), '#020618', 500]);
@@ -436,21 +436,21 @@ class Component extends DCLogic {
       const isMenu = s.pop === 'row' && !!s.menu && s.menu.id === r.id;
       const cellIs = f => s.pop === 'cell' && !!s.cell && s.cell.id === r.id && s.cell.field === f;
       const isCell = s.pop === 'cell' && !!s.cell && s.cell.id === r.id;
-      const bg = sel ? '#e6f4f1' : (hov || isMenu || isCell) ? '#f8fafc' : '#fff';
+      const bg = sel ? '#ecfdf5' : (hov || isMenu || isCell) ? '#f8fafc' : '#fff';
       const closed = this.closed(r), pend = this.pendingMe(r), ty = TYPE[r.type], rk = r.risk ? RISK[r.risk] : null;
       const winEditable = this.active(r) && r.st !== 'uygulaniyor';
       return {
-        id: r.id, s: r.s, sub: r.svc + ' · ' + r.ci, hasRef: !!r.src, refId: r.src ? r.src.id : '', refColor: r.src && r.src.k === 'INC' ? '#b3282d' : '#08748e',
+        id: r.id, s: r.s, sub: r.svc + ' · ' + r.ci, hasRef: !!r.src, refId: r.src ? r.src.id : '', refColor: r.src && r.src.k === 'INC' ? '#b3282d' : '#007a55',
         stLabel: st[0], stColor: st[1], stDotBg: st[2] ? st[1] : '#fff', hasStSub: r.st === 'kapali' && !!r.result, stSub: r.result || '', stSubColor: r.result === 'Geri alındı' ? '#d23f43' : '#64748b',
         typLabel: ty[0], typColor: ty[1], typWeight: r.type === 'acil' ? 600 : 500, hasTypSub: r.type === 'standart' && !!r.tmpl, typSub: r.tmpl || '',
-        riskLabel: rk ? rk[0] : '—', riskColor: rk ? rk[1] : '#94a3b8', hasRiskSub: !rk && !closed, riskSub: 'değerlendirilmedi',
+        riskLabel: rk ? rk[0] : '—', riskColor: rk ? rk[1] : '#64748b', hasRiskSub: !rk && !closed, riskSub: 'değerlendirilmedi',
         apText: ap.text, apColor: ap.color, apWeight: ap.weight, hasApSub: !!ap.sub, apSub: ap.sub, apSubColor: ap.subColor,
         winText: wi.text, winColor: wi.color, winWeight: wi.weight, hasWinSub: !!wi.sub, winSub: wi.sub, winSubColor: wi.subColor, winCellBg: cellIs('win') ? '#e2e8f0' : 'transparent', winAff: winEditable && (hov || isCell) ? 1 : 0, winTitle: winEditable ? 'Pencereyi planla / değiştir' : 'Pencere değiştirilemez',
         editWin: stopEv(ev => { if (winEditable) this.openCell(r, 'win', ev); else this.toast(r.id + ' · ' + (r.st === 'uygulaniyor' ? 'uygulanan değişikliğin penceresi değiştirilemez; gerekiyorsa Geri al' : 'kapanan ya da gözden geçirmedeki değişikliğin penceresi değiştirilemez')); }),
         ci: r.ci, srcLabel: r.src ? r.src.id : (r.tmpl ? 'Şablon' : '—'), tasksText: r.tasks[1] ? r.tasks[0] + '/' + r.tasks[1] : '—',
         mgr: r.mgr, assigneeText: r.a ? r.a + ' · ' + r.g : 'Atanmamış · ' + r.g, assigneeColor: r.a ? '#334155' : '#9a5b0a',
         updatedText: this.fmtAgo(r.u),
-        bg, cbBg: sel ? '#08748e' : '#fff', cbBorder: sel ? '#08748e' : '#cbd5e1', cbMark: sel ? '✓' : '',
+        bg, cbBg: sel ? '#007a55' : '#fff', cbBorder: sel ? '#007a55' : '#cbd5e1', cbMark: sel ? '✓' : '',
         kebabBorder: (hov || isMenu) ? '#e2e8f0' : 'transparent', kebabBg: isMenu ? '#f1f5f9' : (hov ? '#fff' : 'transparent'), kebabFg: (hov || isMenu) ? '#334155' : '#94a3b8',
         showApprove: pend, approve: stop(() => this.approve([r.id])),
         showPrimary: variant === 'birincil' && (hov || isMenu), primary: stop(openDetail(r)),
@@ -464,16 +464,16 @@ class Component extends DCLogic {
     const tabs = Component.TABS.map(([k, label]) => {
       const active = s.queue === k, count = s.rows.filter(r => this.inQ(r, k)).length;
       const warn = k === 'appr' && count > 0, hot = k === 'acil' && count > 0;
-      return { key: k, label, count, border: active ? '#08748e' : 'transparent', color: active ? '#020618' : '#64748b', weight: active ? 600 : 500,
-        pillBg: active ? '#08748e' : hot ? '#fbe9ea' : warn ? '#fdf1e0' : '#f1f5f9', pillFg: active ? '#fff' : hot ? '#b3282d' : warn ? '#9a5b0a' : '#334155',
+      return { key: k, label, count, border: active ? '#007a55' : 'transparent', color: active ? '#020618' : '#64748b', weight: active ? 600 : 500,
+        pillBg: active ? '#007a55' : hot ? '#fbe9ea' : warn ? '#fdf1e0' : '#f1f5f9', pillFg: active ? '#fff' : hot ? '#b3282d' : warn ? '#9a5b0a' : '#334155',
         click: () => this.setState({ queue: k, selected: [], hover: null, pop: null, menu: null, cell: null }) };
     });
-    const box = on => ({ mark: on ? '✓' : '', boxBg: on ? '#08748e' : '#fff', boxBorder: on ? '#08748e' : '#cbd5e1' });
+    const box = on => ({ mark: on ? '✓' : '', boxBg: on ? '#007a55' : '#fff', boxBorder: on ? '#007a55' : '#cbd5e1' });
     const mkFilter = (key, label, w, opts) => {
       const sel = s[key], on = sel.length > 0;
       return {
         key, w, chip: on ? label + ' · ' + opts.filter(o => sel.includes(o.v)).map(o => o.label).join(', ') : label,
-        border: on ? '1px solid #08748e' : '1px dashed #cbd5e1', bg: on ? '#e6f4f1' : '#fff', fg: on ? '#0f5c4d' : '#334155',
+        border: on ? '1px solid #007a55' : '1px dashed #cbd5e1', bg: on ? '#ecfdf5' : '#fff', fg: on ? '#006045' : '#334155',
         open: s.pop === key, toggle: () => this.setState({ pop: s.pop === key ? null : key }), has: on, clear: () => this.setState({ [key]: [], pop: null }),
         options: opts.map(o => { const isOn = sel.includes(o.v); return { label: o.label, desc: o.desc || '', hasDot: !!o.dot, dot: o.dot || '', dotBg: o.dotBg || o.dot || '', weight: o.weight || 500, color: o.color || '#020618', ...box(isOn), toggle: () => this.setState(st => ({ [key]: isOn ? st[key].filter(x => x !== o.v) : [...st[key], o.v] })) }; })
       };
@@ -482,11 +482,11 @@ class Component extends DCLogic {
     const filters = [
       mkFilter('status', 'Durum', 250, ORDER.map(k => ({ v: k, label: ST[k][0], dot: ST[k][1], dotBg: ST[k][2] ? ST[k][1] : '#fff' }))),
       mkFilter('type', 'Tür', 300, Component.TORDER.map(k => ({ v: k, label: TYPE[k][0], desc: TYPE[k][2], weight: 600, color: TYPE[k][1] }))),
-      mkFilter('risk', 'Risk', 200, [...Component.RORDER.map(k => ({ v: k, label: RISK[k][0], weight: 600, color: RISK[k][1] })), { v: 'yok', label: 'Değerlendirilmedi', color: '#94a3b8' }]),
+      mkFilter('risk', 'Risk', 200, [...Component.RORDER.map(k => ({ v: k, label: RISK[k][0], weight: 600, color: RISK[k][1] })), { v: 'yok', label: 'Değerlendirilmedi', color: '#64748b' }]),
       mkFilter('svc', 'Hizmet', 230, services.map(n => ({ v: n, label: n })))
     ];
     const sortMark = k => sort.key === k ? (sort.dir === 'asc' ? '↑' : '↓') : '';
-    const headColor = k => sort.key === k ? '#08748e' : '#64748b';
+    const headColor = k => sort.key === k ? '#007a55' : '#64748b';
     const n = list.length;
     const mr = s.pop === 'row' && s.menu ? s.rows.find(x => x.id === s.menu.id) : null;
     const cr = s.pop === 'cell' && s.cell ? s.rows.find(x => x.id === s.cell.id) : null;
@@ -497,7 +497,7 @@ class Component extends DCLogic {
         const cur = !!cr.win && cr.win.d === c.d && cr.win.h === c.h;
         const others = s.rows.filter(o => o.id !== cr.id && o.win && this.active(o) && (o.ci === cr.ci || o.svc === cr.svc) && this.overlaps(c, o.win)).map(o => o.id);
         const fr = this.inFreeze(c);
-        return opt(this.fmtWin(c), cur, { weight: 600, color: fr ? '#94a3b8' : '#020618', desc: fr ? '⚠ dondurma dönemi · planlanamaz' : others.length ? '⚠ ' + others.join(', ') + ' ile çakışıyor' : 'uygun · mesai dışı', descColor: fr || others.length ? '#d23f43' : '#1f8a6f', pick: () => this.applyField(cr.id, 'win', String(i)) });
+        return opt(this.fmtWin(c), cur, { weight: 600, color: fr ? '#64748b' : '#020618', desc: fr ? '⚠ dondurma dönemi · planlanamaz' : others.length ? '⚠ ' + others.join(', ') + ' ile çakışıyor' : 'uygun · mesai dışı', descColor: fr || others.length ? '#d23f43' : '#007a55', pick: () => this.applyField(cr.id, 'win', String(i)) });
       });
     const cell = k => s.cols[k] ? 'table-cell' : 'none';
     const W_ = { typ: 118, risk: 96, appr: 190, ci: 150, src: 130, tasks: 96, owner: 200, upd: 104 };
@@ -511,7 +511,7 @@ class Component extends DCLogic {
           meta: TYPE[r.type][0] + (r.risk ? ' · ' + RISK[r.risk][0] + ' risk' : '') + (warn ? ' · ⚠ ' + c.join(', ') + ' ile çakışıyor' : fr ? ' · ⚠ dondurma dönemi' : ' · ' + st[0] + (r.result ? ' · ' + r.result : '')), metaColor: warn || fr ? '#d23f43' : '#64748b', open: openDetail(r) };
       });
       const freeze = d >= F.from && d <= F.to;
-      return { label: d === 0 ? 'Bugün' : d === 1 ? 'Yarın' : this.weekday(d), date: this.fmtDay(d), color: d === 0 ? '#08748e' : '#020618', bg: freeze ? '#fffaf0' : '#fff', freeze, freezeLabel: F.label, items, empty: items.length === 0 };
+      return { label: d === 0 ? 'Bugün' : d === 1 ? 'Yarın' : this.weekday(d), date: this.fmtDay(d), color: d === 0 ? '#007a55' : '#020618', bg: freeze ? '#fffaf0' : '#fff', freeze, freezeLabel: F.label, items, empty: items.length === 0 };
     });
     const calCount = calDays.reduce((a, d) => a + d.items.length, 0);
     return {
@@ -519,7 +519,7 @@ class Component extends DCLogic {
       pageTitle: tab[2], headerCount: openAll.length + ' açık değişiklik · ' + apprMe + ' onayınızı bekliyor · ' + weekN + ' bu hafta planlı · ' + confAll + ' çakışma',
       isList: view === 'list', isCal: view === 'cal',
       viewList: () => this.setState({ view: 'list', pop: null, menu: null, cell: null }), viewCal: () => this.setState({ view: 'cal', pop: null, menu: null, cell: null, selected: [] }),
-      listBg: view === 'list' ? '#08748e' : '#fff', listFg: view === 'list' ? '#fff' : '#334155', calBg: view === 'cal' ? '#08748e' : '#fff', calFg: view === 'cal' ? '#fff' : '#334155',
+      listBg: view === 'list' ? '#007a55' : '#fff', listFg: view === 'list' ? '#fff' : '#334155', calBg: view === 'cal' ? '#007a55' : '#fff', calFg: view === 'cal' ? '#fff' : '#334155',
       saveView: () => this.toast('Görünüm kaydedildi: ' + tab[1] + ' · ' + (view === 'cal' ? 'takvim' : ({ win: 'pencereye göre', risk: 'riske göre', status: 'duruma göre', type: 'türe göre', appr: 'onaya göre', updated: 'güncellemeye göre' })[sort.key])),
       newChange: () => this.toast('Yeni değişiklik formu — tür, şablon, risk değerlendirmesi, CI ve pencere seçimi oradan; sıradaki ekranlardan'),
       tabs, q: s.q, setQ: ev => this.setState({ q: ev.target.value }),
@@ -531,7 +531,7 @@ class Component extends DCLogic {
       colOptions: [['typ', 'Tür'], ['risk', 'Risk'], ['appr', 'Onay'], ['ci', 'CI'], ['src', 'Kaynak'], ['tasks', 'Görevler'], ['owner', 'Sorumlu'], ['upd', 'Güncelleme']].map(([k, label]) => ({ label, ...box(s.cols[k]), toggle: () => this.setState(st => ({ cols: { ...st.cols, [k]: !st.cols[k] } })) })),
       hasSelection: s.selected.length > 0 && view === 'list', selCount: s.selected.length,
       bulkApprove: () => this.bulk('approve'), bulkReject: () => this.bulk('reject'), bulkAssign: () => this.bulk('assign'), bulkClose: () => this.bulk('close'), clearSel: () => this.setState({ selected: [] }),
-      allMark: allSel ? '✓' : someSel ? '–' : '', allBoxBg: allSel || someSel ? '#08748e' : '#fff', allBoxBorder: allSel || someSel ? '#08748e' : '#cbd5e1',
+      allMark: allSel ? '✓' : someSel ? '–' : '', allBoxBg: allSel || someSel ? '#007a55' : '#fff', allBoxBorder: allSel || someSel ? '#007a55' : '#cbd5e1',
       toggleAll: () => this.setState({ selected: allSel ? [] : visibleIds }),
       sortSt: () => this.sortBy('status'), sortTyp: () => this.sortBy('type'), sortRisk: () => this.sortBy('risk'), sortAppr: () => this.sortBy('appr'), sortWin: () => this.sortBy('win'), sortUpd: () => this.sortBy('updated'),
       stSortMark: sortMark('status'), typSortMark: sortMark('type'), riskSortMark: sortMark('risk'), apprSortMark: sortMark('appr'), winSortMark: sortMark('win'), updSortMark: sortMark('updated'),
